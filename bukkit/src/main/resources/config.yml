@@ -1,0 +1,12 @@
+blocked-commands:
+  - '/?'
+  - '/pl'
+  - '/plugins'
+  - '/bukkit'
+  - '/reload'
+  - '/rl'
+  - '/stop'
+  - '/spigot'
+  - '/version'
+  - '/ver'
+  - '/help'

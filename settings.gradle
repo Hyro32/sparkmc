@@ -1,0 +1,3 @@
+rootProject.name = "megatron"
+include 'lib'
+include 'bukkit'

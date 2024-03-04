@@ -1,0 +1,13 @@
+repositories {
+    maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+}
+
+dependencies {
+    implementation project(':lib')
+    compileOnly "org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT"
+}
+
+jar {
+    archiveBaseName = 'megatron-core'
+    version = '1.0.0'
+}
