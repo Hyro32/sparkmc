@@ -1,3 +1,7 @@
+database:
+  uri:
+  name:
+
 blocked-commands:
   - '/?'
   - '/pl'

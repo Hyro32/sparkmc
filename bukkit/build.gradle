@@ -8,6 +8,6 @@ dependencies {
 }
 
 jar {
-    archiveBaseName = 'megatron-core'
+    archiveBaseName = 'megatron-bukkit'
     version = '1.0.0'
 }

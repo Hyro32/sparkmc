@@ -1,11 +1,12 @@
 package dev.mardroide.lib.enums;
 
 import com.mongodb.client.MongoCollection;
-import dev.mardroide.lib.database.Database;
+import dev.mardroide.lib.jdbc.Database;
 import org.bson.Document;
 
 public enum Collections {
-    PLAYERS("players");
+    PLAYERS("players"),
+    MODERATION("moderation");
 
     private final String name;
 
@@ -15,5 +16,10 @@ public enum Collections {
 
     public MongoCollection<Document> getCollection() {
         return Database.getDatabase().getCollection(this.name);
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

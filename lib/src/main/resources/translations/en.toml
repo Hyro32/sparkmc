@@ -1,0 +1,5 @@
+errors.player.notFound='&cPlayer not found.'
+game.start.coundown='&6The game starts in &c%s &6seconds.'
+game.start.started='&aThe game has started.'
+moderation.kick.message='&cYou have been kicked from the server.'
+moderation.kick.success='&aPlayer has been kicked from the server.'

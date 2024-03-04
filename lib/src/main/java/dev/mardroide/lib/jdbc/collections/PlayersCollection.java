@@ -1,4 +1,4 @@
-package dev.mardroide.lib.database.collections;
+package dev.mardroide.lib.jdbc.collections;
 
 import dev.mardroide.lib.enums.Collections;
 import org.bson.Document;
@@ -9,6 +9,7 @@ import java.util.UUID;
 public class PlayersCollection {
     public static void create(UUID uuid) {
         Document document = new Document("uuid", uuid);
+        document.put("language", "en");
         document.put("rank", null);
         document.put("level", 0);
         document.put("experience", 0);
@@ -19,14 +20,12 @@ public class PlayersCollection {
     }
 
     public static Document find(UUID uuid) {
-        return Collections.PLAYERS.getCollection().find(new Document("uuid", uuid)).first();
+        Document document = new Document("uuid", uuid);
+        return Collections.PLAYERS.getCollection().find(document).first();
     }
 
-    public static void update() {
-        // Update a document here
-    }
-
-    public static void delete() {
-        // Delete a document here
+    public static void delete(UUID uuid) {
+        Document document = new Document("uuid", uuid);
+        Collections.PLAYERS.getCollection().findOneAndDelete(document);
     }
 }

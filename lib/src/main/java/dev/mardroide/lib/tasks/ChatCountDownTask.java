@@ -1,5 +1,6 @@
 package dev.mardroide.lib.tasks;
 
+import dev.mardroide.lib.enums.Languages;
 import dev.mardroide.lib.i18n.I18n;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,15 +24,14 @@ public class ChatCountDownTask {
             public void run() {
                 if (seconds > 0) {
                     for (Player player : players) {
-                        String locale = player.spigot().getLocale();
-                        String message = String.format(I18n.getTranslation(locale, "game.start.coundown"), seconds);
+                        String message = String.format(I18n.getTranslation("en", "game.start.coundown"), seconds);
                         player.sendMessage(message);
                     }
                     seconds--;
                 } else {
                     for (Player player : players) {
                         String locale = player.spigot().getLocale();
-                        player.sendMessage(I18n.getTranslation(locale, "game.start.started"));
+                        player.sendMessage(I18n.getTranslation("en", "game.start.started"));
                     }
                     cancel();
                 }

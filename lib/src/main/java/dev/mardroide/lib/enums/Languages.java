@@ -1,8 +1,5 @@
 package dev.mardroide.lib.enums;
 
-import lombok.Getter;
-
-@Getter
 public enum Languages {
     ENGLISH("en"),
     SPANISH("es");
@@ -11,5 +8,10 @@ public enum Languages {
 
     Languages(String locale) {
         this.locale = locale;
+    }
+
+    @Override
+    public String toString() {
+        return this.locale;
     }
 }

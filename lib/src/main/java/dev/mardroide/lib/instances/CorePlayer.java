@@ -1,8 +1,9 @@
 package dev.mardroide.lib.instances;
 
 import dev.mardroide.lib.enums.Languages;
+import dev.mardroide.lib.i18n.I18n;
+import dev.mardroide.lib.jdbc.collections.PlayersCollection;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,18 +14,18 @@ import java.util.UUID;
 @ToString
 public class CorePlayer {
     private UUID playerId;
-
-    @Setter
-    private String language;
+    private Languages language;
 
     private CorePlayer(UUID playerId) {
         this.playerId = playerId;
-        this.language = Languages.ENGLISH.name();
+        this.language = Languages.ENGLISH;
+        PlayersCollection.create(this.playerId);
     }
 
     public CorePlayer(Player player) {
         this.playerId = player.getUniqueId();
-        this.language = player.spigot().getLocale();
+        this.language = I18n.defaultAvailableLocale(player);
+        PlayersCollection.create(this.playerId);
     }
 
     public Player getPlayer() {

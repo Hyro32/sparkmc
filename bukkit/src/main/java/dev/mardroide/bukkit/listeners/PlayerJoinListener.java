@@ -1,6 +1,6 @@
 package dev.mardroide.bukkit.listeners;
 
-import dev.mardroide.lib.database.collections.PlayersCollection;
+import dev.mardroide.lib.jdbc.collections.PlayersCollection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
