@@ -22,6 +22,7 @@ public class CommandPreprocessListener implements Listener {
         if (blockedCommands.contains(args[0].toLowerCase())) {
             player.sendMessage("§cYou can't use this command!");
             event.setCancelled(true);
+            return;
         }
 
         for (String blockedCommand : blockedCommands) {

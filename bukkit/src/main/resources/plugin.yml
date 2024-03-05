@@ -1,5 +1,5 @@
 name: 'megatron-bukkit'
-version: '${version}'
+version: '${project.version}'
 main: 'dev.mardroide.bukkit.Bukkit'
 commands:
   kick:
