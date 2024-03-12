@@ -3,3 +3,5 @@ version: '${project.version}'
 main: 'dev.mardroide.bukkit.Bukkit'
 commands:
   kick:
+  language:
+    aliases: ['lang', 'lg']

@@ -1,5 +1,8 @@
+errors.language.noArgs='&cDebes especificar un idioma.'
+errors.language.notFound='&cEl idioma seleccionado no existe.'
 errors.player.notFound='&cJugador no encontrado.'
 game.start.coundown='&6La partida va comenzar en &c%s &6segundos.'
 game.start.started='&aLa partida ha comenzado.'
+language.changed.message='&aTu idioma ha sido cambiado a &2%s&a.'
 moderation.kick.message='&cHas sido expulsado del servidor.'
 moderation.kick.success='&6El jugador ha sido expulsado del servidor.'

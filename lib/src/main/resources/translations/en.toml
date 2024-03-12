@@ -1,5 +1,8 @@
+errors.language.noArgs='&cYou must specify a language.'
+errors.language.notFound='&cLanguage not found.'
 errors.player.notFound='&cPlayer not found.'
 game.start.coundown='&6The game starts in &c%s &6seconds.'
 game.start.started='&aThe game has started.'
+language.changed.message='&aYour language has been changed to &2%s&a.'
 moderation.kick.message='&cYou have been kicked from the server.'
 moderation.kick.success='&aPlayer has been kicked from the server.'

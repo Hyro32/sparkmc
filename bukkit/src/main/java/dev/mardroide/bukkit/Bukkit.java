@@ -1,6 +1,7 @@
 package dev.mardroide.bukkit;
 
 import dev.mardroide.bukkit.commands.KickCommand;
+import dev.mardroide.bukkit.commands.LangCommand;
 import dev.mardroide.bukkit.listeners.AsyncChatListener;
 import dev.mardroide.bukkit.listeners.CommandPreprocessListener;
 import dev.mardroide.bukkit.listeners.PlayerJoinListener;
@@ -27,6 +28,7 @@ public final class Bukkit extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
 
         this.getCommand("kick").setExecutor(new KickCommand());
+        this.getCommand("language").setExecutor(new LangCommand());
 
         System.out.println("[Bukkit] Plugin enabled");
     }
