@@ -3,10 +3,13 @@ package dev.mardroide.lib.jdbc;
 import com.mongodb.*;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import dev.mardroide.lib.enums.Collections;
 import lombok.Getter;
 import org.bson.BsonDocument;
 import org.bson.BsonInt64;
+import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bukkit.ChatColor;
 
@@ -34,5 +37,9 @@ public class Database {
                 System.out.println(ChatColor.RED + "Database not connected.");
             }
         }
+    }
+
+    public static MongoCollection<Document> getCollection(Collections collection) {
+        return database.getCollection(collection.toString());
     }
 }

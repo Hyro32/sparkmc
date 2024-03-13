@@ -1,12 +1,16 @@
 package dev.mardroide.lib.jdbc.collections;
 
+import com.mongodb.client.MongoCollection;
 import dev.mardroide.lib.enums.Collections;
+import dev.mardroide.lib.jdbc.Database;
 import org.bson.Document;
 
 import java.util.Date;
 import java.util.UUID;
 
 public class PlayersCollection {
+    private static MongoCollection<Document> playersCollection = Database.getCollection(Collections.PLAYERS);
+
     public static void create(UUID uuid) {
         Document document = new Document("uuid", uuid);
         document.put("language", "en");
@@ -16,16 +20,16 @@ public class PlayersCollection {
         document.put("first_join", new Date());
         document.put("last_join", null);
 
-        Collections.PLAYERS.getCollection().insertOne(document);
+        playersCollection.insertOne(document);
     }
 
     public static Document find(UUID uuid) {
         Document document = new Document("uuid", uuid);
-        return Collections.PLAYERS.getCollection().find(document).first();
+        return playersCollection.find(document).first();
     }
 
     public static void delete(UUID uuid) {
         Document document = new Document("uuid", uuid);
-        Collections.PLAYERS.getCollection().findOneAndDelete(document);
+        playersCollection.findOneAndDelete(document);
     }
 }
