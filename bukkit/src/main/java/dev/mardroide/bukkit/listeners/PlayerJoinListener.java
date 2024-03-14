@@ -9,9 +9,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        event.setJoinMessage(null);
         Player player = event.getPlayer();
 
-        if (!player.hasPlayedBefore()) {
+        if (PlayersCollection.find(player.getUniqueId()) == null) {
             player.sendMessage("Welcome to the server, " + player.getName() + "!");
             PlayersCollection.create(player.getUniqueId());
         }

@@ -1,5 +1,6 @@
 errors.language.noArgs='&cYou must specify a language.'
 errors.language.notFound='&cLanguage not found.'
+errors.permission.noPermission='&cYou do not have permission to do that.'
 errors.player.notFound='&cPlayer not found.'
 game.start.coundown='&6The game starts in &c%s &6seconds.'
 game.start.started='&aThe game has started.'

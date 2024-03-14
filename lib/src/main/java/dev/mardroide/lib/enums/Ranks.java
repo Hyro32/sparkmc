@@ -1,7 +1,9 @@
 package dev.mardroide.lib.enums;
 
+import lombok.Getter;
 import org.bukkit.ChatColor;
 
+@Getter
 public enum Ranks {
     OWNER("owner", ChatColor.GOLD + "Owner", new String[]{}),
     ADMIN("admin", ChatColor.DARK_RED + "Admin", new String[]{}),

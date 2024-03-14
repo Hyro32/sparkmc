@@ -17,6 +17,11 @@ public class KickCommand implements TabExecutor {
         Player target = Bukkit.getPlayer(args[0]);
 
         if (sender instanceof Player) {
+            if (!sender.hasPermission("moderation.kick") || !sender.isOp()) {
+                sender.sendMessage(I18n.getTranslation("en", "errors.permission.noPermission"));
+                return false;
+            }
+
             if (target == null) {
                 sender.sendMessage(I18n.getTranslation("en", "errors.player.notFound"));
                 return false;
@@ -24,7 +29,6 @@ public class KickCommand implements TabExecutor {
 
             target.kickPlayer(I18n.getTranslation("en", "moderation.kick.message"));
             sender.sendMessage(I18n.getTranslation("en", "moderation.kick.success"));
-            return true;
         } else {
             if (target == null) {
                 sender.sendMessage(ChatColor.RED + "Player not found.");
@@ -35,7 +39,7 @@ public class KickCommand implements TabExecutor {
             System.out.println(ChatColor.GREEN + "Player has been kicked.");
         }
 
-        return false;
+        return true;
     }
 
     @Override

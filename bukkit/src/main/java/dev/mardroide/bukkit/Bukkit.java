@@ -19,9 +19,12 @@ public final class Bukkit extends JavaPlugin {
         instance = this;
 
         FileConfiguration configuration = getConfig();
-        if (configuration == null) saveDefaultConfig();
+        if (configuration != null) saveDefaultConfig();
 
-        //Database.connect(getConfig().getString("database.uri"), getConfig().getString("database.name"));
+        Database.connect(
+                getConfig().getString("database.uri"),
+                getConfig().getString("database.name")
+        );
 
         getServer().getPluginManager().registerEvents(new AsyncChatListener(), this);
         getServer().getPluginManager().registerEvents(new CommandPreprocessListener(), this);
@@ -35,6 +38,7 @@ public final class Bukkit extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        Database.disconnect();
         System.out.println("[Bukkit] Plugin disabled");
     }
 }

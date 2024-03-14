@@ -1,6 +1,5 @@
 package dev.mardroide.lib.instances;
 
-import dev.mardroide.lib.enums.Collections;
 import dev.mardroide.lib.enums.Languages;
 import dev.mardroide.lib.i18n.I18n;
 import dev.mardroide.lib.jdbc.collections.PlayersCollection;

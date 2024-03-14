@@ -10,32 +10,46 @@ import lombok.Getter;
 import org.bson.BsonDocument;
 import org.bson.BsonInt64;
 import org.bson.Document;
+import org.bson.UuidRepresentation;
 import org.bson.conversions.Bson;
 import org.bukkit.ChatColor;
 
+@Getter
 public class Database {
-    @Getter
+    private static MongoClient client;
     private static MongoDatabase database;
 
     public static void connect(String uri, String databaseName) {
+        if (uri == null || databaseName == null) {
+            throw new IllegalArgumentException(ChatColor.RED + "Database URI and database name cannot be null.");
+        }
+
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
 
         MongoClientSettings settings = MongoClientSettings.builder()
                 .applyConnectionString(new ConnectionString(uri))
+                .uuidRepresentation(UuidRepresentation.STANDARD)
                 .serverApi(serverApi)
                 .build();
 
-        try (MongoClient client = MongoClients.create(settings)) {
-            database = client.getDatabase(databaseName);
-            try {
-                Bson command = new BsonDocument("ping", new BsonInt64(1));
-                database.runCommand(command);
-                System.out.println("Connected to the database.");
-            } catch (MongoException me) {
-                System.out.println(ChatColor.RED + "Database not connected.");
-            }
+        client = MongoClients.create(settings);
+        database = client.getDatabase(databaseName);
+
+        try {
+            Bson command = new BsonDocument("ping", new BsonInt64(1));
+            database.runCommand(command);
+            System.out.println("Connected to the database.");
+        } catch (MongoException me) {
+            System.out.println(ChatColor.RED + "Database not connected.");
+        }
+    }
+
+    public static void disconnect() {
+        if (client != null) {
+            client.close();
+            System.out.println("Disconnected from the database.");
         }
     }
 
