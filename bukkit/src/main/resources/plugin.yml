@@ -2,6 +2,8 @@ name: MegatronBukkit
 version: '${version}'
 main: dev.mardroide.bukkit.MegatronBukkit
 commands:
+  ban:
   kick:
   language:
     aliases: ['lang', 'lg']
+  unban:

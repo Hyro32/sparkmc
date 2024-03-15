@@ -14,6 +14,7 @@ import java.util.List;
 public class KickCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length < 1) return false;
         Player target = Bukkit.getPlayer(args[0]);
 
         if (sender instanceof Player) {
@@ -36,7 +37,7 @@ public class KickCommand implements TabExecutor {
             }
 
             target.kickPlayer(I18n.getTranslation("en", "moderation.kick.message"));
-            System.out.println(ChatColor.GREEN + "Player has been kicked.");
+            sender.sendMessage(ChatColor.GREEN + "Player has been kicked.");
         }
 
         return true;

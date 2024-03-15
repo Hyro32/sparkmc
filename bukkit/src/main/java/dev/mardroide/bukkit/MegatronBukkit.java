@@ -1,7 +1,9 @@
 package dev.mardroide.bukkit;
 
+import dev.mardroide.bukkit.commands.BanCommand;
 import dev.mardroide.bukkit.commands.KickCommand;
 import dev.mardroide.bukkit.commands.LangCommand;
+import dev.mardroide.bukkit.commands.UnbanCommand;
 import dev.mardroide.bukkit.listeners.AsyncChatListener;
 import dev.mardroide.bukkit.listeners.CommandPreprocessListener;
 import dev.mardroide.lib.jdbc.Database;
@@ -30,8 +32,10 @@ public final class MegatronBukkit extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new AsyncChatListener(), this);
         getServer().getPluginManager().registerEvents(new CommandPreprocessListener(), this);
 
+        this.getCommand("ban").setExecutor(new BanCommand());
         this.getCommand("kick").setExecutor(new KickCommand());
         this.getCommand("language").setExecutor(new LangCommand());
+        this.getCommand("unban").setExecutor(new UnbanCommand());
 
         Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[Bukkit] Plugin enabled");
     }
