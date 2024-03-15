@@ -12,7 +12,6 @@ import org.bson.BsonInt64;
 import org.bson.Document;
 import org.bson.UuidRepresentation;
 import org.bson.conversions.Bson;
-import org.bukkit.ChatColor;
 
 @Getter
 public class Database {
@@ -21,7 +20,9 @@ public class Database {
 
     public static void connect(String uri, String databaseName) {
         if (uri == null || databaseName == null) {
-            throw new IllegalArgumentException(ChatColor.RED + "Database URI and database name cannot be null.");
+            //Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Database not connected. Please check the configuration file.");
+            //Bukkit.getServer().shutdown();
+            return;
         }
 
         ServerApi serverApi = ServerApi.builder()
@@ -42,7 +43,7 @@ public class Database {
             database.runCommand(command);
             System.out.println("Connected to the database.");
         } catch (MongoException me) {
-            System.out.println(ChatColor.RED + "Database not connected.");
+            System.out.println("Database not connected.");
         }
     }
 

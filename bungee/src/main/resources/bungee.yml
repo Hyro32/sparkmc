@@ -1,0 +1,3 @@
+name: MegatronBungee
+version: '${version}'
+main: dev.mardroide.bungee.MegatronBungee

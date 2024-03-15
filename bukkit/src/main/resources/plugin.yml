@@ -1,6 +1,6 @@
-name: 'megatron-bukkit'
-version: '${project.version}'
-main: 'dev.mardroide.bukkit.Bukkit'
+name: MegatronBukkit
+version: '${version}'
+main: dev.mardroide.bukkit.MegatronBukkit
 commands:
   kick:
   language:

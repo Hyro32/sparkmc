@@ -2,13 +2,9 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-repositories {
-    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
-}
-
 dependencies {
     implementation project(':lib')
-    compileOnly 'org.spigotmc:spigot-api:1.8.8-R0.1-SNAPSHOT'
+    compileOnly "net.md-5:bungeecord-api:1.20-R0.1-SNAPSHOT"
 }
 
 configurations {
@@ -17,7 +13,7 @@ configurations {
 
 shadowJar {
     configurations = [project.configurations.shadowCopy]
-    archiveBaseName.set('MegatronBukkit')
+    archiveBaseName.set('MegatronBungee')
     archiveVersion.set('1.0.0')
     archiveClassifier.set('')
 }

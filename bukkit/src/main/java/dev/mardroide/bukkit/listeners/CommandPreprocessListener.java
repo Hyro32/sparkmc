@@ -1,6 +1,6 @@
 package dev.mardroide.bukkit.listeners;
 
-import dev.mardroide.bukkit.Bukkit;
+import dev.mardroide.bukkit.MegatronBukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +17,7 @@ public class CommandPreprocessListener implements Listener {
 
         if (player.hasPermission("bukkit.blockedcommands.bypass") || player.isOp()) return;
 
-        List<String> blockedCommands = Bukkit.getInstance().getConfig().getStringList("blocked-commands");
+        List<String> blockedCommands = MegatronBukkit.getInstance().getConfig().getStringList("blocked-commands");
 
         if (blockedCommands.contains(args[0].toLowerCase())) {
             player.sendMessage("§cYou can't use this command!");

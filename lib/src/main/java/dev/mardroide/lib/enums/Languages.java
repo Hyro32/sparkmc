@@ -21,6 +21,6 @@ public enum Languages {
 
     @Override
     public String toString() {
-        return this.locale;
+        return this.name();
     }
 }
