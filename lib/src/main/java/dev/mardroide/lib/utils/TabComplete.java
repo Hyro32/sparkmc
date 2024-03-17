@@ -1,9 +1,8 @@
 package dev.mardroide.lib.utils;
 
-import dev.mardroide.lib.enums.DatabaseKeys;
-import dev.mardroide.lib.enums.Languages;
+import dev.mardroide.lib.i18n.Locales;
 import dev.mardroide.lib.enums.Reasons;
-import dev.mardroide.lib.jdbc.collections.ModerationCollection;
+import dev.mardroide.lib.mongo.collections.ModerationCollection;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -26,7 +25,7 @@ public class TabComplete {
     public static List<String> languagesComplete() {
         List<String> languages = new ArrayList<>();
 
-        for (Languages language : Languages.values()) {
+        for (Locales language : Locales.values()) {
             languages.add(language.name().toLowerCase());
         }
 
@@ -47,7 +46,7 @@ public class TabComplete {
         List<String> playersNames = new ArrayList<>();
 
         for (Document document : ModerationCollection.findAll()) {
-            UUID uuid = UUID.fromString(document.getString(DatabaseKeys.UUID.toString()));
+            UUID uuid = UUID.fromString(document.getString("uuid"));
             Player player = Bukkit.getOfflinePlayer(uuid).getPlayer();
             playersNames.add(player.getName());
         }

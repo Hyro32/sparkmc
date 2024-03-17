@@ -1,6 +1,6 @@
 package dev.mardroide.bukkit.commands;
 
-import dev.mardroide.lib.enums.Languages;
+import dev.mardroide.lib.i18n.Locales;
 import dev.mardroide.lib.i18n.I18n;
 import dev.mardroide.lib.utils.TabComplete;
 import org.bukkit.command.Command;
@@ -23,7 +23,7 @@ public class LangCommand implements TabExecutor {
                 return false;
             }
 
-            if (!Languages.exists(args[0])) {
+            if (!Locales.exists(args[0])) {
                 player.sendMessage(I18n.getTranslation("en", "errors.language.notFound"));
                 return false;
             }

@@ -1,8 +1,6 @@
 package dev.mardroide.bukkit.commands;
 
 import dev.mardroide.lib.i18n.I18n;
-import dev.mardroide.lib.jdbc.collections.ModerationCollection;
-import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -28,10 +26,10 @@ public class UnbanCommand implements TabExecutor {
                 return false;
             }
 
-            Document document = ModerationCollection.find(target.getUniqueId());
+            // TODO: Call the API to check if the player is banned
 
-            if (document != null) {
-                ModerationCollection.delete(target.getUniqueId());
+            if (this != null) {
+                // TODO: Call the API to unban the player (delete the document from the database)
                 sender.sendMessage(I18n.getTranslation("en", "moderation.unban.success"));
             } else {
                 sender.sendMessage(I18n.getTranslation("en", "errors.player.notBanned"));
@@ -43,10 +41,10 @@ public class UnbanCommand implements TabExecutor {
                 return false;
             }
 
-            Document document = ModerationCollection.find(target.getUniqueId());
+            // TODO: Call the API to check if the player is banned
 
-            if (document != null) {
-                ModerationCollection.delete(target.getUniqueId());
+            if (this != null) {
+                // TODO: Call the API to unban the player (delete the document from the database)
                 sender.sendMessage(ChatColor.GREEN + "Player has been unbanned.");
             } else {
                 sender.sendMessage(ChatColor.RED + "Player is not banned.");

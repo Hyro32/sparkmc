@@ -1,17 +1,17 @@
-package dev.mardroide.lib.enums;
+package dev.mardroide.lib.i18n;
 
-public enum Languages {
+public enum Locales {
     ENGLISH("en"),
     SPANISH("es");
 
     private final String locale;
 
-    Languages(String locale) {
+    Locales(String locale) {
         this.locale = locale;
     }
 
     public static boolean exists(String locale) {
-        for (Languages language : Languages.values()) {
+        for (Locales language : Locales.values()) {
             if (language.locale.equalsIgnoreCase(locale) || language.name().equalsIgnoreCase(locale)) {
                 return true;
             }

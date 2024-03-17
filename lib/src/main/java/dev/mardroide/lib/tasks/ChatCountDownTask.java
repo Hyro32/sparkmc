@@ -23,8 +23,8 @@ public class ChatCountDownTask {
             public void run() {
                 if (seconds > 0) {
                     for (Player player : players) {
-                        String message = String.format(I18n.getTranslation("en", "game.start.coundown"), seconds);
-                        player.sendMessage(message);
+                        String translation = I18n.getTranslation("en", "game.start.coundown");
+                        player.sendMessage(String.format(translation, seconds));
                     }
                     seconds--;
                 } else {

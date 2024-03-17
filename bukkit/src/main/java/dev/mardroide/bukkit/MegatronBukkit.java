@@ -6,7 +6,6 @@ import dev.mardroide.bukkit.commands.LangCommand;
 import dev.mardroide.bukkit.commands.UnbanCommand;
 import dev.mardroide.bukkit.listeners.AsyncChatListener;
 import dev.mardroide.bukkit.listeners.CommandPreprocessListener;
-import dev.mardroide.lib.jdbc.Database;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,11 +23,6 @@ public final class MegatronBukkit extends JavaPlugin {
         FileConfiguration configuration = getConfig();
         if (configuration != null) saveDefaultConfig();
 
-        Database.connect(
-                getConfig().getString("database.uri"),
-                getConfig().getString("database.name")
-        );
-
         getServer().getPluginManager().registerEvents(new AsyncChatListener(), this);
         getServer().getPluginManager().registerEvents(new CommandPreprocessListener(), this);
 
@@ -42,7 +36,6 @@ public final class MegatronBukkit extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Database.disconnect();
         Bukkit.getConsoleSender().sendMessage(ChatColor.RED  +"[Bukkit] Plugin disabled");
     }
 }

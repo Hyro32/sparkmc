@@ -1,8 +1,7 @@
 package dev.mardroide.lib.i18n;
 
 import dev.mardroide.lib.Lib;
-import dev.mardroide.lib.enums.Languages;
-import dev.mardroide.lib.utils.Colors;
+import dev.mardroide.lib.utils.Formatter;
 import org.bukkit.entity.Player;
 import org.tomlj.Toml;
 import org.tomlj.TomlParseResult;
@@ -17,20 +16,20 @@ public class I18n {
         try {
             TomlParseResult result = Toml.parse(url.openStream());
             if (result.hasErrors()) return "Translation not found.";
-            return Colors.colorize(result.getString(key));
+            return Formatter.colorize(result.getString(key));
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    public static Languages defaultAvailableLocale(Player player) {
-        for (Languages language : Languages.values()) {
+    public static Locales defaultAvailableLocale(Player player) {
+        for (Locales language : Locales.values()) {
             if (player.spigot().getLocale().startsWith(language.toString())) {
                 return language;
             }
         }
 
-        return Languages.ENGLISH;
+        return Locales.ENGLISH;
     }
 }

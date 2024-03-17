@@ -2,7 +2,6 @@ package dev.mardroide.bukkit.commands;
 
 import dev.mardroide.lib.enums.Reasons;
 import dev.mardroide.lib.i18n.I18n;
-import dev.mardroide.lib.jdbc.collections.ModerationCollection;
 import dev.mardroide.lib.utils.TabComplete;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -48,7 +47,7 @@ public class BanCommand implements TabExecutor {
             }
 
             target.kickPlayer(I18n.getTranslation("en", "moderation.ban.message"));
-            ModerationCollection.createBanDocument(target.getUniqueId(), player.getUniqueId(), expirationDate, reason);
+            // TODO: Call the API to create the ban document
             sender.sendMessage(I18n.getTranslation("en", "moderation.ban.success"));
         } else {
             if (target == null) {
@@ -70,7 +69,7 @@ public class BanCommand implements TabExecutor {
             }
 
             target.kickPlayer(I18n.getTranslation("en", "moderation.ban.message"));
-            ModerationCollection.createBanDocument(target.getUniqueId(), null, expirationDate, reason);
+            // TODO: Call the API to create the ban document
             sender.sendMessage(ChatColor.GREEN + "Player has been banned from the server.");
         }
 
