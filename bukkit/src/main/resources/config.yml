@@ -1,11 +1,3 @@
-database:
-  uri:
-  name:
-
-cache:
-  host:
-  port:
-
 blocked-commands:
   - '/?'
   - '/pl'

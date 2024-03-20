@@ -1,15 +1,12 @@
 package dev.mardroide.lib.utils;
 
-import dev.mardroide.lib.i18n.Locales;
 import dev.mardroide.lib.enums.Reasons;
-import dev.mardroide.lib.mongo.collections.ModerationCollection;
-import org.bson.Document;
+import dev.mardroide.lib.i18n.Locales;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class TabComplete {
     public static List<String> playersNamesComplete() {
@@ -40,17 +37,5 @@ public class TabComplete {
         }
 
         return defaultReasons;
-    }
-
-    public static List<String> moderationPlayersNamesComplete() {
-        List<String> playersNames = new ArrayList<>();
-
-        for (Document document : ModerationCollection.findAll()) {
-            UUID uuid = UUID.fromString(document.getString("uuid"));
-            Player player = Bukkit.getOfflinePlayer(uuid).getPlayer();
-            playersNames.add(player.getName());
-        }
-
-        return playersNames;
     }
 }
