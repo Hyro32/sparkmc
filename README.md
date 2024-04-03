@@ -9,17 +9,37 @@
 
 Megatron is an ecosystem of plugins and libraries that help manage a minecraft network designed specifically for a single server. Development, compilation, be very fast!
 
-### Chat with us
+## How to start
+
+1. Clone the repository
+
+```console
+git clone https://github.com/Mardroide/megatron.git
+```
+
+2. Build the project
+
+```console
+gradlew build
+```
+
+## Chat with us
 
 Learn more about the project and the progress of its development is joining the [discord community](https://discord.gg/5yVnrtRCGb).
 
-### Contribute
+## Contribute
 
-Given the injustices in the world of servers either by the theft of software, the sole pursuit of economic gain... This project aims to make the whole community feel part of a place that gives them transparency and security.
+Are you a developer passionate about Minecraft and the community? If so, we invite you to contribute to our project for an open source Minecraft network that prioritizes transparency and security.
+
+In this project, collaboration is key. Being open source, the network's code is available for everyone to inspect, ensuring no cheating or backdoors. In addition, the community can work together to identify and fix vulnerabilities, creating a more secure environment for everyone.
+
+Contributing to this project not only allows you to improve the security and transparency of the network, but also gives you the opportunity to participate in a vibrant community of players and developers who share your passion for Minecraft. You can contribute your talents in different areas, such as code development, documentation creation, testing or translation.
+
+No matter your level of experience, there is something for everyone! Join us and help us create a more transparent, secure and innovative Minecraft network. We look forward to your collaboration!
 
 > Want to make a larger contribution? Please see [CONTRIBUTING.md](/CONTRIBUTING.md) first!
 
-### Technologies
+## Technologies
 
 - [Spigot/Bukkit](https://www.spigotmc.org/)
 - [BungeeCord](https://www.spigotmc.org/wiki/bungeecord/)
