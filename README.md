@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/github/stars/Mardroide/megatron" alt="stars">
 </div>
 
-### [Visit the website](https://mardroide.dev)
+### [Visit the website](https://hyro.one)
 
 Megatron is an ecosystem of plugins and libraries that help manage a minecraft network designed specifically for a single server. Development, compilation, be very fast!
 
@@ -14,7 +14,7 @@ Megatron is an ecosystem of plugins and libraries that help manage a minecraft n
 1. Clone the repository
 
 ```console
-git clone https://github.com/Mardroide/megatron.git
+git clone https://github.com/Hyro32/megatron.git
 ```
 
 2. Build the project

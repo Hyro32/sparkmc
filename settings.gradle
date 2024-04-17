@@ -1,4 +1,2 @@
 rootProject.name = "megatron"
-include 'lib'
-include 'bukkit'
-include 'bungee'
+include 'lib', 'bukkit', 'bungee'
