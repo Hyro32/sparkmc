@@ -10,7 +10,6 @@ public class PlayerDisconnectListener implements Listener {
     @EventHandler
     public void onPlayerDisconnect(PlayerDisconnectEvent event) {
         ProxiedPlayer player = event.getPlayer();
-
         PlayersService.updatePlayerEntryLastJoined(player.getUniqueId());
     }
 }

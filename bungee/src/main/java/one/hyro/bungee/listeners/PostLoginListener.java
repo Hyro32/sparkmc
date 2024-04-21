@@ -10,9 +10,6 @@ public class PostLoginListener implements Listener {
     @EventHandler
     public void onPostLogin(PostLoginEvent event) {
         ProxiedPlayer player = event.getPlayer();
-
-        if (PlayersService.getPLayerEntry(player.getUniqueId()) == null) {
-            PlayersService.createPlayerEntry(player.getUniqueId());
-        }
+        PlayersService.createPlayerEntry(player.getUniqueId());
     }
 }
