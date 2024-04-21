@@ -1,6 +1,6 @@
 package one.hyro.bukkit.listeners;
 
-import one.hyro.bukkit.MegatronBukkit;
+import one.hyro.bukkit.HyroBukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +17,7 @@ public class CommandPreprocessListener implements Listener {
 
         if (player.hasPermission("bukkit.blockedcommands.bypass") || player.isOp()) return;
 
-        List<String> blockedCommands = MegatronBukkit.getInstance().getConfig().getStringList("blocked-commands");
+        List<String> blockedCommands = HyroBukkit.getInstance().getConfig().getStringList("blocked-commands");
 
         if (blockedCommands.contains(args[0].toLowerCase())) {
             player.sendMessage("§cYou can't use this command!");

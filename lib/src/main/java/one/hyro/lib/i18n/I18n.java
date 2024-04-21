@@ -2,7 +2,6 @@ package one.hyro.lib.i18n;
 
 import one.hyro.lib.Lib;
 import one.hyro.lib.utils.Formatter;
-import org.bukkit.entity.Player;
 import org.tomlj.Toml;
 import org.tomlj.TomlParseResult;
 
@@ -21,15 +20,5 @@ public class I18n {
             e.printStackTrace();
             return null;
         }
-    }
-
-    public static Locales defaultAvailableLocale(Player player) {
-        for (Locales language : Locales.values()) {
-            if (player.spigot().getLocale().startsWith(language.toString())) {
-                return language;
-            }
-        }
-
-        return Locales.ENGLISH;
     }
 }

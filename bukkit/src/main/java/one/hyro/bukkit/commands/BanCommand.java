@@ -2,7 +2,6 @@ package one.hyro.bukkit.commands;
 
 import one.hyro.lib.enums.Reasons;
 import one.hyro.lib.i18n.I18n;
-import one.hyro.lib.utils.TabComplete;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -78,8 +77,6 @@ public class BanCommand implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 1) return TabComplete.playersNamesComplete();
-        if (args.length >= 2) return TabComplete.defaultModerationReasons();
         return null;
     }
 

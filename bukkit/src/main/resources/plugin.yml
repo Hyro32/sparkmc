@@ -1,6 +1,8 @@
-name: MegatronBukkit
-version: '${version}'
-main: dev.mardroide.bukkit.MegatronBukkit
+name: HyroBukkit
+author: Hyro
+api-version: 1.8
+version: 1.0
+main: one.hyro.bukkit.HyroBukkit
 commands:
   ban:
   kick:

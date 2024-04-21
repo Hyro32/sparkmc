@@ -24,8 +24,8 @@ configurations {
 
 shadowJar {
     configurations = [project.configurations.shadowCopy]
-    archiveBaseName.set('MegatronBukkit')
-    archiveVersion.set('1.0.0')
+    archiveBaseName.set('HyroBukkit')
+    archiveVersion.set('')
     archiveClassifier.set('')
 }
 

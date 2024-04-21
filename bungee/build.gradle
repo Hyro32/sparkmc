@@ -13,8 +13,8 @@ configurations {
 
 shadowJar {
     configurations = [project.configurations.shadowCopy]
-    archiveBaseName.set('MegatronBungee')
-    archiveVersion.set('1.0.0')
+    archiveBaseName.set('HyroBungee')
+    archiveVersion.set('')
     archiveClassifier.set('')
 }
 

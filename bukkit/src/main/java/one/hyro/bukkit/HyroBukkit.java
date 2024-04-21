@@ -11,8 +11,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class MegatronBukkit extends JavaPlugin {
-    private static MegatronBukkit instance;
+public final class HyroBukkit extends JavaPlugin {
+    private static HyroBukkit instance;
 
     @Override
     public void onEnable() {
@@ -37,7 +37,7 @@ public final class MegatronBukkit extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(ChatColor.RED  +"[Bukkit] Plugin disabled");
     }
 
-    public static MegatronBukkit getInstance() {
+    public static HyroBukkit getInstance() {
         return instance;
     }
 }
