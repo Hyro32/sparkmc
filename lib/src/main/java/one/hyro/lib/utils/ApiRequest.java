@@ -8,10 +8,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class ApiRequest {
-    private static final HttpClient client = HttpClient.newHttpClient();
-
     public static void POST(String url, JsonObject body) {
         try {
+            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(url))
                     .header("Content-Type", "application/json")
@@ -24,6 +23,7 @@ public class ApiRequest {
 
     public static String GET(String url, JsonObject body) {
         try {
+            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(url))
                     .header("Content-Type", "application/json")
@@ -39,6 +39,7 @@ public class ApiRequest {
 
     public static void DELETE(String url) {
         try {
+            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(url))
                     .header("Content-Type", "application/json")
@@ -51,6 +52,7 @@ public class ApiRequest {
 
     public static void PATCH(String url, JsonObject body) {
         try {
+            HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(url))
                     .header("Content-Type", "application/json")

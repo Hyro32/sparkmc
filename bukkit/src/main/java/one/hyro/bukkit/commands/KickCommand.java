@@ -17,29 +17,30 @@ public class KickCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length < 1) return false;
         Player target = Bukkit.getPlayer(args[0]);
-        String locale = Locales.valueOf(PlayersService.getCachePlayerLocale(target.getUniqueId())).toString();
-        System.out.println(locale);
+
+        if (target == null) {
+            String locale = (sender instanceof Player)
+                    ? PlayersService.getCachePlayerLocale(((Player) sender).getUniqueId())
+                    : Locales.DEFAULT.toString();
+            sender.sendMessage(I18n.getTranslation(locale, "errors.player.notFound"));
+            return false;
+        }
+
+        String targetCacheLocale = PlayersService.getCachePlayerLocale(target.getUniqueId());
 
         if (sender instanceof Player) {
-            if (!sender.hasPermission("moderation.kick") || !sender.isOp()) {
-                sender.sendMessage(I18n.getTranslation("en", "errors.permission.noPermission"));
+            Player player = (Player) sender;
+            String cacheLocale = PlayersService.getCachePlayerLocale(player.getUniqueId());
+
+            if (!player.hasPermission("moderation.kick") && !player.isOp()) {
+                player.sendMessage(I18n.getTranslation(cacheLocale, "errors.permission.noPermission"));
                 return false;
             }
 
-            if (target == null) {
-                sender.sendMessage(I18n.getTranslation("en", "errors.player.notFound"));
-                return false;
-            }
-
-            target.kickPlayer(I18n.getTranslation(locale, "moderation.kick.message"));
-            sender.sendMessage(I18n.getTranslation(locale, "moderation.kick.success"));
+            target.kickPlayer(I18n.getTranslation(targetCacheLocale, "moderation.kick.message"));
+            player.sendMessage(I18n.getTranslation(cacheLocale, "moderation.kick.success"));
         } else {
-            if (target == null) {
-                sender.sendMessage(ChatColor.RED + "Player not found.");
-                return false;
-            }
-
-            target.kickPlayer(I18n.getTranslation(locale, "moderation.kick.message"));
+            target.kickPlayer(I18n.getTranslation(targetCacheLocale, "moderation.kick.message"));
             sender.sendMessage(ChatColor.GREEN + "Player has been kicked.");
         }
 

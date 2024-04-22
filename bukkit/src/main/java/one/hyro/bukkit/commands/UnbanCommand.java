@@ -1,6 +1,8 @@
 package one.hyro.bukkit.commands;
 
 import one.hyro.lib.i18n.I18n;
+import one.hyro.lib.i18n.Locales;
+import one.hyro.lib.services.PlayersService;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -13,43 +15,27 @@ import java.util.List;
 public class UnbanCommand implements TabExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length < 1) return false;
         Player target = Bukkit.getOfflinePlayer(args[0]).getPlayer();
 
+        if (target == null) {
+            String locale = (sender instanceof Player)
+                    ? PlayersService.getCachePlayerLocale(((Player) sender).getUniqueId())
+                    : Locales.DEFAULT.toString();
+            sender.sendMessage(I18n.getTranslation(locale, "errors.player.notFound"));
+            return false;
+        }
+
         if (sender instanceof Player) {
-            if (!sender.hasPermission("moderation.unban") || !sender.isOp()) {
-                sender.sendMessage(I18n.getTranslation("en", "errors.permission.noPermission"));
-                return false;
-            }
+            Player player = (Player) sender;
+            String playerCacheLocale = PlayersService.getCachePlayerLocale(player.getUniqueId());
 
-            if (target == null) {
-                sender.sendMessage(I18n.getTranslation("en", "errors.player.notFound"));
-                return false;
-            }
-
-            // TODO: Call the API to check if the player is banned
-
-            if (this != null) {
-                // TODO: Call the API to unban the player (delete the document from the database)
-                sender.sendMessage(I18n.getTranslation("en", "moderation.unban.success"));
-            } else {
-                sender.sendMessage(I18n.getTranslation("en", "errors.player.notBanned"));
+            if (!player.hasPermission("moderation.unban") || !player.isOp()) {
+                player.sendMessage(I18n.getTranslation(playerCacheLocale, "errors.permission.noPermission"));
                 return false;
             }
         } else {
-            if (target == null) {
-                sender.sendMessage(ChatColor.RED + "Player not found.");
-                return false;
-            }
 
-            // TODO: Call the API to check if the player is banned
-
-            if (this != null) {
-                // TODO: Call the API to unban the player (delete the document from the database)
-                sender.sendMessage(ChatColor.GREEN + "Player has been unbanned.");
-            } else {
-                sender.sendMessage(ChatColor.RED + "Player is not banned.");
-                return false;
-            }
         }
 
         return true;

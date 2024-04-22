@@ -9,11 +9,12 @@ import java.util.Date;
 import java.util.UUID;
 
 public class SanctionsService {
-    public static void createSanctionEntry(UUID uuid, UUID agentUuid, SanctionTypes sanctionType, Date sanctionExpiration) {
+    public static void createSanctionEntry(UUID uuid, UUID agentUuid, SanctionTypes sanctionType, String reason, Date sanctionExpiration) {
         JsonObject body = new JsonObject();
         body.addProperty("target_uuid", uuid.toString());
         body.addProperty("agent_uuid", agentUuid.toString());
         body.addProperty("type", sanctionType.toString());
+        body.addProperty("reason", reason);
         body.addProperty("date", Formatter.formatIsoDate(new Date()));
         body.addProperty("expiration", Formatter.formatIsoDate(sanctionExpiration));
 

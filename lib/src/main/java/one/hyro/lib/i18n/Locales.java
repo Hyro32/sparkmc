@@ -1,18 +1,23 @@
 package one.hyro.lib.i18n;
 
 public enum Locales {
-    ENGLISH("en"),
-    SPANISH("es");
+    en_US("English (US)"),
+    es_ES ("Español (España)");
 
-    private final String locale;
+    public static final Locales DEFAULT = en_US;
+    private final String fullName;
 
-    Locales(String locale) {
-        this.locale = locale;
+    Locales(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getFullName() {
+        return fullName;
     }
 
     public static boolean exists(String locale) {
         for (Locales language : Locales.values()) {
-            if (language.locale.equalsIgnoreCase(locale) || language.name().equalsIgnoreCase(locale)) {
+            if (language.name().equalsIgnoreCase(locale)) {
                 return true;
             }
         }
