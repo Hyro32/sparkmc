@@ -6,6 +6,7 @@ import one.hyro.bukkit.commands.LangCommand;
 import one.hyro.bukkit.commands.UnbanCommand;
 import one.hyro.bukkit.listeners.AsyncChatListener;
 import one.hyro.bukkit.listeners.CommandPreprocessListener;
+import one.hyro.bukkit.listeners.PlayerJoinListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,6 +24,7 @@ public final class HyroBukkit extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new AsyncChatListener(), this);
         getServer().getPluginManager().registerEvents(new CommandPreprocessListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
 
         this.getCommand("ban").setExecutor(new BanCommand());
         this.getCommand("kick").setExecutor(new KickCommand());

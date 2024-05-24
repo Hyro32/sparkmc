@@ -1,3 +1,19 @@
+tablist:
+  enabled: true
+  header:
+    - "    &6Hyro's Planet    "
+    - '&7Enjoy your stay!'
+    - ''
+  footer:
+    - ''
+    - '&eplanet.hyro.one'
+
+scoreboard:
+  enabled: true
+  title: "&9Hyro's &3Planet"
+  body:
+    - '&7TODO: finish this'
+
 blocked-commands:
   - '/?'
   - '/pl'
