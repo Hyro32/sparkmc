@@ -41,6 +41,6 @@ No matter your level of experience, there is something for everyone! Join us and
 
 ## Technologies
 
-- [Spigot/Bukkit](https://www.spigotmc.org/)
-- [BungeeCord](https://www.spigotmc.org/wiki/bungeecord/)
-- [Gradle](https://gradle.org/)
+- [Paper](https://papermc.io/)
+- [Velocity](https://papermc.io/software/velocity)
+- [Maven](https://maven.apache.org/)
