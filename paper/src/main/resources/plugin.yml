@@ -1,0 +1,4 @@
+name: HyrosPaper
+version: '${project.version}'
+main: one.hyro.paper.HyrosPaper
+api-version: '1.20'

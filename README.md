@@ -1,6 +1,6 @@
 <div align="center">
   <img src="https://imgur.com/3jwkDd1.png" alt="blue-book"/>
-  <h1>Megatron</h1>
+  <h1>Hyro's Planet</h1>
   <a href="https://discord.gg/5yVnrtRCGb" target="_blank"><img height=20 src="https://img.shields.io/discord/1193186539212128306" /></a>
   <img src="https://img.shields.io/github/stars/Mardroide/megatron" alt="stars">
 </div>
@@ -14,13 +14,13 @@ Megatron is an ecosystem of plugins and libraries that help manage a minecraft n
 1. Clone the repository
 
 ```console
-git clone https://github.com/Hyro32/megatron.git
+git clone https://github.com/Hyro32/hyros-planet.git
 ```
 
 2. Build the project
 
 ```console
-gradlew build
+mvn build
 ```
 
 ## Chat with us
