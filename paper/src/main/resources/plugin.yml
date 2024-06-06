@@ -2,3 +2,10 @@ name: HyrosPaper
 version: '${project.version}'
 main: one.hyro.paper.HyrosPaper
 api-version: '1.20'
+
+commands:
+  ping:
+  hreload:
+    aliases: [hr]
+  teleport:
+    aliases: [tp]

@@ -1,0 +1,7 @@
+lobby-status:
+  worlds:
+    - world
+    - test
+  blocks: true # If true, player will be unable to break or place blocks
+  hunger: true # If true, player will be unable to lose hunger
+  damage: true # If true, player will be unable to take damage
