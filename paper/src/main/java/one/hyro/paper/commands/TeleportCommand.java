@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,10 +30,8 @@ public class TeleportCommand implements BasicCommand {
             Location targetLocation = target.getLocation();
             player.teleportAsync(targetLocation).thenAccept(success -> {
                 if (success) {
-                    TextComponent message = Component.text("You have been teleported to ")
-                            .color(NamedTextColor.YELLOW)
-                            .append(Component.text(target.getName()))
-                            .color(NamedTextColor.GOLD);
+                    TextComponent message = Component.text("You have been teleported to ", NamedTextColor.GOLD)
+                            .append(Component.text(target.getName(), NamedTextColor.RED));
 
                     player.sendMessage(message);
                 }
@@ -48,14 +47,10 @@ public class TeleportCommand implements BasicCommand {
             Location targetLocation = target.getLocation();
             player.teleportAsync(targetLocation).thenAccept(success -> {
                 if (success) {
-                    TextComponent message = Component.text("You have been teleported to ")
-                            .color(NamedTextColor.YELLOW)
-                            .append(Component.text(target.getName()))
-                            .color(NamedTextColor.GOLD)
-                            .append(Component.text(" by an "))
-                            .color(NamedTextColor.YELLOW)
-                            .append(Component.text("operator"))
-                            .color(NamedTextColor.GOLD);
+                    TextComponent message = Component.text("You have been teleported to ", NamedTextColor.GOLD)
+                            .append(Component.text(target.getName(), NamedTextColor.RED))
+                            .append(Component.text(" by an ", NamedTextColor.GOLD))
+                            .append(Component.text("operator", NamedTextColor.RED));
 
                     player.sendMessage(message);
                 }
@@ -65,6 +60,12 @@ public class TeleportCommand implements BasicCommand {
 
     @Override
     public @NotNull Collection<String> suggest(@NotNull CommandSourceStack stack, @NotNull String[] args) {
+        if (args.length == 1) {
+            List<String> playerNames = new ArrayList<>();
+            for (Player player : Bukkit.getOnlinePlayers())
+                playerNames.add(player.getName());
+            return playerNames;
+        }
         return List.of();
     }
 
