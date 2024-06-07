@@ -23,6 +23,19 @@ git clone https://github.com/Hyro32/hyros-planet.git
 mvn build
 ```
 
+## Velocity with Docker
+
+All paper servers are exposed only within the docker network, not externally. So you can't access them outside of that docker compose file.
+
+To bind the server to the velocity proxy, follow the example bellow:
+
+```yml
+[servers]
+# Configure your servers here. Each key represents the server's name, and the value
+# represents the IP address of the server to connect to.
+paper-1 = 'paper-1'
+```
+
 ## Chat with us
 
 Learn more about the project and the progress of its development is joining the [discord community](https://discord.gg/5yVnrtRCGb).
