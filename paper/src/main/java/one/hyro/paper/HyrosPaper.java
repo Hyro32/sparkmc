@@ -3,9 +3,10 @@ package one.hyro.paper;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import one.hyro.paper.commands.KickCommand;
 import one.hyro.paper.commands.PingCommand;
 import one.hyro.paper.commands.ReloadCommand;
-import one.hyro.paper.commands.TeleportCommand;
+import one.hyro.paper.commands.GotoCommand;
 import one.hyro.paper.events.LobbyPlayerStatusListener;
 import one.hyro.paper.events.PlayerJoinListener;
 import org.bukkit.Bukkit;
@@ -25,9 +26,10 @@ public final class HyrosPaper extends JavaPlugin {
         LifecycleEventManager<Plugin> manager = this.getLifecycleManager();
         manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
+            commands.register("goto", "Teleport to a player between servers", new GotoCommand());
+            commands.register("kick", "Kick a player from the server", new KickCommand());
             commands.register("ping", "See you server latency", new PingCommand());
             commands.register("hreload", "Reload the plugin configuration", new ReloadCommand());
-            commands.register("teleport", "Teleport to a player between servers", new TeleportCommand());
         });
 
         getServer().getPluginManager().registerEvents(new LobbyPlayerStatusListener(), this);
