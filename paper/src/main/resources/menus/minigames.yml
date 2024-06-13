@@ -1,0 +1,9 @@
+title: 'Minigames'
+slots: 27
+items:
+  - material: GRASS_BLOCK
+    slot: 0
+    name: '§a§lGrass Block'
+    lore:
+      - '§7Click to play §aGrass Block'
+    enchanted: true

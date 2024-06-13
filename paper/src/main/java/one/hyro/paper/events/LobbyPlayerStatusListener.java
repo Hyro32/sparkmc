@@ -8,15 +8,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.List;
 
 public class LobbyPlayerStatusListener implements Listener {
     private final FileConfiguration config = HyrosPaper.getInstance().getConfig();
-    private final boolean isDamageDisabled = config.getBoolean("lobby-status.disable-damage");
-    private final boolean isHungerDisabled = config.getBoolean("lobby-status.disable-hunger");
-    private final boolean isBlocksDisabled = config.getBoolean("lobby-status.disable-blocks");
+    private final boolean isDamageDisabled = config.getBoolean("lobby-status.damage");
+    private final boolean isHungerDisabled = config.getBoolean("lobby-status.hunger");
+    private final boolean isBlocksDisabled = config.getBoolean("lobby-status.blocks");
+    private final boolean isItemDropDisabled = config.getBoolean("lobby-status.item-drop");
     private final List<String> lobbyWorlds = config.getStringList("lobby-status.worlds");
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -35,6 +37,12 @@ public class LobbyPlayerStatusListener implements Listener {
             event.setCancelled(true);
             player.setFoodLevel(20);
         }
+    }
+
+    @EventHandler
+    public void onItemDrop(PlayerDropItemEvent event) {
+        if (!isLobbyWorld(event.getPlayer().getWorld().getName())) return;
+        if (isItemDropDisabled) event.setCancelled(true);
     }
 
     private boolean isLobbyWorld(String worldName) {
