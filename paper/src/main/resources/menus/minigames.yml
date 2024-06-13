@@ -1,9 +1,11 @@
-title: 'Minigames'
+title: Minigames
 slots: 27
 items:
-  - material: GRASS_BLOCK
-    slot: 0
-    name: '§a§lGrass Block'
+  - material: NOTE_BLOCK
+    slot: 13
+    name: '§3Survival §cbeta 1.0.0'
     lore:
-      - '§7Click to play §aGrass Block'
-    enchanted: true
+      - '§7Click to play §2Survival'
+    enchanted: false
+    commands:
+      - connect survival

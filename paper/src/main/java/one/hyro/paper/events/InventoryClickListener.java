@@ -1,7 +1,7 @@
 package one.hyro.paper.events;
 
-import one.hyro.paper.HyrosPaper;
 import one.hyro.paper.enums.PersistentDataKeys;
+import one.hyro.paper.managers.MenusManager;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,11 +16,13 @@ public class InventoryClickListener implements Listener {
         Player player = (Player) event.getWhoClicked();
         PersistentDataContainer container = player.getPersistentDataContainer();
 
-        NamespacedKey key = new NamespacedKey(
-                HyrosPaper.getInstance(),
-                PersistentDataKeys.CUSTOM_MENU.getKey()
-        );
-
-        if (container.has(key, PersistentDataType.BYTE)) event.setCancelled(true);
+        NamespacedKey key = PersistentDataKeys.CUSTOM_MENU.getKey();
+        if (container.has(key, PersistentDataType.STRING)) {
+            event.setCancelled(true);
+            String menuName = container.get(key, PersistentDataType.STRING);
+            MenusManager.runItemCommands(event.getSlot(), menuName, player);
+            player.getPersistentDataContainer().remove(key);
+            player.closeInventory();
+        }
      }
 }

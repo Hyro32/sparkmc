@@ -1,5 +1,7 @@
 package one.hyro.paper.managers;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import one.hyro.paper.HyrosPaper;
 import one.hyro.paper.enums.PersistentDataKeys;
 import org.bukkit.Bukkit;
@@ -21,7 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 public class MenusManager {
-    private static final Map<String, Inventory> menus = new HashMap<>();
+    private static final Map<String, FileConfiguration> menus = new HashMap<>();
+    private static final NamespacedKey key = PersistentDataKeys.CUSTOM_MENU.getKey();
 
     public static void loadMenus() {
         File dataFolder = new File(HyrosPaper.getInstance().getDataFolder(), "menus");
@@ -30,10 +33,54 @@ public class MenusManager {
 
         for (File file : files) {
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-            Inventory menu = createMenuFromConfig(config);
-            menus.put(file.getName(), menu);
-            System.out.println("Loaded menu: " + file.getName());
+            menus.put(file.getName(), config);
+            Bukkit.getLogger().info("Loaded menu: " + file.getName());
         }
+    }
+
+    public static void runItemCommands(int slot, String menuName, Player player) {
+        FileConfiguration menuConfig = menus.get(menuName + ".yml");
+        List<Map<?, ?>> itemsList = menuConfig.getMapList("items");
+
+        for (Map<?, ?> itemMap : itemsList) {
+            if ((int) itemMap.get("slot") != slot) continue;
+            List<String> commands = (List<String>) itemMap.get("commands");
+
+            for (String command : commands) {
+                String label = command.split(" ")[0];
+                String args = command.substring(label.length() + 1);
+
+                switch (label) {
+                    case "connect":
+                        final ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                        out.writeUTF("Connect");
+                        out.writeUTF(args);
+                        player.sendPluginMessage(HyrosPaper.getInstance(), "BungeeCord", out.toByteArray());
+                        break;
+                    case "menu":
+                        openMenu(player, args);
+                        break;
+                    case "message":
+                        player.sendMessage(args);
+                        break;
+                    default:
+                        Bukkit.getLogger().warning("Invalid command type: " + label);
+                }
+            }
+        }
+    }
+
+    public static void openMenu(Player player, String menuName) {
+        FileConfiguration config = menus.get(menuName + ".yml");
+
+        if (config == null) {
+            player.sendMessage("Invalid menu name.");
+            return;
+        }
+
+        Inventory menu = createMenuFromConfig(config);
+        player.getPersistentDataContainer().set(key, PersistentDataType.STRING, menuName);
+        player.openInventory(menu);
     }
 
     private static Inventory createMenuFromConfig(FileConfiguration config) {
@@ -69,22 +116,5 @@ public class MenusManager {
         }
 
         return menu;
-    }
-
-    public static void openMenu(Player player, String menuName) {
-        Inventory menu = menus.get(menuName + ".yml");
-
-        if (menu == null) {
-            player.sendMessage("Invalid menu name.");
-            return;
-        }
-
-        NamespacedKey key = new NamespacedKey(
-                HyrosPaper.getInstance(),
-                PersistentDataKeys.CUSTOM_MENU.getKey()
-        );
-
-        player.getPersistentDataContainer().set(key, PersistentDataType.BYTE, (byte) 1);
-        player.openInventory(menu);
     }
 }
