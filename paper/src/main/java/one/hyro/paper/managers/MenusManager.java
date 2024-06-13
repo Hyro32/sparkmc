@@ -2,8 +2,11 @@ package one.hyro.paper.managers;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import one.hyro.paper.HyrosPaper;
 import one.hyro.paper.enums.PersistentDataKeys;
+import one.hyro.paper.utilities.Chalk;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -86,7 +89,7 @@ public class MenusManager {
     private static Inventory createMenuFromConfig(FileConfiguration config) {
         String title = config.getString("title", "Menu");
         int size = config.getInt("slots", 9 * 3);
-        Inventory menu = Bukkit.createInventory(null, size, title);
+        Inventory menu = Bukkit.createInventory(null, size, Chalk.colorizeLegacy(title));
 
         List<Map<?, ?>> itemsList = config.getMapList("items");
 
@@ -103,8 +106,8 @@ public class MenusManager {
             ItemStack item = new ItemStack(material);
             ItemMeta meta = item.getItemMeta();
 
-            meta.setDisplayName(name);
-            meta.setLore(lore);
+            meta.setDisplayName(Chalk.colorizeLegacy(name));
+            meta.setLore(Chalk.colorizeLegacyLore(lore));
 
             if (enchanted) {
                 meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

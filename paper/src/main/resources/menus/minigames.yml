@@ -3,9 +3,9 @@ slots: 27
 items:
   - material: NOTE_BLOCK
     slot: 13
-    name: '§3Survival §cbeta 1.0.0'
+    name: '&3Survival &cbeta 1.0.0'
     lore:
-      - '§7Click to play §2Survival'
+      - '&7Click to play &2Survival'
     enchanted: false
     commands:
       - connect survival
