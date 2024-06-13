@@ -24,6 +24,7 @@ services:
       VERSION: 1.20.6
       ONLINE_MODE: false
       MEMORY: 1G
+      ALLOW_NETHER: false
     expose:
       - 25565
     volumes:

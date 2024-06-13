@@ -6,6 +6,7 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import one.hyro.paper.commands.*;
 import one.hyro.paper.events.InventoryClickListener;
 import one.hyro.paper.events.LobbyPlayerStatusListener;
+import one.hyro.paper.events.PlayerInteractListener;
 import one.hyro.paper.events.PlayerJoinListener;
 import one.hyro.paper.managers.MenusManager;
 import org.bukkit.Bukkit;
@@ -35,6 +36,7 @@ public final class HyrosPaper extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         getServer().getPluginManager().registerEvents(new LobbyPlayerStatusListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(),this);
 
         MenusManager.loadMenus();

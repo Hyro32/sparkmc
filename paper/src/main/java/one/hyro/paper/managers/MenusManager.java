@@ -2,8 +2,6 @@ package one.hyro.paper.managers;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import one.hyro.paper.HyrosPaper;
 import one.hyro.paper.enums.PersistentDataKeys;
 import one.hyro.paper.utilities.Chalk;
