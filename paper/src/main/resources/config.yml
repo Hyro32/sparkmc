@@ -8,5 +8,5 @@ lobby-status:
   item-drop: true # If true, player will be unable to drop items
 
 tablist:
-  header: "&9Hyros's Planet &7| &3Open Beta"
-  footer: "&6store.planet.hyro.one"
+  header: 'ʜʏʀᴏ᾽ѕ ᴘʟᴀɴᴇᴛ'
+  footer: 'ᴘʟᴀɴᴇᴛ.ʜʏʀᴏ.ᴏɴᴇ'

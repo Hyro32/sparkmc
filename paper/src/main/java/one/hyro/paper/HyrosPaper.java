@@ -4,10 +4,7 @@ import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import one.hyro.paper.commands.*;
-import one.hyro.paper.events.InventoryClickListener;
-import one.hyro.paper.events.LobbyPlayerStatusListener;
-import one.hyro.paper.events.PlayerInteractListener;
-import one.hyro.paper.events.PlayerJoinListener;
+import one.hyro.paper.events.*;
 import one.hyro.paper.managers.MenusManager;
 import one.hyro.paper.managers.TablistManager;
 import org.bukkit.Bukkit;
@@ -36,6 +33,7 @@ public final class HyrosPaper extends JavaPlugin {
             commands.register("hreload", "Reload the plugin configuration", new ReloadCommand());
         });
 
+        getServer().getPluginManager().registerEvents(new AsyncChatPlayerListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         getServer().getPluginManager().registerEvents(new LobbyPlayerStatusListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
@@ -48,6 +46,7 @@ public final class HyrosPaper extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        TablistManager.unregisterRanksTeams();
         Bukkit.getLogger().info("HyrosPaper has been disabled!");
     }
 

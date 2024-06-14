@@ -2,7 +2,6 @@ package one.hyro.paper.events;
 
 import one.hyro.paper.HyrosPaper;
 import one.hyro.paper.enums.PersistentDataKeys;
-import one.hyro.paper.managers.MenusManager;
 import one.hyro.paper.utilities.ConfigParser;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;

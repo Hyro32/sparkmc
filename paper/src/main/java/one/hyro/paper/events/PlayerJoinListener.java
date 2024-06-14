@@ -23,7 +23,7 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        event.setJoinMessage(null);
+        event.joinMessage(null);
         Player player = event.getPlayer();
         givePlayerItems(player);
         TablistManager.setCustomTablist(player);
