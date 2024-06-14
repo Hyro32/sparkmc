@@ -9,6 +9,7 @@ import one.hyro.paper.events.LobbyPlayerStatusListener;
 import one.hyro.paper.events.PlayerInteractListener;
 import one.hyro.paper.events.PlayerJoinListener;
 import one.hyro.paper.managers.MenusManager;
+import one.hyro.paper.managers.TablistManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +22,7 @@ public final class HyrosPaper extends JavaPlugin {
         instance = this;
 
         saveResource("config.yml", false);
+        saveResource("default-items.yml", false);
         saveResource("menus/minigames.yml", false);
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
@@ -40,6 +42,7 @@ public final class HyrosPaper extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(),this);
 
         MenusManager.loadMenus();
+        TablistManager.registerRanksTeams();
         Bukkit.getLogger().info("HyrosPaper has been enabled!");
     }
 

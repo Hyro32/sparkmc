@@ -1,0 +1,15 @@
+default-items:
+  - material: COMPASS
+    name: '&6Minigame selector'
+    slot: 0
+    lore:
+      - '&7Right click to open the minigame selector'
+    commands:
+      - menu minigames
+  - material: PLAYER_HEAD
+    slot: 2
+    name: '&aProfile'
+    lore:
+      - '&7Right click to open your profile'
+    commands:
+      - menu profile
