@@ -3,7 +3,6 @@ package one.hyro.paper.commands;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,19 +15,25 @@ import java.util.List;
 public class KickCommand implements BasicCommand {
     @Override
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
-        Player target = Bukkit.getPlayer(args[0]);
-
-        if (target == null) {
-            TextComponent message = Component.text("Player not found", NamedTextColor.RED);
-            stack.getSender().sendMessage(message);
+        if (stack.getExecutor() instanceof Player player && !player.hasPermission("hyros.kick")) {
+            player.sendMessage(Component.translatable("info.errors.permissions").color(NamedTextColor.RED));
             return;
         }
 
-        if (stack.getExecutor() instanceof Player player && !player.hasPermission("hyros.kick")) return;
+        if (args.length != 1) return;
+        Player target = Bukkit.getPlayer(args[0]);
 
-        target.kick(Component.text("You have been kicked from the server.", NamedTextColor.RED));
-        TextComponent message = Component.text("Player has been kicked from the server.", NamedTextColor.GREEN);
-        stack.getSender().sendMessage(message);
+        if (target == null) {
+            stack.getSender().sendMessage(Component.translatable("info.errors.playerNotFound").color(NamedTextColor.RED));
+            return;
+        }
+
+        target.kick(Component.translatable("info.moderation.kick").color(NamedTextColor.RED));
+        Component successMessage = Component.translatable(
+                "info.success.kick",
+                Component.text(target.getName()).color(NamedTextColor.DARK_GREEN)
+        ).color(NamedTextColor.GREEN);
+        stack.getSender().sendMessage(successMessage);
     }
 
     @Override

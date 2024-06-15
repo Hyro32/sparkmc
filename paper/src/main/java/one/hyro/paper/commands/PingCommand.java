@@ -3,7 +3,6 @@ package one.hyro.paper.commands;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,27 +15,32 @@ import java.util.List;
 public class PingCommand implements BasicCommand {
     @Override
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
-        if (stack.getExecutor() instanceof Player player) {
-            if (args.length == 1) {
-                Player target = Bukkit.getPlayer(args[0]);
-                if (target == null) return;
+        if (!(stack.getExecutor() instanceof Player player)) return;
 
-                TextComponent message = Component.text("The player ", NamedTextColor.GREEN)
-                        .append(Component.text(args[0], NamedTextColor.DARK_GREEN))
-                        .append(Component.text(" has a ping of ", NamedTextColor.GREEN))
-                        .append(Component.text(target.getPing() + " ms.", NamedTextColor.DARK_GREEN));
+        if (args.length == 1) {
+            Player target = Bukkit.getPlayer(args[0]);
 
-                player.sendMessage(message);
+            if (target == null) {
+                player.sendMessage(Component.translatable("info.errors.playerNotFound").color(NamedTextColor.RED));
                 return;
             }
 
-            TextComponent message = Component.text("Your ping is: ", NamedTextColor.GREEN)
-                    .append(Component.text(player.getPing() + " ms.", NamedTextColor.DARK_GREEN));
+            Component playerPing = Component.translatable(
+                    "commands.ping.player",
+                    Component.text(target.getName(), NamedTextColor.DARK_GREEN),
+                    Component.text(target.getPing(), NamedTextColor.DARK_GREEN)
+            ).color(NamedTextColor.GREEN);
 
-            player.sendMessage(message);
-        } else {
-            Bukkit.getLogger().warning("&4This command can only be executed by a player!");
+            player.sendMessage(playerPing);
+            return;
         }
+
+        Component message = Component.translatable(
+                "commands.ping.self",
+                Component.text(player.getPing(), NamedTextColor.DARK_GREEN)
+        ).color(NamedTextColor.GREEN);
+
+        player.sendMessage(message);
     }
 
     @Override

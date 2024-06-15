@@ -37,7 +37,7 @@ public class MenusManager {
         FileConfiguration config = menus.get(menuName + ".yml");
 
         if (config == null) {
-            player.sendMessage("Invalid menu name.");
+            Bukkit.getLogger().warning("Invalid menu name.");
             return;
         }
 

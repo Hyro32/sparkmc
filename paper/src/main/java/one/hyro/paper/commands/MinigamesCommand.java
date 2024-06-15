@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 public class MinigamesCommand implements BasicCommand {
     @Override
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
-        if (args.length > 0) return;
         if (!(stack.getExecutor() instanceof Player player)) return;
         MenusManager.openMenu(player, "minigames");
     }

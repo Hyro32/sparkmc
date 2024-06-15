@@ -33,7 +33,10 @@ public class PlayerJoinListener implements Listener {
     private void teleportPlayerToSpawn(Player player) {
         player.teleportAsync(player.getWorld().getSpawnLocation()).thenAccept(success -> {
             if (success && player.hasPermission("hyro.welcome")) {
-                Component welcomeMessage = player.displayName().append(Component.text(" has joined the server!", NamedTextColor.YELLOW));
+                Component welcomeMessage = Component.translatable(
+                        "info.player.join",
+                        player.displayName()
+                ).color(NamedTextColor.YELLOW);
                 player.getServer().broadcast(welcomeMessage);
             }
         });

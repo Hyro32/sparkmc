@@ -4,9 +4,7 @@ main: one.hyro.paper.HyrosPaper
 api-version: '1.20'
 
 commands:
-  goto:
   kick:
   minigames:
-    aliases: [menu]
   ping:
   hreload:
