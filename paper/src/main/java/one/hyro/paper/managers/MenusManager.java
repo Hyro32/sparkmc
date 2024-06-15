@@ -1,8 +1,8 @@
 package one.hyro.paper.managers;
 
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import one.hyro.paper.HyrosPaper;
 import one.hyro.paper.enums.PersistentDataKeys;
-import one.hyro.paper.utilities.Chalk;
 import one.hyro.paper.utilities.ConfigParser;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -47,11 +47,12 @@ public class MenusManager {
     }
 
     private static Inventory createMenuFromConfig(FileConfiguration config, Player player) {
-        String title = config.getString("title", "Menu");
-        int size = config.getInt("slots", 9 * 3);
-        Inventory menu = Bukkit.createInventory(null, size, Chalk.colorizeLegacy(title));
-        Map<ItemStack, Integer> items = ConfigParser.parseItems(config, "items", player);
+        Inventory menu = Bukkit.createInventory(null,
+                config.getInt("slots", 27),
+                LegacyComponentSerializer.legacyAmpersand().deserialize(config.getString("title", "Menu"))
+        );
 
+        Map<ItemStack, Integer> items = ConfigParser.parseItems(config, "items", player);
         for (Map.Entry<ItemStack, Integer> entry : items.entrySet()) {
             ItemStack item = entry.getKey();
             int slot = entry.getValue();

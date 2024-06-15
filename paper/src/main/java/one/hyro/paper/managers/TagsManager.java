@@ -11,13 +11,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-public class TablistManager {
+public class TagsManager {
     private static final Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
     private static final FileConfiguration config = HyrosPaper.getInstance().getConfig();
     private static final String header = config.getString("tablist.header");
     private static final String footer = config.getString("tablist.footer");
 
-    public static void setCustomTablist(Player player) {
+    public static void setCustomTags(Player player) {
         scoreboard.getTeam(PlayerRanks.DEFAULT.name()).addPlayer(player);
 
         TextComponent component = Component.text(PlayerRanks.DEFAULT.getUnicode())

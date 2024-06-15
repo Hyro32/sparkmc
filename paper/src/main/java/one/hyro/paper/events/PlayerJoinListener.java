@@ -3,7 +3,7 @@ package one.hyro.paper.events;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import one.hyro.paper.HyrosPaper;
-import one.hyro.paper.managers.TablistManager;
+import one.hyro.paper.managers.TagsManager;
 import one.hyro.paper.utilities.ConfigParser;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -26,15 +26,14 @@ public class PlayerJoinListener implements Listener {
         event.joinMessage(null);
         Player player = event.getPlayer();
         givePlayerItems(player);
-        TablistManager.setCustomTablist(player);
+        TagsManager.setCustomTags(player);
         teleportPlayerToSpawn(player);
     }
 
     private void teleportPlayerToSpawn(Player player) {
         player.teleportAsync(player.getWorld().getSpawnLocation()).thenAccept(success -> {
             if (success && player.hasPermission("hyro.welcome")) {
-                Component welcomeMessage = Component.text(player.getDisplayName())
-                        .append(Component.text(" has joined the server!", NamedTextColor.YELLOW));
+                Component welcomeMessage = player.displayName().append(Component.text(" has joined the server!", NamedTextColor.YELLOW));
                 player.getServer().broadcast(welcomeMessage);
             }
         });

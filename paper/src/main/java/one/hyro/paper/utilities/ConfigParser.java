@@ -2,6 +2,8 @@ package one.hyro.paper.utilities;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import one.hyro.paper.HyrosPaper;
 import one.hyro.paper.managers.MenusManager;
 import org.bukkit.Bukkit;
@@ -12,14 +14,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ConfigParser {
-    public static Map<ItemStack, Integer> parseItems(FileConfiguration configuration, String path, @Nullable Player player) {
+    public static Map<ItemStack, Integer> parseItems(FileConfiguration configuration, String path, Player player) {
         List<Map<?, ?>> items = configuration.getMapList(path);
         Map<ItemStack, Integer> itemStacks = new HashMap<>();
 
@@ -28,7 +30,7 @@ public class ConfigParser {
             int slot = (int) item.get("slot");
 
             if (materialName == null || !item.containsKey("slot")) {
-                Bukkit.getLogger().warning("Invalid item parsed in file: " + configuration.getName() + " at item: " + item);
+                Bukkit.getLogger().warning("Invalid item: " + item);
                 continue;
             }
 
@@ -37,7 +39,7 @@ public class ConfigParser {
             if (materialName.equals("CUSTOM_HEAD")) {
                 String texture = (String) item.get("texture");
                 if (texture == null || texture.isEmpty()) {
-                    Bukkit.getLogger().warning("Texture must be declared for a CUSTOM_HEAD at: " + configuration.getName() + " at item: " + item);
+                    Bukkit.getLogger().warning("Texture must be declared for a CUSTOM_HEAD at item: " + item);
                     continue;
                 }
                 stack = CustomHeads.getCustomHead(texture);
@@ -55,10 +57,18 @@ public class ConfigParser {
             ItemMeta meta = stack.getItemMeta();
 
             String name = (String) item.get("name");
-            if (name != null) meta.setDisplayName(Chalk.colorizeLegacy(name));
+            Component displayName = LegacyComponentSerializer.legacyAmpersand().deserialize(name);
+            if (name != null) meta.displayName(displayName);
 
             List<String> lore = (List<String>) item.get("lore");
-            if (lore != null) meta.setLore(Chalk.colorizeLegacyLore(lore));
+            List<Component> loreComponents = new ArrayList<>();
+
+            for (String line : lore) {
+                Component component = LegacyComponentSerializer.legacyAmpersand().deserialize(line);
+                loreComponents.add(component);
+            }
+
+            if (lore != null) meta.lore(loreComponents);
 
             Boolean enchanted = (Boolean) item.get("enchanted");
             if (enchanted == null) enchanted = false;

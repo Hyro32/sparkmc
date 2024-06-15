@@ -6,7 +6,7 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import one.hyro.paper.commands.*;
 import one.hyro.paper.events.*;
 import one.hyro.paper.managers.MenusManager;
-import one.hyro.paper.managers.TablistManager;
+import one.hyro.paper.managers.TagsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -40,13 +40,13 @@ public final class HyrosPaper extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(),this);
 
         MenusManager.loadMenus();
-        TablistManager.registerRanksTeams();
+        TagsManager.registerRanksTeams();
         Bukkit.getLogger().info("HyrosPaper has been enabled!");
     }
 
     @Override
     public void onDisable() {
-        TablistManager.unregisterRanksTeams();
+        TagsManager.unregisterRanksTeams();
         Bukkit.getLogger().info("HyrosPaper has been disabled!");
     }
 
