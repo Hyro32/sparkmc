@@ -40,6 +40,7 @@ public final class HyrosPaper extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         getServer().getPluginManager().registerEvents(new LobbyPlayerStatusListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerClientOptionsChangeListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(),this);
 
         TranslationRegistry registry = TranslationRegistry.create(Key.key("paper:i18n"));

@@ -1,5 +1,6 @@
 package one.hyro.paper.events;
 
+import one.hyro.builders.CustomItem;
 import one.hyro.builders.GameMenu;
 import one.hyro.managers.MenuManager;
 import org.bukkit.entity.Player;
@@ -16,8 +17,9 @@ public class InventoryClickListener implements Listener {
         GameMenu menu = manager.getMenu(event.getInventory());
         if (menu != null) {
             event.setCancelled(true);
-            if (event.getCurrentItem() == null) return;
-            menu.getItems().get(event.getSlot()).getConsumer().accept(player);
+            CustomItem item = menu.getItems().get(event.getSlot());
+            if (item == null) return;
+            item.getConsumer().accept(player);
         }
     }
 }
