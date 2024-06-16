@@ -1,4 +1,4 @@
-package one.hyro.paper.utilities;
+package one.hyro.utils;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import net.kyori.adventure.text.Component;

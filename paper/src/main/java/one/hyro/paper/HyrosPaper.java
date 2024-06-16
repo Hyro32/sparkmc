@@ -31,6 +31,7 @@ public final class HyrosPaper extends JavaPlugin {
         LifecycleEventManager<Plugin> manager = this.getLifecycleManager();
         manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
+            commands.register("minigames", "Open the minigames menu", new MinigamesCommand());
             commands.register("ping", "See you server latency", new PingCommand());
             commands.register("hreload", "Reload the plugin configuration", new ReloadCommand());
         });
