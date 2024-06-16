@@ -7,6 +7,7 @@ lobby-status:
   damage: true # If true, player will be unable to take damage
   item-drop: true # If true, player will be unable to drop items
 
-tablist:
-  header: 'ʜʏʀᴏ᾽ѕ ᴘʟᴀɴᴇᴛ'
-  footer: 'ᴘʟᴀɴᴇᴛ.ʜʏʀᴏ.ᴏɴᴇ'
+scoreboard:
+  tablist: true # If true, tablist will be displayed
+  sidebar: true # If true, a sidebar will be displayed
+  health: true # If true, health will be displayed

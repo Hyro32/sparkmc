@@ -7,9 +7,9 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.kyori.adventure.translation.TranslationRegistry;
 import net.kyori.adventure.util.UTF8ResourceBundleControl;
+import one.hyro.enums.PlayerRanks;
 import one.hyro.paper.commands.*;
 import one.hyro.paper.events.*;
-import one.hyro.paper.managers.MenusManager;
 import one.hyro.paper.managers.TagsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -26,15 +26,11 @@ public final class HyrosPaper extends JavaPlugin {
         instance = this;
 
         saveResource("config.yml", false);
-        saveResource("default-items.yml", false);
-        saveResource("menus/minigames.yml", false);
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
         LifecycleEventManager<Plugin> manager = this.getLifecycleManager();
         manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
-            commands.register("kick", "Kick a player from the server", new KickCommand());
-            commands.register("minigames", "Open the minigames menu", new MinigamesCommand());
             commands.register("ping", "See you server latency", new PingCommand());
             commands.register("hreload", "Reload the plugin configuration", new ReloadCommand());
         });
@@ -43,7 +39,6 @@ public final class HyrosPaper extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         getServer().getPluginManager().registerEvents(new LobbyPlayerStatusListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerClientOptionsChangeListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(),this);
 
         TranslationRegistry registry = TranslationRegistry.create(Key.key("paper:i18n"));
@@ -53,7 +48,6 @@ public final class HyrosPaper extends JavaPlugin {
         registry.registerAll(Locale.forLanguageTag("es"), bundleES, true);
         GlobalTranslator.translator().addSource(registry);
 
-        MenusManager.loadMenus();
         TagsManager.registerRanksTeams();
         Bukkit.getLogger().info("HyrosPaper has been enabled!");
     }
