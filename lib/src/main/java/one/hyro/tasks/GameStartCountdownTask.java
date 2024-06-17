@@ -1,17 +1,17 @@
 package one.hyro.tasks;
 
-import one.hyro.managers.GameManager;
+import one.hyro.instances.GameSession;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameStartCountdownTask extends BukkitRunnable {
     private final Plugin plugin;
-    private final GameManager manager;
+    private final GameSession session;
     private int seconds = 15;
 
-    public GameStartCountdownTask(Plugin plugin, GameManager manager) {
+    public GameStartCountdownTask(Plugin plugin, GameSession session) {
         this.plugin = plugin;
-        this.manager = manager;
+        this.session = session;
         this.runTaskTimerAsynchronously(plugin, 0L, 20L);
     }
 
@@ -20,9 +20,12 @@ public class GameStartCountdownTask extends BukkitRunnable {
         seconds--;
 
         if (seconds <= 0) {
+            session.getPlayers().forEach(player -> player.sendMessage("Game starting!"));
             Thread.currentThread().interrupt();
         }
 
-        // Get game session and broadcast countdown
+        if (seconds == 10 || seconds <= 5) {
+            session.getPlayers().forEach(player -> player.sendMessage("Game starting in " + seconds + " seconds!"));
+        }
     }
 }
