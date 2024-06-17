@@ -7,7 +7,6 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.kyori.adventure.translation.TranslationRegistry;
 import net.kyori.adventure.util.UTF8ResourceBundleControl;
-import one.hyro.enums.PlayerRanks;
 import one.hyro.paper.commands.*;
 import one.hyro.paper.events.*;
 import one.hyro.paper.managers.TagsManager;

@@ -18,7 +18,7 @@ public class InventoryClickListener implements Listener {
         if (menu != null) {
             event.setCancelled(true);
             CustomItem item = menu.getItems().get(event.getSlot());
-            if (item == null) return;
+            if (item == null || item.getConsumer() == null) return;
             item.getConsumer().accept(player);
         }
     }

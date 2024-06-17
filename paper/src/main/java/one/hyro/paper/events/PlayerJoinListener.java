@@ -3,8 +3,6 @@ package one.hyro.paper.events;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import one.hyro.builders.CustomItem;
-import one.hyro.builders.GameMenu;
-import one.hyro.managers.MenuManager;
 import one.hyro.paper.managers.TagsManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

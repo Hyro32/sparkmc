@@ -1,7 +1,6 @@
 package one.hyro.paper.managers;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import one.hyro.enums.PlayerRanks;
 import one.hyro.paper.HyrosPaper;
@@ -27,8 +26,7 @@ public class TagsManager {
     private static void setDisplayNameTags(Player player) {
         scoreboard.getTeam(PlayerRanks.OWNER.name()).addPlayer(player);
 
-        TextComponent component = Component.text(PlayerRanks.OWNER.getPrefix())
-                .append(Component.text(" "))
+        Component component = PlayerRanks.OWNER.getPrefix()
                 .append(Component.text(player.getName(), NamedTextColor.GRAY));
 
         player.displayName(component);
@@ -39,8 +37,7 @@ public class TagsManager {
             if (scoreboard.getTeam(rank.name()) != null) continue;
             Team team = scoreboard.registerNewTeam(rank.name());
             if (rank.getPrefix() == null) continue;
-            TextComponent prefix = Component.text(rank.getPrefix() + " ");
-            team.prefix(prefix);
+            team.prefix(rank.getPrefix());
         }
     }
 

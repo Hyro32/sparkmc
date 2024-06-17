@@ -70,10 +70,6 @@ public class CustomItem {
     }
 
     public CustomItem build() {
-        if (customId == null) {
-            throw new IllegalArgumentException("Custom ID cannot be null");
-        }
-
         item.setItemMeta(meta);
         MenuManager.getInstance().registerItem(this);
         return this;

@@ -66,10 +66,6 @@ public class GameMenu {
     }
 
     public GameMenu fillRow(int row, Material material) {
-        if (inventory.getSize() % 9 != 0 || row < 0 || row >= inventory.getSize() / 9) {
-            throw new IllegalArgumentException("Invalid row number");
-        }
-
         for (int i = row * 9; i < (row + 1) * 9; i++) {
             if (inventory != null && inventory.getItem(i) != null) continue;
             CustomItem item = new CustomItem(material)
