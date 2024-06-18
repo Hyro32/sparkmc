@@ -31,8 +31,9 @@ public class KickCommand {
                             CommandSource source = context.getSource();
                             String argumentProvided = context.getArgument("argument", String.class);
 
-                            proxy.getPlayer(argumentProvided).ifPresent(player ->
-                                    player.disconnect(Component.translatable("info.moderation.kick", NamedTextColor.RED))
+                            proxy.getPlayer(argumentProvided).ifPresentOrElse(player ->
+                                            player.disconnect(Component.translatable("info.moderation.kick", NamedTextColor.RED)),
+                                    () -> source.sendMessage(Component.translatable("info.errors.playerNotFound", NamedTextColor.RED))
                             );
 
                             Component successMessage = Component.translatable(

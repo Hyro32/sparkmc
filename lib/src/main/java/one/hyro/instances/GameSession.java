@@ -10,7 +10,6 @@ import java.util.UUID;
 @Getter
 public class GameSession {
     private final Minigame minigame;
-
     private GameStatus status;
     private final List<Player> players;
 
