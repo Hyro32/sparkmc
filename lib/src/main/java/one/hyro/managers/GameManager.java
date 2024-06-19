@@ -2,10 +2,10 @@ package one.hyro.managers;
 
 import lombok.Getter;
 import one.hyro.instances.GameSession;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 public class GameManager {
@@ -23,12 +23,21 @@ public class GameManager {
         gameSessions.remove(gameSession);
     }
 
-    public GameSession getGameSession(UUID uuid) {
+    public GameSession getGameSession(Player player) {
         for (GameSession gameSession : gameSessions) {
-            if (gameSession.isPlayerInGame(uuid)) {
+            if (gameSession.isPlayerInGame(player)) {
                 return gameSession;
             }
         }
         return null;
+    }
+
+    public boolean isInGame(Player player) {
+        for (GameSession gameSession : gameSessions) {
+            if (gameSession.isPlayerInGame(player)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

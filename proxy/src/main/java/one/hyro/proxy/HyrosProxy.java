@@ -28,13 +28,12 @@ import java.util.ResourceBundle;
 )
 public class HyrosProxy {
     private final ProxyServer proxy;
+    private final Logger logger;
 
     @Inject
-    private Logger logger;
-
-    @Inject
-    public HyrosProxy(ProxyServer proxy) {
+    public HyrosProxy(ProxyServer proxy, Logger logger) {
         this.proxy = proxy;
+        this.logger = logger;
     }
 
     @Subscribe

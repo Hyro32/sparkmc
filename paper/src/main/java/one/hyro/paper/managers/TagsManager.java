@@ -38,6 +38,7 @@ public class TagsManager {
             Team team = scoreboard.registerNewTeam(rank.name());
             if (rank.getPrefix() == null) continue;
             team.prefix(rank.getPrefix());
+            team.color(NamedTextColor.GRAY);
         }
     }
 

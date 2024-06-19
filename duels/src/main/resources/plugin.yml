@@ -1,0 +1,6 @@
+name: duels
+version: '${project.version}'
+main: one.hyro.duels.Duels
+api-version: '1.20'
+commands:
+  join:

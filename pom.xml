@@ -25,6 +25,7 @@
     </dependencies>
 
     <modules>
+        <module>duels</module>
         <module>paper</module>
         <module>proxy</module>
         <module>lib</module>

@@ -7,6 +7,7 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.kyori.adventure.translation.TranslationRegistry;
 import net.kyori.adventure.util.UTF8ResourceBundleControl;
+import one.hyro.managers.PermissionManager;
 import one.hyro.paper.commands.*;
 import one.hyro.paper.events.*;
 import one.hyro.paper.managers.TagsManager;
@@ -19,6 +20,7 @@ import java.util.ResourceBundle;
 
 public final class HyrosPaper extends JavaPlugin {
     private static HyrosPaper instance;
+    private static PermissionManager permissionManager;
 
     @Override
     public void onEnable() {
@@ -61,5 +63,10 @@ public final class HyrosPaper extends JavaPlugin {
 
     public static HyrosPaper getInstance() {
         return instance;
+    }
+
+    public static PermissionManager getPermissionManager() {
+        if (permissionManager == null) return new PermissionManager(getInstance());
+        return permissionManager;
     }
 }

@@ -5,16 +5,17 @@ import one.hyro.enums.GameStatus;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 public class GameSession {
     private final Minigame minigame;
     private GameStatus status;
+    private final GameMap map;
     private final List<Player> players;
 
-    public GameSession(List<Player> players, Minigame minigame) {
+    public GameSession(List<Player> players, GameMap map, Minigame minigame) {
         this.minigame = minigame;
+        this.map = map;
         this.players = players;
         this.status = GameStatus.WAITING;
     }
@@ -38,12 +39,7 @@ public class GameSession {
         players.remove(player);
     }
 
-    public boolean isPlayerInGame(UUID uuid) {
-        for (Player player : players) {
-            if (player.getUniqueId().equals(uuid)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean isPlayerInGame(Player player) {
+        return players.contains(player);
     }
 }
