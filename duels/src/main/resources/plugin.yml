@@ -1,6 +1,6 @@
-name: duels
+name: HyroDuels
 version: '${project.version}'
-main: one.hyro.duels.Duels
+main: one.hyro.duels.HyroDuels
 api-version: '1.20'
 commands:
   join:

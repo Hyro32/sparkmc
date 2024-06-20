@@ -1,8 +1,7 @@
-name: HyrosPaper
+name: HyroPaper
 version: '${project.version}'
-main: one.hyro.paper.HyrosPaper
+main: one.hyro.paper.HyroPaper
 api-version: '1.20'
-
 commands:
   minigames:
   ping:

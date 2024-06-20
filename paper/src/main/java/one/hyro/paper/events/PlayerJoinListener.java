@@ -4,7 +4,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import one.hyro.builders.CustomItem;
 import one.hyro.enums.PlayerRanks;
-import one.hyro.paper.HyrosPaper;
+import one.hyro.paper.HyroPaper;
 import one.hyro.paper.managers.TagsManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,7 +21,7 @@ public class PlayerJoinListener implements Listener {
         TagsManager.updateScoreboard(player);
         teleportPlayerToSpawn(player);
         givePlayerItems(player);
-        HyrosPaper.getPermissionManager().setRankPermissions(player.getUniqueId(), PlayerRanks.OWNER);
+        HyroPaper.getPermissionManager().setRankPermissions(player.getUniqueId(), PlayerRanks.OWNER);
     }
 
     private void teleportPlayerToSpawn(Player player) {

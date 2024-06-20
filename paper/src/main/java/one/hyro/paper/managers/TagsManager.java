@@ -3,7 +3,7 @@ package one.hyro.paper.managers;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import one.hyro.enums.PlayerRanks;
-import one.hyro.paper.HyrosPaper;
+import one.hyro.paper.HyroPaper;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -12,7 +12,7 @@ import org.bukkit.scoreboard.*;
 
 public class TagsManager {
     private static final Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-    private static final FileConfiguration config = HyrosPaper.getInstance().getConfig();
+    private static final FileConfiguration config = HyroPaper.getInstance().getConfig();
 
     private static void setCustomTablist(Player player) {
         boolean enabled = config.getBoolean("scoreboard.tablist");
@@ -50,8 +50,8 @@ public class TagsManager {
     }
 
     public static void updateScoreboard(Player player) {
-        BukkitScheduler scheduler = HyrosPaper.getInstance().getServer().getScheduler();
-        scheduler.scheduleSyncRepeatingTask(HyrosPaper.getInstance(), () -> {
+        BukkitScheduler scheduler = HyroPaper.getInstance().getServer().getScheduler();
+        scheduler.scheduleSyncRepeatingTask(HyroPaper.getInstance(), () -> {
             setCustomTablist(player);
             setDisplayNameTags(player);
             player.setScoreboard(scoreboard);

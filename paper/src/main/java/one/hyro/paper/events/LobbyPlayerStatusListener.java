@@ -1,6 +1,6 @@
 package one.hyro.paper.events;
 
-import one.hyro.paper.HyrosPaper;
+import one.hyro.paper.HyroPaper;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.util.List;
 
 public class LobbyPlayerStatusListener implements Listener {
-    private final FileConfiguration config = HyrosPaper.getInstance().getConfig();
+    private final FileConfiguration config = HyroPaper.getInstance().getConfig();
     private final boolean isDamageDisabled = config.getBoolean("lobby-status.damage");
     private final boolean isHungerDisabled = config.getBoolean("lobby-status.hunger");
     private final boolean isBlocksDisabled = config.getBoolean("lobby-status.blocks");

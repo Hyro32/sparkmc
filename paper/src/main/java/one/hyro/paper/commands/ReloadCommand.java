@@ -4,7 +4,7 @@ import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import one.hyro.paper.HyrosPaper;
+import one.hyro.paper.HyroPaper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +18,7 @@ public class ReloadCommand implements BasicCommand {
         }
 
         try {
-            HyrosPaper.getInstance().reloadConfig();
+            HyroPaper.getInstance().reloadConfig();
             stack.getSender().sendMessage(Component.translatable("info.success.reload").color(NamedTextColor.GREEN));
         } catch (Exception e) {
             stack.getSender().sendMessage(Component.translatable("info.errors.reload").color(NamedTextColor.RED));

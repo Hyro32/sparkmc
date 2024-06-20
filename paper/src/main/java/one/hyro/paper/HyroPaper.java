@@ -18,8 +18,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public final class HyrosPaper extends JavaPlugin {
-    private static HyrosPaper instance;
+public final class HyroPaper extends JavaPlugin {
+    private static HyroPaper instance;
     private static PermissionManager permissionManager;
 
     @Override
@@ -52,16 +52,16 @@ public final class HyrosPaper extends JavaPlugin {
         GlobalTranslator.translator().addSource(registry);
 
         TagsManager.registerRanksTeams();
-        Bukkit.getLogger().info("HyrosPaper has been enabled!");
+        Bukkit.getLogger().info("HyroPaper has been enabled!");
     }
 
     @Override
     public void onDisable() {
         TagsManager.unregisterRanksTeams();
-        Bukkit.getLogger().info("HyrosPaper has been disabled!");
+        Bukkit.getLogger().info("HyroPaper has been disabled!");
     }
 
-    public static HyrosPaper getInstance() {
+    public static HyroPaper getInstance() {
         return instance;
     }
 

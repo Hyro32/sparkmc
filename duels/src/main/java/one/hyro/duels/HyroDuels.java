@@ -11,17 +11,19 @@ import one.hyro.instances.GameSession;
 import one.hyro.instances.Minigame;
 import one.hyro.managers.BlockManager;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Duels extends JavaPlugin implements Minigame {
+public final class HyroDuels extends JavaPlugin implements Minigame {
     @Getter
-    private static Duels instance;
+    private static HyroDuels instance;
     private final BlockManager blockManager = new BlockManager();
 
     @Override
     public void onEnable() {
         instance = this;
+        saveResource("config.yml", false);
 
         LifecycleEventManager<Plugin> manager = this.getLifecycleManager();
         manager.registerEventHandler(LifecycleEvents.COMMANDS, event -> {
@@ -32,17 +34,19 @@ public final class Duels extends JavaPlugin implements Minigame {
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
         getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
 
-        Bukkit.getLogger().info("Duels has been enabled!");
+        Bukkit.getLogger().info("HyroDuels has been enabled!");
     }
 
     @Override
     public void onDisable() {
-        Bukkit.getLogger().info("Duels has been disabled!");
+        Bukkit.getLogger().info("HyroDuels has been disabled!");
     }
 
     @Override
     public void waiting(GameSession session) {
-
+        for (Player player : session.getPlayers()) {
+            player.teleport(session.getMap().getActiveWorld().getSpawnLocation());
+        }
     }
 
     @Override
