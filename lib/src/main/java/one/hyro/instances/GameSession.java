@@ -18,6 +18,7 @@ public class GameSession {
         this.map = map;
         this.players = players;
         this.status = GameStatus.WAITING;
+        minigame.waiting(this);
     }
 
     public void setGameStatus(GameStatus newStatus) {

@@ -1,6 +1,8 @@
 package one.hyro.tasks;
 
+import one.hyro.enums.GameStatus;
 import one.hyro.instances.GameSession;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -20,8 +22,10 @@ public class GameStartCountdownTask extends BukkitRunnable {
         seconds--;
 
         if (seconds <= 0) {
-            session.getPlayers().forEach(player -> player.sendMessage("Game starting!"));
-            Thread.currentThread().interrupt();
+            this.cancel();
+            for (Player player : session.getPlayers())
+                player.sendMessage("Game starting!");
+            session.setGameStatus(GameStatus.IN_GAME);
         }
 
         if (seconds == 10 || seconds <= 5) {
