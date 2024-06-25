@@ -1,7 +1,12 @@
 package one.hyro.tasks;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import one.hyro.enums.GameStatus;
 import one.hyro.instances.GameSession;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -24,12 +29,21 @@ public class GameStartCountdownTask extends BukkitRunnable {
         if (seconds <= 0) {
             this.cancel();
             for (Player player : session.getPlayers())
-                player.sendMessage("Game starting!");
+                player.sendMessage(Component.text("Game starting!", NamedTextColor.GREEN));
             session.setGameStatus(GameStatus.IN_GAME);
         }
 
-        if (seconds == 10 || seconds <= 5) {
-            session.getPlayers().forEach(player -> player.sendMessage("Game starting in " + seconds + " seconds!"));
+        if (seconds == 10 || (seconds >= 1 && seconds <= 5)) {
+            session.getPlayers().forEach(player -> {
+                Location location = player.getLocation();
+                player.playSound(location, Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, 1.0F);
+
+                TextComponent message = Component.text("Game starting in ", NamedTextColor.GOLD)
+                                .append(Component.text(seconds, NamedTextColor.RED))
+                                .append(Component.text(" seconds!", NamedTextColor.GOLD));
+
+                player.sendMessage(message);
+            });
         }
     }
 }

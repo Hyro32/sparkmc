@@ -19,7 +19,8 @@ public class MinigamesCommand implements BasicCommand {
                 .setCustomId("survival")
                 .setDisplayName(Component.text("Survival", NamedTextColor.GREEN))
                 .onClick(clicker -> {
-                    clicker.sendMessage(Component.text("You clicked on the survival item!"));
+                    clicker.closeInventory();
+                    clicker.sendMessage(Component.text("Coming soon!"));
                 })
                 .build();
 

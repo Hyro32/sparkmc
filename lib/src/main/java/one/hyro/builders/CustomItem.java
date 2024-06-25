@@ -54,6 +54,7 @@ public class CustomItem {
     }
 
     public CustomItem amount(int amount) {
+        if (amount < 1) amount = 1;
         item.setAmount(amount);
         return this;
     }
