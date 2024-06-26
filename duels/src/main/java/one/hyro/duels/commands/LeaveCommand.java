@@ -16,8 +16,8 @@ public class LeaveCommand implements BasicCommand {
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
         if (!(stack.getExecutor() instanceof Player player)) return;
 
-        QueueManager queueManager = new QueueManager();
-        GameManager gameManager = new GameManager();
+        QueueManager queueManager = QueueManager.getInstance();
+        GameManager gameManager = GameManager.getInstance();
 
         if (queueManager.isPlayerInQueue(player)) {
             queueManager.removePlayerFromQueue(player);

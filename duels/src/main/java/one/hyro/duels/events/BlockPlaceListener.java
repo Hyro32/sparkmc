@@ -11,7 +11,7 @@ public class BlockPlaceListener implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         BlockManager blockManager = new BlockManager();
-        GameManager gameManager = new GameManager();
+        GameManager gameManager = GameManager.getInstance();
 
         if (gameManager.isInGame(event.getPlayer())) {
             GameSession session = gameManager.getGameSession(event.getPlayer());

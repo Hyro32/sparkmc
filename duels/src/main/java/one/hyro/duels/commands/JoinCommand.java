@@ -5,8 +5,12 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import one.hyro.builders.CustomItem;
 import one.hyro.builders.GameMenu;
+import one.hyro.duels.HyroDuels;
 import one.hyro.duels.enums.DuelMode;
 import one.hyro.duels.managers.QueueManager;
+import one.hyro.instances.GameMap;
+import one.hyro.instances.GameSession;
+import one.hyro.managers.GameManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +23,7 @@ public class JoinCommand implements BasicCommand {
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
         if (!(stack.getExecutor() instanceof Player player)) return;
         if (args.length != 1) return;
-        QueueManager queueManager = new QueueManager();
+        QueueManager queueManager = QueueManager.getInstance();
 
         GameMenu modeMenu = new GameMenu()
                 .setCustomId("duels-mode-menu")
@@ -36,18 +40,18 @@ public class JoinCommand implements BasicCommand {
                         .onClick(clicker -> {
                             clicker.closeInventory();
                             queueManager.addPlayerToSingleQueue(clicker, DuelMode.CLASSIC);
-                            clicker.sendMessage(Component.text("You have been added to the queue!"));
+                            queueManager.fillSingleDuelsOrCreateNew(DuelMode.CLASSIC);
                         })
                         .build();
 
                 CustomItem bow = new CustomItem(Material.BOW)
                         .setCustomId("bow")
-                        .setDisplayName(Component.text("Bow"))
+                        .setDisplayName(Component.text(DuelMode.BOW.getName()))
                         .amount(queueManager.getPlayersInSingleQueueByMode(DuelMode.BOW).size())
                         .onClick(clicker -> {
                             clicker.closeInventory();
                             queueManager.addPlayerToSingleQueue(clicker, DuelMode.BOW);
-                            clicker.sendMessage(Component.text("You have been added to the queue!"));
+                            queueManager.fillSingleDuelsOrCreateNew(DuelMode.BOW);
                         })
                         .build();
 
@@ -62,18 +66,18 @@ public class JoinCommand implements BasicCommand {
                         .onClick(clicker -> {
                             clicker.closeInventory();
                             queueManager.addPlayerToDoubleQueue(clicker, DuelMode.CLASSIC);
-                            clicker.sendMessage(Component.text("You have been added to the queue!"));
+                            queueManager.fillDoublesDuelsOrCreateNew(DuelMode.CLASSIC);
                         })
                         .build();
 
                 CustomItem bow = new CustomItem(Material.BOW)
                         .setCustomId("bow-doubles")
-                        .setDisplayName(Component.text("Bow Doubles"))
+                        .setDisplayName(Component.text(DuelMode.BOW.getName()))
                         .amount(queueManager.getPlayersInDoubleQueueByMode(DuelMode.BOW).size())
                         .onClick(clicker -> {
                             clicker.closeInventory();
                             queueManager.addPlayerToDoubleQueue(clicker, DuelMode.BOW);
-                            clicker.sendMessage(Component.text("You have been added to the queue!"));
+                            queueManager.fillDoublesDuelsOrCreateNew(DuelMode.BOW);
                         })
                         .build();
 

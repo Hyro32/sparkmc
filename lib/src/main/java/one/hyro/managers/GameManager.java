@@ -9,9 +9,10 @@ import java.util.List;
 
 @Getter
 public class GameManager {
+    private static GameManager instance;
     private final List<GameSession> gameSessions;
 
-    public GameManager() {
+    private GameManager() {
         gameSessions = new ArrayList<>();
     }
 
@@ -39,5 +40,10 @@ public class GameManager {
             }
         }
         return false;
+    }
+
+    public static GameManager getInstance() {
+        if (instance == null) instance = new GameManager();
+        return instance;
     }
 }

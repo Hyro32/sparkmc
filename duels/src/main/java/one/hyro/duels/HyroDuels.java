@@ -10,11 +10,11 @@ import one.hyro.duels.enums.DuelMode;
 import one.hyro.duels.events.BlockBreakListener;
 import one.hyro.duels.events.BlockPlaceListener;
 import one.hyro.duels.events.FoodLevelChangeListener;
-import one.hyro.duels.managers.QueueManager;
+import one.hyro.duels.events.InventoryClickListener;
+import one.hyro.duels.instances.DuelGameSession;
 import one.hyro.enums.GameStatus;
 import one.hyro.instances.GameSession;
 import one.hyro.instances.Minigame;
-import one.hyro.managers.BlockManager;
 import one.hyro.tasks.GameStartCountdownTask;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -24,7 +24,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class HyroDuels extends JavaPlugin implements Minigame {
     @Getter
     private static HyroDuels instance;
-    private final BlockManager blockManager = new BlockManager();
 
     @Override
     public void onEnable() {
@@ -41,6 +40,7 @@ public final class HyroDuels extends JavaPlugin implements Minigame {
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
         getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
         getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
+        getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
 
         Bukkit.getLogger().info("HyroDuels has been enabled!");
     }
@@ -52,6 +52,9 @@ public final class HyroDuels extends JavaPlugin implements Minigame {
 
     @Override
     public void waiting(GameSession session) {
+        for (Player player : session.getPlayers()) {
+            player.getInventory().clear();
+        }
         session.setGameStatus(GameStatus.STARTING);
     }
 
@@ -62,10 +65,12 @@ public final class HyroDuels extends JavaPlugin implements Minigame {
 
     @Override
     public void inGame(GameSession session) {
-        QueueManager queueManager = new QueueManager();
+        DuelGameSession duelSession = (DuelGameSession) session;
+        DuelMode mode = duelSession.getMode();
 
-        for (Player player : session.getPlayers()) {
-            DuelMode.BOW.setPlayerInventory(player);
+        for (Player player : duelSession.getPlayers()) {
+            mode.setPlayerInventory(player);
+            player.setInvulnerable(false);
         }
 
         session.setGameStatus(GameStatus.ENDING);
@@ -75,8 +80,7 @@ public final class HyroDuels extends JavaPlugin implements Minigame {
     public void ending(GameSession session) {
         for (Player player : session.getPlayers()) {
             player.sendMessage("The game has ended!");
-            //player.getInventory().clear();
+            player.getInventory().clear();
         }
-        blockManager.removeBlocksFromSession(session);
     }
 }

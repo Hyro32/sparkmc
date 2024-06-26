@@ -10,7 +10,7 @@ public class BlockBreakListener implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         BlockManager blockManager = new BlockManager();
-        GameManager gameManager = new GameManager();
+        GameManager gameManager = GameManager.getInstance();
 
         if (gameManager.isInGame(event.getPlayer()) ) {
             if (blockManager.getBlocks().containsKey(event.getBlock())) event.setCancelled(true);
