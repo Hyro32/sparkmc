@@ -50,5 +50,4 @@ public class MenuManager {
         if (instance == null) instance = new MenuManager();
         return instance;
     }
-
 }

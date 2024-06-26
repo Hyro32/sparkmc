@@ -7,10 +7,9 @@ import net.kyori.adventure.key.Key;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.kyori.adventure.translation.TranslationRegistry;
 import net.kyori.adventure.util.UTF8ResourceBundleControl;
-import one.hyro.managers.PermissionManager;
 import one.hyro.paper.commands.*;
 import one.hyro.paper.events.*;
-import one.hyro.paper.managers.TagsManager;
+import one.hyro.paper.managers.ScoreboardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,11 +19,12 @@ import java.util.ResourceBundle;
 
 public final class HyroPaper extends JavaPlugin {
     private static HyroPaper instance;
-    private static PermissionManager permissionManager;
+    private static ScoreboardManager scoreboardManager;
 
     @Override
     public void onEnable() {
         instance = this;
+        scoreboardManager = new ScoreboardManager();
 
         saveResource("config.yml", false);
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
@@ -51,13 +51,13 @@ public final class HyroPaper extends JavaPlugin {
         registry.registerAll(Locale.forLanguageTag("es"), bundleES, true);
         GlobalTranslator.translator().addSource(registry);
 
-        TagsManager.registerRanksTeams();
+        scoreboardManager.registerRanksTeams();
         Bukkit.getLogger().info("HyroPaper has been enabled!");
     }
 
     @Override
     public void onDisable() {
-        TagsManager.unregisterRanksTeams();
+        scoreboardManager.unregisterRanksTeams();
         Bukkit.getLogger().info("HyroPaper has been disabled!");
     }
 
@@ -65,8 +65,7 @@ public final class HyroPaper extends JavaPlugin {
         return instance;
     }
 
-    public static PermissionManager getPermissionManager() {
-        if (permissionManager == null) return new PermissionManager(getInstance());
-        return permissionManager;
+    public static ScoreboardManager getScoreboardManager() {
+        return scoreboardManager;
     }
 }

@@ -28,22 +28,26 @@ public class GameStartCountdownTask extends BukkitRunnable {
 
         if (seconds <= 0) {
             this.cancel();
-            for (Player player : session.getPlayers())
+            for (Player player : session.getPlayers()) {
+                Location location = player.getLocation();
+                player.playSound(location, Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
                 player.sendMessage(Component.text("Game starting!", NamedTextColor.GREEN));
+            }
+
             session.setGameStatus(GameStatus.IN_GAME);
         }
 
         if (seconds == 10 || (seconds >= 1 && seconds <= 5)) {
-            session.getPlayers().forEach(player -> {
+            for (Player player : session.getPlayers()) {
                 Location location = player.getLocation();
-                player.playSound(location, Sound.BLOCK_NOTE_BLOCK_BASS, 1.0F, 1.0F);
+                player.playSound(location, Sound.BLOCK_NOTE_BLOCK_BIT, 1.0F, 1.0F);
 
                 TextComponent message = Component.text("Game starting in ", NamedTextColor.GOLD)
-                                .append(Component.text(seconds, NamedTextColor.RED))
-                                .append(Component.text(" seconds!", NamedTextColor.GOLD));
+                        .append(Component.text(seconds, NamedTextColor.RED))
+                        .append(Component.text(" seconds!", NamedTextColor.GOLD));
 
                 player.sendMessage(message);
-            });
+            }
         }
     }
 }

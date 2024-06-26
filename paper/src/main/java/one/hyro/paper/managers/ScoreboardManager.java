@@ -10,11 +10,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scoreboard.*;
 
-public class TagsManager {
-    private static final Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-    private static final FileConfiguration config = HyroPaper.getInstance().getConfig();
+public class ScoreboardManager {
+    private final Scoreboard scoreboard;
+    private final FileConfiguration config;
 
-    private static void setCustomTablist(Player player) {
+    public ScoreboardManager() {
+        this.config = HyroPaper.getInstance().getConfig();
+        this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+    }
+
+    private void setCustomMainTablist(Player player) {
         boolean enabled = config.getBoolean("scoreboard.tablist");
         if (!enabled) return;
         player.sendPlayerListHeaderAndFooter(
@@ -23,7 +28,7 @@ public class TagsManager {
         );
     }
 
-    private static void setDisplayNameTags(Player player) {
+    private void setDisplayNameTags(Player player) {
         scoreboard.getTeam(PlayerRanks.OWNER.name()).addPlayer(player);
 
         Component component = PlayerRanks.OWNER.getPrefix()
@@ -32,7 +37,7 @@ public class TagsManager {
         player.displayName(component);
     }
 
-    public static void registerRanksTeams() {
+    public void registerRanksTeams() {
         for (PlayerRanks rank : PlayerRanks.values()) {
             if (scoreboard.getTeam(rank.name()) != null) continue;
             Team team = scoreboard.registerNewTeam(rank.name());
@@ -42,17 +47,17 @@ public class TagsManager {
         }
     }
 
-    public static void unregisterRanksTeams() {
+    public void unregisterRanksTeams() {
         for (PlayerRanks rank : PlayerRanks.values()) {
             if (scoreboard.getTeam(rank.name()) == null) continue;
             scoreboard.getTeam(rank.name()).unregister();
         }
     }
 
-    public static void updateScoreboard(Player player) {
+    public void updateScoreboard(Player player) {
         BukkitScheduler scheduler = HyroPaper.getInstance().getServer().getScheduler();
         scheduler.scheduleSyncRepeatingTask(HyroPaper.getInstance(), () -> {
-            setCustomTablist(player);
+            setCustomMainTablist(player);
             setDisplayNameTags(player);
             player.setScoreboard(scoreboard);
         }, 0L, 20L);

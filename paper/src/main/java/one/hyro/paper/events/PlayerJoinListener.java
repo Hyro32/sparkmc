@@ -3,9 +3,7 @@ package one.hyro.paper.events;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import one.hyro.builders.CustomItem;
-import one.hyro.enums.PlayerRanks;
 import one.hyro.paper.HyroPaper;
-import one.hyro.paper.managers.TagsManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,10 +16,8 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         event.joinMessage(null);
         Player player = event.getPlayer();
-        TagsManager.updateScoreboard(player);
         teleportPlayerToSpawn(player);
         givePlayerItems(player);
-        HyroPaper.getPermissionManager().setRankPermissions(player.getUniqueId(), PlayerRanks.OWNER);
     }
 
     private void teleportPlayerToSpawn(Player player) {
@@ -33,6 +29,8 @@ public class PlayerJoinListener implements Listener {
                 ).color(NamedTextColor.YELLOW);
                 player.getServer().broadcast(welcomeMessage);
             }
+
+            if (success) HyroPaper.getScoreboardManager().updateScoreboard(player);
         });
     }
 
@@ -45,9 +43,15 @@ public class PlayerJoinListener implements Listener {
                 })
                 .build();
 
+        CustomItem playerHead = new CustomItem(player)
+                .setCustomId("player-head")
+                .setDisplayName(Component.text(player.getName(), NamedTextColor.LIGHT_PURPLE))
+                .build();
+
 
         Inventory inventory = player.getInventory();
         inventory.clear();
         inventory.setItem(0, compass.getItem());
+        inventory.setItem(1, playerHead.getItem());
     }
 }

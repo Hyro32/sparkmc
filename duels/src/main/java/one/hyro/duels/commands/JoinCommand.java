@@ -5,12 +5,8 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import one.hyro.builders.CustomItem;
 import one.hyro.builders.GameMenu;
-import one.hyro.duels.HyroDuels;
 import one.hyro.duels.enums.DuelMode;
 import one.hyro.duels.managers.QueueManager;
-import one.hyro.enums.GameStatus;
-import one.hyro.instances.GameMap;
-import one.hyro.instances.GameSession;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -35,13 +31,12 @@ public class JoinCommand implements BasicCommand {
             case "singles" -> {
                 CustomItem classic = new CustomItem(Material.DIAMOND_HELMET)
                         .setCustomId("classic")
-                        .setDisplayName(Component.text("Classic"))
+                        .setDisplayName(Component.text(DuelMode.CLASSIC.getName()))
                         .amount(queueManager.getPlayersInSingleQueueByMode(DuelMode.CLASSIC).size())
                         .onClick(clicker -> {
                             clicker.closeInventory();
                             queueManager.addPlayerToSingleQueue(clicker, DuelMode.CLASSIC);
                             clicker.sendMessage(Component.text("You have been added to the queue!"));
-                            checkSinglesQueueAndCreateGame(queueManager, DuelMode.CLASSIC);
                         })
                         .build();
 
@@ -53,7 +48,6 @@ public class JoinCommand implements BasicCommand {
                             clicker.closeInventory();
                             queueManager.addPlayerToSingleQueue(clicker, DuelMode.BOW);
                             clicker.sendMessage(Component.text("You have been added to the queue!"));
-                            checkSinglesQueueAndCreateGame(queueManager, DuelMode.BOW);
                         })
                         .build();
 
@@ -63,13 +57,12 @@ public class JoinCommand implements BasicCommand {
             case "doubles" -> {
                 CustomItem classic = new CustomItem(Material.DIAMOND_HELMET)
                         .setCustomId("classic-doubles")
-                        .setDisplayName(Component.text("Classic Doubles"))
+                        .setDisplayName(Component.text(DuelMode.CLASSIC.getName()))
                         .amount(queueManager.getPlayersInDoubleQueueByMode(DuelMode.CLASSIC).size())
                         .onClick(clicker -> {
                             clicker.closeInventory();
                             queueManager.addPlayerToDoubleQueue(clicker, DuelMode.CLASSIC);
                             clicker.sendMessage(Component.text("You have been added to the queue!"));
-                            checkDoublesQueueAndCreateGame(queueManager, DuelMode.CLASSIC);
                         })
                         .build();
 
@@ -81,7 +74,6 @@ public class JoinCommand implements BasicCommand {
                             clicker.closeInventory();
                             queueManager.addPlayerToDoubleQueue(clicker, DuelMode.BOW);
                             clicker.sendMessage(Component.text("You have been added to the queue!"));
-                            checkDoublesQueueAndCreateGame(queueManager, DuelMode.BOW);
                         })
                         .build();
 
@@ -99,21 +91,5 @@ public class JoinCommand implements BasicCommand {
     public @NotNull Collection<String> suggest(@NotNull CommandSourceStack stack, @NotNull String[] args) {
         if (args.length == 1) return List.of("singles", "doubles");
         return List.of();
-    }
-
-    private void checkSinglesQueueAndCreateGame(QueueManager manager, DuelMode mode) {
-        List<Player> queuePlayerList = manager.getPlayersInSingleQueueByMode(mode);
-        if (queuePlayerList.size() >= 1) { // Change this to 2, is 1 for testing purposes
-            List<Player> players = queuePlayerList.subList(0, 1);
-            new GameSession(players, new GameMap(), HyroDuels.getInstance());
-        }
-    }
-
-    private void checkDoublesQueueAndCreateGame(QueueManager manager, DuelMode mode) {
-        List<Player> queuePlayerList = manager.getPlayersInDoubleQueueByMode(mode);
-        if (queuePlayerList.size() >= 1) { // Change this to 2, is 1 for testing purposes
-            List<Player> players = queuePlayerList.subList(0, 1);
-            new GameSession(players, new GameMap(), HyroDuels.getInstance());
-        }
     }
 }

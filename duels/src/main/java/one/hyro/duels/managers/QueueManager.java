@@ -34,20 +34,9 @@ public class QueueManager {
         doublesQueue.put(player, mode);
     }
 
-    public void removePlayerFromSingleQueue(Player player) {
-        if (!singlesQueue.containsKey(player)) {
-            player.sendMessage("You are not in the queue!");
-            return;
-        }
-        singlesQueue.remove(player);
-    }
-
-    public void removePlayerFromDoubleQueue(Player player) {
-        if (!doublesQueue.containsKey(player)) {
-            player.sendMessage("You are not in the queue!");
-            return;
-        }
-        doublesQueue.remove(player);
+    public void removePlayerFromQueue(Player player) {
+        if (singlesQueue.containsKey(player)) singlesQueue.remove(player);
+        if (doublesQueue.containsKey(player)) doublesQueue.remove(player);
     }
 
     public boolean isPlayerInQueue(Player player) {

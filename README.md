@@ -13,7 +13,6 @@ Megatron is an ecosystem of plugins and libraries that help manage a minecraft n
 
 - [Paper](#paper)
   - [Lobby status](#lobby-status)
-  - [Menus](#menus)
 
 ## How to start
 
@@ -47,34 +46,6 @@ paper-1 = 'paper-1'
 Learn more about the project and the progress of its development is joining the [discord community](https://discord.gg/5yVnrtRCGb).
 
 ## Paper
-
-### Menus
-
-Menus are a way to create custom GUIs for the player. They can be used to create a custom server selector, a shop, or any other GUI you can think of.
-
-This is the main example of how to create a custom menu with config files:
-
-```yml
-title: Minigames
-slots: 27
-items:
-  - material: NOTE_BLOCK
-    slot: 0
-    name: 'Survival beta 1.0.0'
-    lore:
-      - 'Click to play Survival'
-    enchanted: false
-    commands:
-      - connect survival
-```
-
-The material must be a current in game item from the Minecraft name with the exact material name. You can find a list of them at [Minecraft Info](https://www.minecraftinfo.com/IDList.htm).
-
-The commands available are:
-
-- `connect <server>` Connects the player to the specified server (proxy).
-- `message <message>` Sends a message to the player who clicked.
-- `menu <menu>` Opens a custom name by the file name.
 
 ### Lobby Status
 

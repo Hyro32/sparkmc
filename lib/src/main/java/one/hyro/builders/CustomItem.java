@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -32,10 +33,12 @@ public class CustomItem {
 
     public CustomItem(String texture) {
         this.item = CustomHeads.getCustomHead(texture);
+        this.meta = (SkullMeta) item.getItemMeta();
     }
 
     public CustomItem(Player player) {
         this.item = CustomHeads.getPlayerHead(player);
+        this.meta = (SkullMeta) item.getItemMeta();
     }
 
     public CustomItem setCustomId(String customId) {
