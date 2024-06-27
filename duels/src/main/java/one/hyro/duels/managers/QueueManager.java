@@ -81,13 +81,15 @@ public class QueueManager {
 
         if (players.size() >= 2) {
             List<Player> playersToCreate = players.subList(0, 2);
-            DuelGameSession session = new DuelGameSession(playersToCreate, new GameMap(), HyroDuels.getInstance(), mode);
+            DuelGameSession session = new DuelGameSession(playersToCreate, new GameMap(), 2, 2, HyroDuels.getInstance(), mode);
+            gameManager.registerGameSession(session);
             session.setGameStatus(GameStatus.STARTING);
             return;
         }
 
         List<Player> playersToCreate = players.subList(0, 1);
-        new DuelGameSession(playersToCreate, new GameMap(), HyroDuels.getInstance(), mode);
+        DuelGameSession session = new DuelGameSession(playersToCreate, new GameMap(), 2, 2, HyroDuels.getInstance(), mode);
+        gameManager.registerGameSession(session);
     }
 
     public void fillDoublesDuelsOrCreateNew(DuelMode mode) {
@@ -107,13 +109,15 @@ public class QueueManager {
         if (players.size() >= 4) {
             List<Player> playersToCreate = players.subList(0, 4);
             playersToCreate.forEach(this::removePlayerFromQueue);
-            DuelGameSession session = new DuelGameSession(playersToCreate, new GameMap(), HyroDuels.getInstance(), mode);
+            DuelGameSession session = new DuelGameSession(playersToCreate, new GameMap(), 4, 4, HyroDuels.getInstance(), mode);
+            gameManager.registerGameSession(session);
             session.setGameStatus(GameStatus.STARTING);
             return;
         }
 
         List<Player> playersToCreate = players.subList(0, players.size());
-        new DuelGameSession(playersToCreate, new GameMap(), HyroDuels.getInstance(), mode);
+        DuelGameSession session = new DuelGameSession(playersToCreate, new GameMap(), 4, 4, HyroDuels.getInstance(), mode);
+        gameManager.registerGameSession(session);
     }
 
     public static QueueManager getInstance() {

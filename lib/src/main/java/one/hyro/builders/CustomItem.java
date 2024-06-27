@@ -64,6 +64,10 @@ public class CustomItem {
 
     public CustomItem setEnchantment(Enchantment enchantment, int level) {
         meta.addEnchant(enchantment, level, false);
+        return this;
+    }
+
+    public CustomItem hideEnchantments() {
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         return this;
     }

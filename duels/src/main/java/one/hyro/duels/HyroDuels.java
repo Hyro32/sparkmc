@@ -7,16 +7,15 @@ import lombok.Getter;
 import one.hyro.duels.commands.JoinCommand;
 import one.hyro.duels.commands.LeaveCommand;
 import one.hyro.duels.enums.DuelMode;
-import one.hyro.duels.events.BlockBreakListener;
-import one.hyro.duels.events.BlockPlaceListener;
-import one.hyro.duels.events.FoodLevelChangeListener;
-import one.hyro.duels.events.InventoryClickListener;
+import one.hyro.duels.events.*;
 import one.hyro.duels.instances.DuelGameSession;
 import one.hyro.enums.GameStatus;
 import one.hyro.instances.GameSession;
 import one.hyro.instances.Minigame;
+import one.hyro.tasks.GameEndCountdownTask;
 import one.hyro.tasks.GameStartCountdownTask;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -39,7 +38,8 @@ public final class HyroDuels extends JavaPlugin implements Minigame {
 
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
         getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
-        getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(), this);
+        getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
+        getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
 
         Bukkit.getLogger().info("HyroDuels has been enabled!");
@@ -52,9 +52,7 @@ public final class HyroDuels extends JavaPlugin implements Minigame {
 
     @Override
     public void waiting(GameSession session) {
-        for (Player player : session.getPlayers()) {
-            player.getInventory().clear();
-        }
+        for (Player player : session.getPlayers()) player.getInventory().clear();
         session.setGameStatus(GameStatus.STARTING);
     }
 
@@ -71,16 +69,12 @@ public final class HyroDuels extends JavaPlugin implements Minigame {
         for (Player player : duelSession.getPlayers()) {
             mode.setPlayerInventory(player);
             player.setInvulnerable(false);
+            player.setGameMode(GameMode.SURVIVAL);
         }
-
-        session.setGameStatus(GameStatus.ENDING);
     }
 
     @Override
     public void ending(GameSession session) {
-        for (Player player : session.getPlayers()) {
-            player.sendMessage("The game has ended!");
-            player.getInventory().clear();
-        }
+        new GameEndCountdownTask(this, session);
     }
 }

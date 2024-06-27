@@ -13,8 +13,8 @@ import java.util.List;
 public class DuelGameSession extends GameSession {
     private final DuelMode mode;
 
-    public DuelGameSession(List<Player> players, GameMap map, Minigame minigame, DuelMode mode) {
-        super(players, map, minigame);
+    public DuelGameSession(List<Player> players, GameMap map, int minPlayers, int maxPlayers, Minigame minigame, DuelMode mode) {
+        super(players, map, minPlayers, maxPlayers, minigame);
         this.mode = mode;
     }
 }

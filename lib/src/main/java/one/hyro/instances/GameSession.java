@@ -11,11 +11,15 @@ public class GameSession {
     private final Minigame minigame;
     private GameStatus status;
     private final GameMap map;
+    private final int minPlayers;
+    private final int maxPlayers;
     private final List<Player> players;
 
-    public GameSession(List<Player> players, GameMap map, Minigame minigame) {
+    public GameSession(List<Player> players, GameMap map, int minPlayers, int maxPlayers, Minigame minigame) {
         this.minigame = minigame;
         this.map = map;
+        this.minPlayers = minPlayers;
+        this.maxPlayers = maxPlayers;
         this.players = players;
         this.status = GameStatus.WAITING;
         minigame.waiting(this);

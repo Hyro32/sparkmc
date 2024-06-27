@@ -19,7 +19,7 @@ public class GameStartCountdownTask extends BukkitRunnable {
     public GameStartCountdownTask(Plugin plugin, GameSession session) {
         this.plugin = plugin;
         this.session = session;
-        this.runTaskTimerAsynchronously(plugin, 0L, 20L);
+        this.runTaskTimer(plugin, 0L, 20L);
     }
 
     @Override
