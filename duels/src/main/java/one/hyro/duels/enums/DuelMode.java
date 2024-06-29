@@ -11,8 +11,8 @@ import java.util.List;
 @Getter
 public enum DuelMode {
     CLASSIC(
-            "name.kits.classic",
-            "lore.kits.classic",
+            "info.kits.classic",
+            "info.kits.description.classic",
             null,
             new CustomItem(Material.DIAMOND_HELMET)
                     .setCustomId("classic-helmet")
@@ -53,8 +53,8 @@ public enum DuelMode {
             )
     ),
     BOW(
-            "name.kits.bow",
-            "lore.kits.bow",
+            "info.kits.bow",
+            "info.kits.description.bow",
             null,
             new CustomItem(Material.LEATHER_HELMET)
                     .setCustomId("bow-helmet")

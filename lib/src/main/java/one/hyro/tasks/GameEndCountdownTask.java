@@ -22,6 +22,12 @@ public class GameEndCountdownTask extends BukkitRunnable {
     public void run() {
         seconds--;
 
+        if (session.getPlayers().isEmpty()) {
+            this.cancel();
+            session.getMap().unload();
+            return;
+        }
+
         if (seconds <= 0) {
             this.cancel();
             for (Player player : session.getPlayers()) {
@@ -35,6 +41,7 @@ public class GameEndCountdownTask extends BukkitRunnable {
                     }
                 });
             }
+            session.getMap().unload();
         }
     }
 }

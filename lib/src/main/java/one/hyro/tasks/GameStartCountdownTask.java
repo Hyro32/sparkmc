@@ -1,7 +1,6 @@
 package one.hyro.tasks;
 
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import one.hyro.enums.GameStatus;
 import one.hyro.instances.GameSession;
@@ -26,6 +25,11 @@ public class GameStartCountdownTask extends BukkitRunnable {
     public void run() {
         seconds--;
 
+        if (session.getPlayers().size() < session.getMinPlayers()) {
+            this.cancel();
+            session.setGameStatus(GameStatus.WAITING);
+        }
+
         if (seconds <= 0) {
             this.cancel();
             for (Player player : session.getPlayers()) {
@@ -42,7 +46,7 @@ public class GameStartCountdownTask extends BukkitRunnable {
                 Location location = player.getLocation();
                 player.playSound(location, Sound.BLOCK_NOTE_BLOCK_BIT, 1.0F, 1.0F);
 
-                TextComponent message = Component.text("Game starting in ", NamedTextColor.GOLD)
+                Component message = Component.text("Game starting in ", NamedTextColor.GOLD)
                         .append(Component.text(seconds, NamedTextColor.RED))
                         .append(Component.text(" seconds!", NamedTextColor.GOLD));
 

@@ -1,6 +1,7 @@
 package one.hyro.duels.events;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import one.hyro.managers.GameManager;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -16,9 +17,13 @@ public class EntityDamageByEntityListener implements Listener {
 
         if (event.getEntity() instanceof Player entity && gameManager.isInGame(entity)) {
             Entity damager = event.getDamager();
-
             double health = Math.round(entity.getHealth() * 10.0) / 10.0;
-            Component infoHealth = Component.text(entity.getName() + " has " + health + " health left!");
+
+            Component infoHealth = Component.translatable(
+                    "info.health.status",
+                    Component.text(entity.getName()),
+                    Component.text(health)
+            ).color(NamedTextColor.GRAY);
 
             if (damager instanceof Arrow arrow && arrow.getShooter() instanceof Player shooter) {
                 shooter.sendMessage(infoHealth);

@@ -35,7 +35,7 @@ public class JoinCommand implements BasicCommand {
             case "singles" -> {
                 CustomItem classic = new CustomItem(Material.DIAMOND_HELMET)
                         .setCustomId("classic")
-                        .setDisplayName(Component.text(DuelMode.CLASSIC.getName()))
+                        .setDisplayName(Component.translatable(DuelMode.CLASSIC.getName()))
                         .amount(queueManager.getPlayersInSingleQueueByMode(DuelMode.CLASSIC).size())
                         .onClick(clicker -> {
                             clicker.closeInventory();
@@ -46,7 +46,7 @@ public class JoinCommand implements BasicCommand {
 
                 CustomItem bow = new CustomItem(Material.BOW)
                         .setCustomId("bow")
-                        .setDisplayName(Component.text(DuelMode.BOW.getName()))
+                        .setDisplayName(Component.translatable(DuelMode.BOW.getName()))
                         .amount(queueManager.getPlayersInSingleQueueByMode(DuelMode.BOW).size())
                         .onClick(clicker -> {
                             clicker.closeInventory();
@@ -61,7 +61,7 @@ public class JoinCommand implements BasicCommand {
             case "doubles" -> {
                 CustomItem classic = new CustomItem(Material.DIAMOND_HELMET)
                         .setCustomId("classic-doubles")
-                        .setDisplayName(Component.text(DuelMode.CLASSIC.getName()))
+                        .setDisplayName(Component.translatable(DuelMode.CLASSIC.getName()))
                         .amount(queueManager.getPlayersInDoubleQueueByMode(DuelMode.CLASSIC).size())
                         .onClick(clicker -> {
                             clicker.closeInventory();
@@ -72,7 +72,7 @@ public class JoinCommand implements BasicCommand {
 
                 CustomItem bow = new CustomItem(Material.BOW)
                         .setCustomId("bow-doubles")
-                        .setDisplayName(Component.text(DuelMode.BOW.getName()))
+                        .setDisplayName(Component.translatable(DuelMode.BOW.getName()))
                         .amount(queueManager.getPlayersInDoubleQueueByMode(DuelMode.BOW).size())
                         .onClick(clicker -> {
                             clicker.closeInventory();
