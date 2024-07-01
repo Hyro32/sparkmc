@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-@Getter
 public enum DuelMode {
     CLASSIC(
             "info.kits.classic",
@@ -86,6 +85,7 @@ public enum DuelMode {
 
     );
 
+    @Getter
     private final String name;
     private final String lore;
     private final String permission;

@@ -26,6 +26,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public final class HyroDuels extends JavaPlugin implements Minigame {
     @Getter
@@ -67,7 +68,7 @@ public final class HyroDuels extends JavaPlugin implements Minigame {
 
     @Override
     public void waiting(GameSession session) {
-        if (session.getPlayers().size() < session.getMinPlayers()) return;
+        if (session.getPlayersUuids().size() < session.getMinPlayers()) return;
         session.setGameStatus(GameStatus.STARTING);
     }
 
@@ -81,7 +82,9 @@ public final class HyroDuels extends JavaPlugin implements Minigame {
         DuelGameSession duelSession = (DuelGameSession) session;
         DuelMode mode = duelSession.getMode();
 
-        for (Player player : duelSession.getPlayers()) {
+        for (UUID uuid : duelSession.getPlayersUuids()) {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player == null) continue;
             mode.setPlayerInventory(player);
             player.setInvulnerable(false);
             player.setGameMode(GameMode.SURVIVAL);

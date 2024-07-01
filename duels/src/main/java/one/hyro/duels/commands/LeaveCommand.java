@@ -11,22 +11,25 @@ import one.hyro.managers.GameManager;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 public class LeaveCommand implements BasicCommand {
     @Override
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
         if (!(stack.getExecutor() instanceof Player player)) return;
+        UUID playerUuid = player.getUniqueId();
 
         QueueManager queueManager = QueueManager.getInstance();
         GameManager gameManager = GameManager.getInstance();
 
-        if (queueManager.isPlayerInQueue(player)) {
-            queueManager.removePlayerFromQueue(player);
+        if (queueManager.isPlayerInQueue(playerUuid)) {
+            queueManager.removePlayerFromQueue(playerUuid);
             return;
         }
 
-        if (gameManager.isInGame(player)) {
-            GameSession session = gameManager.getGameSession(player);
-            session.removePlayer(player);
+        if (gameManager.isPlayerInGame(playerUuid)) {
+            GameSession session = gameManager.getGameSession(playerUuid);
+            session.removePlayer(playerUuid);
             session.setGameStatus(GameStatus.ENDING);
             return;
         }

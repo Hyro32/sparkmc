@@ -19,7 +19,7 @@ public class EntityDamageListener implements Listener {
             player.getInventory().clear();
             player.setGameMode(GameMode.SPECTATOR);
 
-            GameSession session = GameManager.getInstance().getGameSession(player);
+            GameSession session = GameManager.getInstance().getGameSession(player.getUniqueId());
             session.setGameStatus(GameStatus.ENDING);
         }
     }

@@ -3,9 +3,12 @@ package one.hyro.duels.events;
 import one.hyro.instances.GameSession;
 import one.hyro.managers.BlockManager;
 import one.hyro.managers.GameManager;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+
+import java.util.UUID;
 
 public class BlockPlaceListener implements Listener {
     @EventHandler
@@ -13,8 +16,11 @@ public class BlockPlaceListener implements Listener {
         BlockManager blockManager = new BlockManager();
         GameManager gameManager = GameManager.getInstance();
 
-        if (gameManager.isInGame(event.getPlayer())) {
-            GameSession session = gameManager.getGameSession(event.getPlayer());
+        Player player = event.getPlayer();
+        UUID playerUuid = player.getUniqueId();
+
+        if (gameManager.isPlayerInGame(playerUuid)) {
+            GameSession session = gameManager.getGameSession(playerUuid);
             blockManager.addBlock(event.getBlock(), session);
         }
     }

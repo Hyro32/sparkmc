@@ -15,7 +15,7 @@ public class EntityDamageByEntityListener implements Listener {
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         GameManager gameManager = GameManager.getInstance();
 
-        if (event.getEntity() instanceof Player entity && gameManager.isInGame(entity)) {
+        if (event.getEntity() instanceof Player entity && gameManager.isPlayerInGame(entity.getUniqueId())) {
             Entity damager = event.getDamager();
             double health = Math.round(entity.getHealth() * 10.0) / 10.0;
 

@@ -5,12 +5,8 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import one.hyro.builders.CustomItem;
 import one.hyro.builders.GameMenu;
-import one.hyro.duels.HyroDuels;
 import one.hyro.duels.enums.DuelMode;
 import one.hyro.duels.managers.QueueManager;
-import one.hyro.instances.GameMap;
-import one.hyro.instances.GameSession;
-import one.hyro.managers.GameManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +24,7 @@ public class JoinCommand implements BasicCommand {
         GameMenu modeMenu = new GameMenu()
                 .setCustomId("duels-mode-menu")
                 .setTitle(Component.text("Choose your kit"))
-                .setSize(27)
+                .setSize(9)
                 .setHolder(player);
 
         switch (args[0].toLowerCase()) {
@@ -39,7 +35,7 @@ public class JoinCommand implements BasicCommand {
                         .amount(queueManager.getPlayersInSingleQueueByMode(DuelMode.CLASSIC).size())
                         .onClick(clicker -> {
                             clicker.closeInventory();
-                            queueManager.addPlayerToSingleQueue(clicker, DuelMode.CLASSIC);
+                            queueManager.addPlayerToSingleQueue(clicker.getUniqueId(), DuelMode.CLASSIC);
                             queueManager.fillSingleDuelsOrCreateNew(DuelMode.CLASSIC);
                         })
                         .build();
@@ -50,13 +46,13 @@ public class JoinCommand implements BasicCommand {
                         .amount(queueManager.getPlayersInSingleQueueByMode(DuelMode.BOW).size())
                         .onClick(clicker -> {
                             clicker.closeInventory();
-                            queueManager.addPlayerToSingleQueue(clicker, DuelMode.BOW);
+                            queueManager.addPlayerToSingleQueue(clicker.getUniqueId(), DuelMode.BOW);
                             queueManager.fillSingleDuelsOrCreateNew(DuelMode.BOW);
                         })
                         .build();
 
-                modeMenu.setItem(10, classic);
-                modeMenu.setItem(11, bow);
+                modeMenu.setItem(0, classic);
+                modeMenu.setItem(1, bow);
             }
             case "doubles" -> {
                 CustomItem classic = new CustomItem(Material.DIAMOND_HELMET)
@@ -65,7 +61,7 @@ public class JoinCommand implements BasicCommand {
                         .amount(queueManager.getPlayersInDoubleQueueByMode(DuelMode.CLASSIC).size())
                         .onClick(clicker -> {
                             clicker.closeInventory();
-                            queueManager.addPlayerToDoubleQueue(clicker, DuelMode.CLASSIC);
+                            queueManager.addPlayerToDoubleQueue(clicker.getUniqueId(), DuelMode.CLASSIC);
                             queueManager.fillDoublesDuelsOrCreateNew(DuelMode.CLASSIC);
                         })
                         .build();
@@ -76,13 +72,13 @@ public class JoinCommand implements BasicCommand {
                         .amount(queueManager.getPlayersInDoubleQueueByMode(DuelMode.BOW).size())
                         .onClick(clicker -> {
                             clicker.closeInventory();
-                            queueManager.addPlayerToDoubleQueue(clicker, DuelMode.BOW);
+                            queueManager.addPlayerToDoubleQueue(clicker.getUniqueId(), DuelMode.BOW);
                             queueManager.fillDoublesDuelsOrCreateNew(DuelMode.BOW);
                         })
                         .build();
 
-                modeMenu.setItem(10, classic);
-                modeMenu.setItem(11, bow);
+                modeMenu.setItem(0, classic);
+                modeMenu.setItem(1, bow);
             }
             default -> player.sendMessage(Component.text("Invalid mode!"));
         }

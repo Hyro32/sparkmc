@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 public class GameSession {
@@ -16,14 +17,14 @@ public class GameSession {
     private final GameMap map;
     private final int minPlayers;
     private final int maxPlayers;
-    private List<Player> players;
+    private List<UUID> playersUuids;
 
     public GameSession(GameMap map, int minPlayers, int maxPlayers, Minigame minigame) {
         this.minigame = minigame;
         this.map = map;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
-        this.players = new ArrayList<>();
+        this.playersUuids = new ArrayList<>();
         this.status = GameStatus.WAITING;
         minigame.waiting(this);
     }
@@ -38,45 +39,59 @@ public class GameSession {
         }
     }
 
-    public void addPlayer(Player player) {
+    public void addPlayer(UUID uuid) {
         if (status != GameStatus.WAITING) return;
-        players.add(player);
-        player.getInventory().clear();
+        playersUuids.add(uuid);
 
+        Player player = Bukkit.getPlayer(uuid);
+        if (player == null) return;
+
+        player.getInventory().clear();
         player.teleportAsync(map.getWorld().getSpawnLocation()).thenAccept(success -> {
-            if (success) {
-                Component message = Component.translatable(
-                        "info.status.join",
-                        Component.text(players.size()),
-                        Component.text(maxPlayers)
-                );
-                players.forEach(p -> p.sendMessage(message));
+            if (!success) return;
+            Component message = Component.translatable(
+                    "info.status.join",
+                    Component.text(playersUuids.size()),
+                    Component.text(maxPlayers)
+            );
+
+            for (UUID playerUuid : playersUuids) {
+                Player p = Bukkit.getPlayer(playerUuid);
+                if (p == null) continue;
+                p.sendMessage(message);
             }
         });
 
-        GameStatus status = players.size() >= minPlayers ? GameStatus.STARTING : GameStatus.WAITING;
+        GameStatus status = playersUuids.size() >= minPlayers ? GameStatus.STARTING : GameStatus.WAITING;
         setGameStatus(status);
     }
 
-    public void removePlayer(Player player) {
-        players.remove(player);
+    public void removePlayer(UUID uuid) {
+        playersUuids.remove(uuid);
+
+        Player player = Bukkit.getPlayer(uuid);
+        if (player == null) return;
 
         player.teleportAsync(Bukkit.getWorld("world").getSpawnLocation()).thenAccept(success -> {
-            if (success) {
-                Component message = Component.translatable(
-                        "info.status.leave",
-                        Component.text(players.size()),
-                        Component.text(maxPlayers)
-                );
-                players.forEach(p -> p.sendMessage(message));
+            if (!success) return;
+            Component message = Component.translatable(
+                    "info.status.leave",
+                    Component.text(playersUuids.size()),
+                    Component.text(maxPlayers)
+            );
+
+            for (UUID playerUuid : playersUuids) {
+                Player p = Bukkit.getPlayer(playerUuid);
+                if (p == null) continue;
+                p.sendMessage(message);
             }
         });
 
-        if (status == GameStatus.STARTING && players.size() < minPlayers) setGameStatus(GameStatus.WAITING);
-        if (status != GameStatus.WAITING && players.isEmpty()) setGameStatus(GameStatus.ENDING);
+        if (status == GameStatus.STARTING && playersUuids.size() < minPlayers) setGameStatus(GameStatus.WAITING);
+        if (status != GameStatus.WAITING && playersUuids.isEmpty()) setGameStatus(GameStatus.ENDING);
     }
 
-    public boolean isPlayerInGame(Player player) {
-        return players.contains(player);
+    public boolean isPlayerInGame(UUID uuid) {
+        return playersUuids.contains(uuid);
     }
 }

@@ -1,26 +1,21 @@
 package one.hyro.duels.managers;
 
-import lombok.Getter;
 import one.hyro.duels.HyroDuels;
 import one.hyro.duels.enums.DuelMode;
 import one.hyro.duels.instances.DuelGameSession;
-import one.hyro.enums.GameStatus;
 import one.hyro.instances.GameSession;
 import one.hyro.managers.GameManager;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-@Getter
 public class QueueManager {
     private static QueueManager instance;
-    private final GameManager gameManager = GameManager.getInstance();
-    private final Map<Player, DuelMode> singlesQueue;
-    private final Map<Player, DuelMode> doublesQueue;
+    private GameManager gameManager = GameManager.getInstance();
+    private Map<UUID, DuelMode> singlesQueue;
+    private Map<UUID, DuelMode> doublesQueue;
     private final Plugin plugin = HyroDuels.getInstance();
 
     private QueueManager() {
@@ -28,56 +23,60 @@ public class QueueManager {
         this.doublesQueue = new HashMap<>();
     }
 
-    public void addPlayerToSingleQueue(Player player, DuelMode mode) {
-        if (singlesQueue.containsKey(player)) {
+    public void addPlayerToSingleQueue(UUID uuid, DuelMode mode) {
+        if (singlesQueue.containsKey(uuid)) {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player == null) return;
             player.sendMessage("You are already in the queue!");
             return;
         }
-        singlesQueue.put(player, mode);
+        singlesQueue.put(uuid, mode);
     }
 
-    public void addPlayerToDoubleQueue(Player player, DuelMode mode) {
-        if (doublesQueue.containsKey(player)) {
+    public void addPlayerToDoubleQueue(UUID uuid, DuelMode mode) {
+        if (doublesQueue.containsKey(uuid)) {
+            Player player = Bukkit.getPlayer(uuid);
+            if (player == null) return;
             player.sendMessage("You are already in the queue!");
             return;
         }
-        doublesQueue.put(player, mode);
+        doublesQueue.put(uuid, mode);
     }
 
-    public void removePlayerFromQueue(Player player) {
-        if (singlesQueue.containsKey(player)) singlesQueue.remove(player);
-        if (doublesQueue.containsKey(player)) doublesQueue.remove(player);
+    public void removePlayerFromQueue(UUID uuid) {
+        singlesQueue.remove(uuid);
+        doublesQueue.remove(uuid);
     }
 
-    public boolean isPlayerInQueue(Player player) {
-        return singlesQueue.containsKey(player) || doublesQueue.containsKey(player);
+    public boolean isPlayerInQueue(UUID uuid) {
+        return singlesQueue.containsKey(uuid) || doublesQueue.containsKey(uuid);
     }
 
-    public List<Player> getPlayersInSingleQueueByMode(DuelMode mode) {
+    public List<UUID> getPlayersInSingleQueueByMode(DuelMode mode) {
         return singlesQueue.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(mode))
                 .map(Map.Entry::getKey)
                 .toList();
     }
 
-    public List<Player> getPlayersInDoubleQueueByMode(DuelMode mode) {
+    public List<UUID> getPlayersInDoubleQueueByMode(DuelMode mode) {
         return doublesQueue.entrySet().stream()
                 .filter(entry -> entry.getValue().equals(mode))
                 .map(Map.Entry::getKey)
                 .toList();
     }
 
-    private void fillQueueOrCreateNew(DuelMode mode, int playersPerGame, Map<Player, DuelMode> queue) {
-        Iterator<Player> players = queue.keySet().iterator();
+    private void fillQueueOrCreateNew(DuelMode mode, int playersPerGame, Map<UUID, DuelMode> queue) {
+        Iterator<UUID> playerUuids = queue.keySet().iterator();
 
         for (GameSession gameSession : gameManager.getGameSessions()) {
             if (gameSession.getMinigame() != HyroDuels.getInstance()) continue;
 
             DuelGameSession duelGame = (DuelGameSession) gameSession;
-            if (duelGame.getPlayers().size() < playersPerGame && duelGame.getMode() == mode) {
-                Player player = players.next();
-                gameSession.addPlayer(player);
-                players.remove();
+            if (duelGame.getPlayersUuids().size() < playersPerGame && duelGame.getMode() == mode) {
+                UUID uuid = playerUuids.next();
+                gameSession.addPlayer(uuid);
+                playerUuids.remove();
                 return;
             }
         }
@@ -92,13 +91,12 @@ public class QueueManager {
             );
 
             for (int i = 0; i < playersPerGame; i++) {
-                Player player = players.next();
-                session.addPlayer(player);
-                players.remove();
+                UUID uuid = playerUuids.next();
+                session.addPlayer(uuid);
+                playerUuids.remove();
             }
 
             gameManager.registerGameSession(session);
-            session.setGameStatus(GameStatus.STARTING);
             return;
         }
 
@@ -110,17 +108,17 @@ public class QueueManager {
                 mode
         );
 
-        while (players.hasNext()) {
-            Player player = players.next();
-            session.addPlayer(player);
-            players.remove();
+        while (playerUuids.hasNext()) {
+            UUID uuid = playerUuids.next();
+            session.addPlayer(uuid);
+            playerUuids.remove();
         }
 
         gameManager.registerGameSession(session);
     }
 
     public void fillSingleDuelsOrCreateNew(DuelMode mode) {
-        fillQueueOrCreateNew(mode, 1, singlesQueue);
+        fillQueueOrCreateNew(mode, 2, singlesQueue);
     }
 
     public void fillDoublesDuelsOrCreateNew(DuelMode mode) {

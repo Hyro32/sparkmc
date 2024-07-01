@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
+
 public class GameEndCountdownTask extends BukkitRunnable {
     private final Plugin plugin;
     private final GameSession session;
@@ -22,7 +24,7 @@ public class GameEndCountdownTask extends BukkitRunnable {
     public void run() {
         seconds--;
 
-        if (session.getPlayers().isEmpty()) {
+        if (session.getPlayersUuids().isEmpty()) {
             this.cancel();
             session.getMap().unload();
             return;
@@ -30,7 +32,10 @@ public class GameEndCountdownTask extends BukkitRunnable {
 
         if (seconds <= 0) {
             this.cancel();
-            for (Player player : session.getPlayers()) {
+            for (UUID uuid : session.getPlayersUuids()) {
+                Player player = Bukkit.getPlayer(uuid);
+                if (player == null) continue;
+
                 player.teleportAsync(Bukkit.getWorld("world").getSpawnLocation()).thenAccept(success -> {
                     if (success) {
                         player.getInventory().clear();

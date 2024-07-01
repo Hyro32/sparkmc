@@ -3,12 +3,12 @@ package one.hyro.managers;
 import lombok.Getter;
 import one.hyro.instances.GameMap;
 import one.hyro.instances.GameSession;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 public class GameManager {
@@ -27,18 +27,18 @@ public class GameManager {
         gameSessions.remove(gameSession);
     }
 
-    public GameSession getGameSession(Player player) {
+    public GameSession getGameSession(UUID uuid) {
         for (GameSession gameSession : gameSessions) {
-            if (gameSession.isPlayerInGame(player)) {
+            if (gameSession.isPlayerInGame(uuid)) {
                 return gameSession;
             }
         }
         return null;
     }
 
-    public boolean isInGame(Player player) {
+    public boolean isPlayerInGame(UUID uuid) {
         for (GameSession gameSession : gameSessions) {
-            if (gameSession.isPlayerInGame(player)) {
+            if (gameSession.isPlayerInGame(uuid)) {
                 return true;
             }
         }
