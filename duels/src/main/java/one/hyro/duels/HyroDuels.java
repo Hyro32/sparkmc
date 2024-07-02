@@ -5,6 +5,9 @@ import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import lombok.Getter;
 import net.kyori.adventure.key.Key;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.title.Title;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.kyori.adventure.translation.TranslationRegistry;
 import net.kyori.adventure.util.UTF8ResourceBundleControl;
@@ -93,6 +96,25 @@ public final class HyroDuels extends JavaPlugin implements Minigame {
 
     @Override
     public void ending(GameSession session) {
+        DuelGameSession duelSession = (DuelGameSession) session;
+
+        for (UUID uuid : duelSession.getPlayersUuids()) {
+            if (duelSession.getLosers().contains(uuid)) {
+                Component title = Component.text("You lost!", NamedTextColor.RED);
+                Title titleComponent = Title.title(title, Component.empty());
+                Player player = Bukkit.getPlayer(uuid);
+                if (player == null) continue;
+                player.showTitle(titleComponent);
+            } else {
+                Component title = Component.text("You won!", NamedTextColor.GREEN);
+                Title titleComponent = Title.title(title, Component.empty());
+                Player player = Bukkit.getPlayer(uuid);
+                if (player == null) continue;
+                player.getInventory().clear();
+                player.showTitle(titleComponent);
+            }
+        }
+
         new GameEndCountdownTask(this, session);
     }
 }

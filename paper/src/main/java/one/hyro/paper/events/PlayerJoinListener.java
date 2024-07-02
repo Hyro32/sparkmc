@@ -3,7 +3,6 @@ package one.hyro.paper.events;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import one.hyro.builders.CustomItem;
-import one.hyro.paper.HyroPaper;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,8 +28,6 @@ public class PlayerJoinListener implements Listener {
                 ).color(NamedTextColor.YELLOW);
                 player.getServer().broadcast(welcomeMessage);
             }
-
-            if (success) HyroPaper.getScoreboardManager().updateScoreboard(player);
         });
     }
 

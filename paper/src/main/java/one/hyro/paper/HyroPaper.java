@@ -9,7 +9,6 @@ import net.kyori.adventure.translation.TranslationRegistry;
 import net.kyori.adventure.util.UTF8ResourceBundleControl;
 import one.hyro.paper.commands.*;
 import one.hyro.paper.events.*;
-import one.hyro.paper.managers.ScoreboardManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,12 +18,10 @@ import java.util.ResourceBundle;
 
 public final class HyroPaper extends JavaPlugin {
     private static HyroPaper instance;
-    private static ScoreboardManager scoreboardManager;
 
     @Override
     public void onEnable() {
         instance = this;
-        scoreboardManager = new ScoreboardManager();
 
         saveResource("config.yml", false);
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
@@ -51,21 +48,15 @@ public final class HyroPaper extends JavaPlugin {
         registry.registerAll(Locale.forLanguageTag("es"), bundleES, true);
         GlobalTranslator.translator().addSource(registry);
 
-        scoreboardManager.registerRanksTeams();
         Bukkit.getLogger().info("HyroPaper has been enabled!");
     }
 
     @Override
     public void onDisable() {
-        scoreboardManager.unregisterRanksTeams();
         Bukkit.getLogger().info("HyroPaper has been disabled!");
     }
 
     public static HyroPaper getInstance() {
         return instance;
-    }
-
-    public static ScoreboardManager getScoreboardManager() {
-        return scoreboardManager;
     }
 }

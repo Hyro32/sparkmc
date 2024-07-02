@@ -13,7 +13,7 @@ import java.util.UUID;
 public class BlockPlaceListener implements Listener {
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        BlockManager blockManager = new BlockManager();
+        BlockManager blockManager = BlockManager.getInstance();
         GameManager gameManager = GameManager.getInstance();
 
         Player player = event.getPlayer();

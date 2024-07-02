@@ -7,6 +7,7 @@ import one.hyro.builders.CustomItem;
 import one.hyro.builders.GameMenu;
 import one.hyro.duels.enums.DuelMode;
 import one.hyro.duels.managers.QueueManager;
+import one.hyro.managers.GameManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +20,10 @@ public class JoinCommand implements BasicCommand {
     public void execute(@NotNull CommandSourceStack stack, @NotNull String[] args) {
         if (!(stack.getExecutor() instanceof Player player)) return;
         if (args.length != 1) return;
+
         QueueManager queueManager = QueueManager.getInstance();
+        GameManager gameManager = GameManager.getInstance();
+        if (gameManager.isPlayerInGame(player.getUniqueId())) return;
 
         GameMenu modeMenu = new GameMenu()
                 .setCustomId("duels-mode-menu")
@@ -80,7 +84,10 @@ public class JoinCommand implements BasicCommand {
                 modeMenu.setItem(0, classic);
                 modeMenu.setItem(1, bow);
             }
-            default -> player.sendMessage(Component.text("Invalid mode!"));
+            default -> {
+                player.sendMessage(Component.text("Invalid mode!"));
+                return;
+            }
         }
 
         modeMenu.build();

@@ -1,6 +1,8 @@
 package one.hyro.tasks;
 
 import one.hyro.instances.GameSession;
+import one.hyro.managers.BlockManager;
+import one.hyro.managers.GameManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -32,6 +34,7 @@ public class GameEndCountdownTask extends BukkitRunnable {
 
         if (seconds <= 0) {
             this.cancel();
+
             for (UUID uuid : session.getPlayersUuids()) {
                 Player player = Bukkit.getPlayer(uuid);
                 if (player == null) continue;
@@ -46,7 +49,12 @@ public class GameEndCountdownTask extends BukkitRunnable {
                     }
                 });
             }
+
             session.getMap().unload();
+            GameManager gameManager = GameManager.getInstance();
+            BlockManager blockManager = BlockManager.getInstance();
+            gameManager.unregisterGameSession(session);
+            blockManager.removeBlocksFromSession(session);
         }
     }
 }

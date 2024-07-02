@@ -9,9 +9,10 @@ import java.util.Map;
 
 @Getter
 public class BlockManager {
+    private static BlockManager instance;
     private final Map<Block, GameSession> blocks;
 
-    public BlockManager() {
+    private BlockManager() {
         this.blocks = new HashMap<>();
     }
 
@@ -29,5 +30,10 @@ public class BlockManager {
                 blocks.remove(entry.getKey());
             }
         }
+    }
+
+    public static BlockManager getInstance() {
+        if (instance == null) instance = new BlockManager();
+        return instance;
     }
 }

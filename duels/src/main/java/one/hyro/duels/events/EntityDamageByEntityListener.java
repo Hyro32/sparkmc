@@ -17,7 +17,8 @@ public class EntityDamageByEntityListener implements Listener {
 
         if (event.getEntity() instanceof Player entity && gameManager.isPlayerInGame(entity.getUniqueId())) {
             Entity damager = event.getDamager();
-            double health = Math.round(entity.getHealth() * 10.0) / 10.0;
+            double health = Math.round((entity.getHealth() - event.getFinalDamage()) * 10.0) / 10.0;
+            if (health < 0) health = 0;
 
             Component infoHealth = Component.translatable(
                     "info.health.status",

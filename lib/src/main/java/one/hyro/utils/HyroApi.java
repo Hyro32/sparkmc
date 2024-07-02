@@ -10,4 +10,8 @@ public class HyroApi {
     public static JSONObject createPlayer(UUID uuid) {
         return ApiRequests.sendPostRequest(BASE_URL + "/players", new JSONObject().put("uuid", uuid.toString()));
     }
+
+    public static JSONObject getPlayer(UUID uuid) {
+        return ApiRequests.sendGetRequest(BASE_URL + "/players/" + uuid.toString());
+    }
 }

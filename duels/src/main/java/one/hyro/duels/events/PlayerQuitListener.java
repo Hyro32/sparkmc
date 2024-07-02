@@ -1,6 +1,8 @@
 package one.hyro.duels.events;
 
+import one.hyro.duels.instances.DuelGameSession;
 import one.hyro.duels.managers.QueueManager;
+import one.hyro.enums.GameStatus;
 import one.hyro.instances.GameSession;
 import one.hyro.managers.GameManager;
 import org.bukkit.entity.Player;
@@ -24,9 +26,12 @@ public class PlayerQuitListener implements Listener {
             queueManager.removePlayerFromQueue(playerUuid);
         }
 
-        if (gameManager.isPlayerInGame(playerUuid)) {
-            GameSession game = gameManager.getGameSession(playerUuid);
-            game.removePlayer(playerUuid);
+        for (GameSession session : gameManager.getGameSessions()) {
+            if (session.getPlayersUuids().contains(playerUuid)) {
+                DuelGameSession duelSession = (DuelGameSession) session;
+                duelSession.getLosers().add(playerUuid);
+                duelSession.setGameStatus(GameStatus.ENDING);
+            }
         }
     }
 }

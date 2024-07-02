@@ -1,7 +1,7 @@
 package one.hyro.duels.events;
 
+import one.hyro.duels.instances.DuelGameSession;
 import one.hyro.enums.GameStatus;
-import one.hyro.instances.GameSession;
 import one.hyro.managers.GameManager;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -17,10 +17,17 @@ public class EntityDamageListener implements Listener {
         if (player.getHealth() - event.getFinalDamage() <= 0) {
             event.setCancelled(true);
             player.getInventory().clear();
-            player.setGameMode(GameMode.SPECTATOR);
+            player.setGameMode(GameMode.ADVENTURE);
 
-            GameSession session = GameManager.getInstance().getGameSession(player.getUniqueId());
-            session.setGameStatus(GameStatus.ENDING);
+            DuelGameSession session = (DuelGameSession) GameManager.getInstance().getGameSession(player.getUniqueId());
+
+            if (session.getMaxPlayers() == 2) {
+                session.getLosers().add(player.getUniqueId());
+                session.setGameStatus(GameStatus.ENDING);
+            } else {
+                session.getLosers().add(player.getUniqueId());
+                if (session.getLosers().size() == 2) session.setGameStatus(GameStatus.ENDING);
+            }
         }
     }
 }

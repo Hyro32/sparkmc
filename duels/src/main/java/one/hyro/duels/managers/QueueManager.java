@@ -13,7 +13,7 @@ import java.util.*;
 
 public class QueueManager {
     private static QueueManager instance;
-    private GameManager gameManager = GameManager.getInstance();
+    private final GameManager gameManager = GameManager.getInstance();
     private Map<UUID, DuelMode> singlesQueue;
     private Map<UUID, DuelMode> doublesQueue;
     private final Plugin plugin = HyroDuels.getInstance();

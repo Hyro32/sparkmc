@@ -2,6 +2,7 @@ package one.hyro.tasks;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.title.Title;
 import one.hyro.enums.GameStatus;
 import one.hyro.instances.GameSession;
 import org.bukkit.Bukkit;
@@ -16,7 +17,7 @@ import java.util.UUID;
 public class GameStartCountdownTask extends BukkitRunnable {
     private final Plugin plugin;
     private final GameSession session;
-    private int seconds = 15;
+    private int seconds = 10;
 
     public GameStartCountdownTask(Plugin plugin, GameSession session) {
         this.plugin = plugin;
@@ -41,13 +42,19 @@ public class GameStartCountdownTask extends BukkitRunnable {
 
                 Location location = player.getLocation();
                 player.playSound(location, Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
-                player.sendMessage(Component.text("Game starting!", NamedTextColor.GREEN));
+
+                Component title = Component.text("Fight!", NamedTextColor.GREEN);
+                player.showTitle(Title.title(title, Component.empty()));
+                player.sendMessage(Component.text("Fight!", NamedTextColor.GREEN));
             }
 
             session.setGameStatus(GameStatus.IN_GAME);
         }
 
-        if (seconds == 10 || (seconds >= 1 && seconds <= 5)) {
+        if (seconds >= 1 && seconds <= 5) {
+            Component title = Component.text(seconds, NamedTextColor.RED);
+            Title titleMessage = Title.title(title, Component.empty());
+
             for (UUID uuid : session.getPlayersUuids()) {
                 Player player = Bukkit.getPlayer(uuid);
                 if (player == null) continue;
@@ -60,6 +67,7 @@ public class GameStartCountdownTask extends BukkitRunnable {
                         .append(Component.text(" seconds!", NamedTextColor.GOLD));
 
                 player.sendMessage(message);
+                player.showTitle(titleMessage);
             }
         }
     }
