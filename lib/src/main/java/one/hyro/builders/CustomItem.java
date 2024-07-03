@@ -1,7 +1,6 @@
 package one.hyro.builders;
 
 import lombok.Getter;
-import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import one.hyro.managers.MenuManager;
 import one.hyro.utils.CustomHeads;
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 @Getter
-@Setter
 public class CustomItem {
     private String customId;
     private Material material;
@@ -51,8 +49,8 @@ public class CustomItem {
         return this;
     }
 
-    public CustomItem setLore(List<Component> components) {
-        meta.lore(components);
+    public CustomItem setLore(Component components) {
+        meta.lore(List.of(components));
         return this;
     }
 

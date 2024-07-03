@@ -3,6 +3,7 @@ package one.hyro.instances;
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
 import one.hyro.enums.GameStatus;
+import one.hyro.utils.Teleport;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -46,22 +47,13 @@ public class GameSession {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) return;
 
-        player.getInventory().clear();
-        player.teleportAsync(map.getWorld().getSpawnLocation()).thenAccept(success -> {
-            if (!success) return;
-            Component message = Component.translatable(
-                    "info.status.join",
-                    Component.text(playersUuids.size()),
-                    Component.text(maxPlayers)
-            );
+        Component message = Component.translatable(
+                "info.status.join",
+                Component.text(playersUuids.size()),
+                Component.text(maxPlayers)
+        );
 
-            for (UUID playerUuid : playersUuids) {
-                Player p = Bukkit.getPlayer(playerUuid);
-                if (p == null) continue;
-                p.sendMessage(message);
-            }
-        });
-
+        Teleport.teleportToGame(player, this, message);
         GameStatus status = playersUuids.size() >= minPlayers ? GameStatus.STARTING : GameStatus.WAITING;
         setGameStatus(status);
     }
@@ -72,21 +64,13 @@ public class GameSession {
         Player player = Bukkit.getPlayer(uuid);
         if (player == null) return;
 
-        player.teleportAsync(Bukkit.getWorld("world").getSpawnLocation()).thenAccept(success -> {
-            if (!success) return;
-            Component message = Component.translatable(
-                    "info.status.leave",
-                    Component.text(playersUuids.size()),
-                    Component.text(maxPlayers)
-            );
+        Component message = Component.translatable(
+                "info.status.leave",
+                Component.text(getPlayersUuids().size()),
+                Component.text(maxPlayers)
+        );
 
-            for (UUID playerUuid : playersUuids) {
-                Player p = Bukkit.getPlayer(playerUuid);
-                if (p == null) continue;
-                p.sendMessage(message);
-            }
-        });
-
+        Teleport.teleportToLobby(player, message);
         if (status == GameStatus.STARTING && playersUuids.size() < minPlayers) setGameStatus(GameStatus.WAITING);
         if (status != GameStatus.WAITING && playersUuids.isEmpty()) setGameStatus(GameStatus.ENDING);
     }

@@ -1,5 +1,6 @@
 package one.hyro.paper.events;
 
+import io.papermc.paper.event.player.PlayerPickItemEvent;
 import one.hyro.paper.HyroPaper;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -43,6 +44,12 @@ public class LobbyPlayerStatusListener implements Listener {
     public void onItemDrop(PlayerDropItemEvent event) {
         if (!isLobbyWorld(event.getPlayer().getWorld().getName())) return;
         if (isItemDropDisabled) event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onItemPickup(PlayerPickItemEvent event) {
+        if (!isLobbyWorld(event.getPlayer().getWorld().getName())) return;
+        event.setCancelled(true);
     }
 
     private boolean isLobbyWorld(String worldName) {

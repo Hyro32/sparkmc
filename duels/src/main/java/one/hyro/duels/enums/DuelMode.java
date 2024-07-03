@@ -1,6 +1,8 @@
 package one.hyro.duels.enums;
 
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import one.hyro.builders.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -8,10 +10,11 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+@Getter
 public enum DuelMode {
     CLASSIC(
-            "info.kits.classic",
-            "info.kits.description.classic",
+            Component.translatable("info.kits.classic").color(NamedTextColor.GOLD),
+            Component.translatable("info.classic.description").color(NamedTextColor.GRAY),
             null,
             new CustomItem(Material.DIAMOND_HELMET)
                     .setCustomId("classic-helmet")
@@ -52,8 +55,8 @@ public enum DuelMode {
             )
     ),
     BOW(
-            "info.kits.bow",
-            "info.kits.description.bow",
+            Component.translatable("info.kits.bow").color(NamedTextColor.GOLD),
+            Component.translatable("info.bow.description").color(NamedTextColor.GRAY),
             null,
             new CustomItem(Material.LEATHER_HELMET)
                     .setCustomId("bow-helmet")
@@ -85,9 +88,8 @@ public enum DuelMode {
 
     );
 
-    @Getter
-    private final String name;
-    private final String lore;
+    private final Component name;
+    private final Component lore;
     private final String permission;
     private final CustomItem helmet;
     private final CustomItem chestplate;
@@ -95,7 +97,7 @@ public enum DuelMode {
     private final CustomItem boots;
     private final List<CustomItem> items;
 
-    DuelMode(String name, String lore, String permission, CustomItem helmet, CustomItem chestplate, CustomItem leggings, CustomItem boots, List<CustomItem> items) {
+    DuelMode(Component name, Component lore, String permission, CustomItem helmet, CustomItem chestplate, CustomItem leggings, CustomItem boots, List<CustomItem> items) {
         this.name = name;
         this.lore = lore;
         this.permission = permission;

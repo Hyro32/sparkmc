@@ -17,12 +17,17 @@ import java.util.UUID;
 public class GameStartCountdownTask extends BukkitRunnable {
     private final Plugin plugin;
     private final GameSession session;
-    private int seconds = 10;
+    private final Component countdown;
+    private final Component start;
+    private int seconds;
 
-    public GameStartCountdownTask(Plugin plugin, GameSession session) {
+    public GameStartCountdownTask(Plugin plugin, GameSession session, int seconds, Component countdown, Component start) {
         this.plugin = plugin;
         this.session = session;
-        this.runTaskTimer(plugin, 0L, 20L);
+        this.seconds = seconds;
+        this.countdown = countdown;
+        this.start = start;
+        runTaskTimer(plugin, 0L, 20L);
     }
 
     @Override
@@ -42,10 +47,8 @@ public class GameStartCountdownTask extends BukkitRunnable {
 
                 Location location = player.getLocation();
                 player.playSound(location, Sound.BLOCK_NOTE_BLOCK_BELL, 1.0F, 1.0F);
-
-                Component title = Component.text("Fight!", NamedTextColor.GREEN);
-                player.showTitle(Title.title(title, Component.empty()));
-                player.sendMessage(Component.text("Fight!", NamedTextColor.GREEN));
+                player.showTitle(Title.title(start, Component.empty()));
+                player.sendMessage(start);
             }
 
             session.setGameStatus(GameStatus.IN_GAME);
@@ -62,11 +65,7 @@ public class GameStartCountdownTask extends BukkitRunnable {
                 Location location = player.getLocation();
                 player.playSound(location, Sound.BLOCK_NOTE_BLOCK_BIT, 1.0F, 1.0F);
 
-                Component message = Component.text("Game starting in ", NamedTextColor.GOLD)
-                        .append(Component.text(seconds, NamedTextColor.RED))
-                        .append(Component.text(" seconds!", NamedTextColor.GOLD));
-
-                player.sendMessage(message);
+                player.sendMessage(countdown);
                 player.showTitle(titleMessage);
             }
         }

@@ -3,10 +3,12 @@ package one.hyro.paper;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
+import lombok.Getter;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.kyori.adventure.translation.TranslationRegistry;
 import net.kyori.adventure.util.UTF8ResourceBundleControl;
+import one.hyro.managers.ScoreboardManager;
 import one.hyro.paper.commands.*;
 import one.hyro.paper.events.*;
 import org.bukkit.Bukkit;
@@ -17,11 +19,13 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public final class HyroPaper extends JavaPlugin {
-    private static HyroPaper instance;
+    @Getter private static HyroPaper instance;
+    @Getter private static ScoreboardManager scoreboardManager;
 
     @Override
     public void onEnable() {
         instance = this;
+        scoreboardManager = new ScoreboardManager(this);
 
         saveResource("config.yml", false);
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
@@ -48,15 +52,13 @@ public final class HyroPaper extends JavaPlugin {
         registry.registerAll(Locale.forLanguageTag("es"), bundleES, true);
         GlobalTranslator.translator().addSource(registry);
 
+        scoreboardManager.registerTeams();
         Bukkit.getLogger().info("HyroPaper has been enabled!");
     }
 
     @Override
     public void onDisable() {
+        scoreboardManager.unregisterTeams();
         Bukkit.getLogger().info("HyroPaper has been disabled!");
-    }
-
-    public static HyroPaper getInstance() {
-        return instance;
     }
 }

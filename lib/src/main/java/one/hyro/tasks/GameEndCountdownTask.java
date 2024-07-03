@@ -3,6 +3,7 @@ package one.hyro.tasks;
 import one.hyro.instances.GameSession;
 import one.hyro.managers.BlockManager;
 import one.hyro.managers.GameManager;
+import one.hyro.utils.Teleport;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -38,16 +39,7 @@ public class GameEndCountdownTask extends BukkitRunnable {
             for (UUID uuid : session.getPlayersUuids()) {
                 Player player = Bukkit.getPlayer(uuid);
                 if (player == null) continue;
-
-                player.teleportAsync(Bukkit.getWorld("world").getSpawnLocation()).thenAccept(success -> {
-                    if (success) {
-                        player.getInventory().clear();
-                        player.setHealth(20);
-                        player.setFoodLevel(20);
-                        player.setGameMode(GameMode.ADVENTURE);
-                        player.setInvulnerable(true);
-                    }
-                });
+                Teleport.teleportToLobby(player, null);
             }
 
             session.getMap().unload();

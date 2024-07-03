@@ -1,9 +1,9 @@
 .gradle
-mongo
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+**/dependency-reduced-pom.xml
 
 ### IntelliJ IDEA ###
 .idea/

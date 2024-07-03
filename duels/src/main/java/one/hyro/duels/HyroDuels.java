@@ -32,8 +32,7 @@ import java.util.ResourceBundle;
 import java.util.UUID;
 
 public final class HyroDuels extends JavaPlugin implements Minigame {
-    @Getter
-    private static HyroDuels instance;
+    @Getter private static HyroDuels instance;
 
     @Override
     public void onEnable() {
@@ -51,7 +50,6 @@ public final class HyroDuels extends JavaPlugin implements Minigame {
         getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);
-        getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
 
         TranslationRegistry registry = TranslationRegistry.create(Key.key("duels:i18n"));
@@ -77,7 +75,18 @@ public final class HyroDuels extends JavaPlugin implements Minigame {
 
     @Override
     public void starting(GameSession session) {
-        new GameStartCountdownTask(this, session);
+        int seconds = 10;
+
+        Component countdown = Component.translatable(
+                "info.status.countdown",
+                Component.text(seconds, NamedTextColor.BLUE)
+        ).color(NamedTextColor.GRAY);
+
+        Component start = Component.translatable(
+                "info.status.start"
+        ).color(NamedTextColor.GREEN);
+
+        new GameStartCountdownTask(this, session, seconds, countdown, start);
     }
 
     @Override

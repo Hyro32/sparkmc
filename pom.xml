@@ -15,19 +15,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.32</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-
     <modules>
         <module>duels</module>
+        <module>lib</module>
         <module>paper</module>
         <module>proxy</module>
-        <module>lib</module>
     </modules>
 </project>

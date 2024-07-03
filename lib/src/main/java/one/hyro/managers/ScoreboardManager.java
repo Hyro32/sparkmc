@@ -44,11 +44,29 @@ public class ScoreboardManager {
         setPlayerRankTeam(player);
     }
 
-    public void setMinigameTeams(List<UUID> uuids, int teamCount) {
+    public void setMinigameTeams(List<UUID> uuids, int teamCount, int teamSize) {
         registerTeams();
         for (UUID uuid : uuids) {
+            for (int i = 0; i < teamCount; i++) {
+                Team team = scoreboard.getTeam(MinigameTeams.values()[i].getName());
+                if (team == null) continue;
+                if (team.getSize() < teamSize) {
+                    Player player = Bukkit.getPlayer(uuid);
+                    if (player == null) continue;
+                    team.addPlayer(player);
+                    break;
+                }
+            }
+        }
+    }
+
+    public void removePlayerFromMinigameTeam(UUID uuid) {
+        for (MinigameTeams team : MinigameTeams.values()) {
+            Team scoreboardTeam = scoreboard.getTeam(team.getName());
+            if (scoreboardTeam == null) continue;
             Player player = Bukkit.getPlayer(uuid);
             if (player == null) continue;
+            scoreboardTeam.removePlayer(player);
         }
     }
 

@@ -8,11 +8,9 @@ import java.util.Date;
 import java.util.UUID;
 
 public class PlayerData {
-    private final UUID uuid;
     private final JSONObject data;
 
     private PlayerData(UUID uuid) {
-        this.uuid = uuid;
         this.data = HyroApi.getPlayer(uuid) == null ? HyroApi.createPlayer(uuid) : HyroApi.getPlayer(uuid);
     }
 
