@@ -14,6 +14,7 @@ import net.kyori.adventure.translation.TranslationRegistry;
 import net.kyori.adventure.util.UTF8ResourceBundleControl;
 import one.hyro.proxy.commands.BanCommand;
 import one.hyro.proxy.commands.KickCommand;
+import one.hyro.proxy.commands.MessageCommand;
 import one.hyro.proxy.commands.TempBanCommand;
 import org.slf4j.Logger;
 
@@ -48,16 +49,23 @@ public class HyrosProxy {
                 .plugin(this)
                 .build();
 
+        CommandMeta messageCommandMeta = commandManager.metaBuilder("message")
+                .plugin(this)
+                .aliases("msg", "private")
+                .build();
+
         CommandMeta tempBanCommandMeta = commandManager.metaBuilder("tempban")
                 .plugin(this)
                 .build();
 
         BrigadierCommand banCommand = BanCommand.createBanCommand(proxy);
         BrigadierCommand kickCommand = KickCommand.createKickCommand(proxy);
+        BrigadierCommand messageCommand = MessageCommand.createMessageCommand(proxy);
         BrigadierCommand tempBanCommand = TempBanCommand.createTempBanCommand(proxy);
 
         commandManager.register(banCommandMeta, banCommand);
         commandManager.register(kickCommandMeta, kickCommand);
+        commandManager.register(messageCommandMeta, messageCommand);
         commandManager.register(tempBanCommandMeta, tempBanCommand);
 
         TranslationRegistry registry = TranslationRegistry.create(Key.key("velocity:i18n"));
