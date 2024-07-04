@@ -15,14 +15,12 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.UUID;
 
 public class GameStartCountdownTask extends BukkitRunnable {
-    private final Plugin plugin;
     private final GameSession session;
     private final Component countdown;
     private final Component start;
     private int seconds;
 
     public GameStartCountdownTask(Plugin plugin, GameSession session, int seconds, Component countdown, Component start) {
-        this.plugin = plugin;
         this.session = session;
         this.seconds = seconds;
         this.countdown = countdown;

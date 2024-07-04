@@ -53,6 +53,7 @@ public final class HyroPaper extends JavaPlugin {
         GlobalTranslator.translator().addSource(registry);
 
         scoreboardManager.registerTeams();
+        scoreboardManager.updateScoreboard();
         Bukkit.getLogger().info("HyroPaper has been enabled!");
     }
 

@@ -28,20 +28,14 @@ public class GameManager {
     }
 
     public GameSession getGameSession(UUID uuid) {
-        for (GameSession gameSession : gameSessions) {
-            if (gameSession.isPlayerInGame(uuid)) {
-                return gameSession;
-            }
-        }
+        for (GameSession gameSession : gameSessions)
+            if (gameSession.isPlayerInGame(uuid)) return gameSession;
         return null;
     }
 
     public boolean isPlayerInGame(UUID uuid) {
-        for (GameSession gameSession : gameSessions) {
-            if (gameSession.isPlayerInGame(uuid)) {
-                return true;
-            }
-        }
+        for (GameSession gameSession : gameSessions)
+            if (gameSession.isPlayerInGame(uuid)) return true;
         return false;
     }
 

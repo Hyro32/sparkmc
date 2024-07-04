@@ -11,3 +11,6 @@ scoreboard:
   tablist: true # If true, tablist will be displayed
   sidebar: true # If true, a sidebar will be displayed
   health: true # If true, health will be displayed
+
+chat:
+  per-world-chat: false # If true, messages will be sent only for players in the same world

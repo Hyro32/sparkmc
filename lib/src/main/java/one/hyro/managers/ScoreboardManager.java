@@ -73,16 +73,16 @@ public class ScoreboardManager {
     public void registerTeams() {
         for (PlayerRanks rank : PlayerRanks.values()) {
             if (scoreboard.getTeam(rank.name()) != null) continue;
-            Team team = scoreboard.registerNewTeam(rank.name());
+            Team team = scoreboard.registerNewTeam(rank.getWeight() + rank.name());
             if (rank.getPrefix() == null) continue;
             team.prefix(rank.getPrefix());
             team.color(NamedTextColor.GRAY);
         }
 
-        for (MinigameTeams teamMinigame : MinigameTeams.values()) {
-            if (scoreboard.getTeam(teamMinigame.getName()) != null) continue;
-            Team team = scoreboard.registerNewTeam(teamMinigame.getName());
-            team.color(teamMinigame.getColor());
+        for (MinigameTeams minigameTeam : MinigameTeams.values()) {
+            if (scoreboard.getTeam(minigameTeam.getName()) != null) continue;
+            Team team = scoreboard.registerNewTeam(minigameTeam.getName());
+            team.color(minigameTeam.getColor());
         }
     }
 

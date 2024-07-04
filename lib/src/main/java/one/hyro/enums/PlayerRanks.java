@@ -33,7 +33,7 @@ public enum PlayerRanks {
     ),
     HELPER(
             Component.text("[", NamedTextColor.DARK_GRAY)
-                    .append(Component.text("HELPER", NamedTextColor.GREEN)
+                    .append(Component.text("HELPER", NamedTextColor.DARK_GREEN)
                     .append(Component.text("]", NamedTextColor.DARK_GRAY))
             ),
             4,
@@ -58,14 +58,12 @@ public enum PlayerRanks {
     DEFAULT(null, 1, List.of());
 
     private final Component prefix;
-    @Getter
-    private final int priority;
-    @Getter
-    private final List<String> permissions;
+    @Getter private final int weight;
+    @Getter private final List<String> permissions;
 
-    PlayerRanks(Component prefix, int priority, List<String> permissions) {
+    PlayerRanks(Component prefix, int weight, List<String> permissions) {
         this.prefix = prefix;
-        this.priority = priority;
+        this.weight = weight;
         this.permissions = permissions;
     }
 
