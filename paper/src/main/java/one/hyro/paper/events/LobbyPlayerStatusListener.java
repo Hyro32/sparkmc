@@ -20,6 +20,7 @@ public class LobbyPlayerStatusListener implements Listener {
     private final boolean isHungerDisabled = config.getBoolean("lobby-status.hunger");
     private final boolean isBlocksDisabled = config.getBoolean("lobby-status.blocks");
     private final boolean isItemDropDisabled = config.getBoolean("lobby-status.item-drop");
+    private final boolean isItemPickupDisabled = config.getBoolean("lobby-status.item-pickup");
     private final List<String> lobbyWorlds = config.getStringList("lobby-status.worlds");
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -49,7 +50,7 @@ public class LobbyPlayerStatusListener implements Listener {
     @EventHandler
     public void onItemPickup(PlayerPickItemEvent event) {
         if (!isLobbyWorld(event.getPlayer().getWorld().getName())) return;
-        event.setCancelled(true);
+        if (isItemPickupDisabled) event.setCancelled(true);
     }
 
     private boolean isLobbyWorld(String worldName) {

@@ -14,7 +14,7 @@ public class PlayerClientOptionsChangeListener implements Listener {
         if (event.hasLocaleChanged()) {
             Component localeMessage = Component.translatable(
                     "info.player.locale",
-                    Component.text(player.locale().getDisplayName()).color(NamedTextColor.RED)
+                    Component.text(event.getLocale()).color(NamedTextColor.RED)
             ).color(NamedTextColor.GOLD);
             player.sendMessage(localeMessage);
         }

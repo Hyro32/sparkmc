@@ -5,6 +5,7 @@ services:
     environment:
       EULA: true
       TYPE: VELOCITY
+      MEMORY: 500M
       DB_HOST: 'http://localhost:3306'
       DB_NAME: 'hyro'
       DB_PASSWORD: 'yourpassword'
