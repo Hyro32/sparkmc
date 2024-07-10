@@ -12,7 +12,6 @@ services:
     ports:
       - '25577:25577'
     volumes:
-      - ./assets/server-icon.png:/server/server-icon.png
       - proxy-1:/server
     restart: unless-stopped
 
@@ -20,35 +19,19 @@ services:
     container_name: paper-lobby-1
     image: itzg/minecraft-server
     environment:
+      ALLOW_NETHER: false
+      DIFFICULTY: peaceful
       EULA: true
+      MEMORY: 1G
+      ONLINE_MODE: false
       TYPE: PAPER
       VERSION: 1.20.6
-      ONLINE_MODE: false
-      MEMORY: 1G
-      ALLOW_NETHER: false
     expose:
       - 25565
     volumes:
       - lobby-1:/data
     restart: unless-stopped
 
-#  duels-1:
-#    container_name: paper-duels-1
-#    image: itzg/minecraft-server
-#    environment:
-#      EULA: true
-#      TYPE: PAPER
-#      VERSION: 1.20.6
-#      ONLINE_MODE: false
-#      MEMORY: 1G
-#      ALLOW_NETHER: false
-#    expose:
-#      - 25565
-#    volumes:
-#      - duels-1:/data
-#    restart: unless-stopped
-
 volumes:
   proxy-1:
   lobby-1:
-#  duels-1:

@@ -1,0 +1,4 @@
+name: HyroCore
+version: '${project.version}'
+main: one.hyro.HyroCore
+api-version: '1.20'

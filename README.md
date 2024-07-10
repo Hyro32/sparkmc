@@ -11,8 +11,9 @@ Megatron is an ecosystem of plugins and libraries that help manage a minecraft n
 
 ## Documentation
 
-- [Paper](#paper)
-  - [Lobby status](#lobby-status)
+- [Core](#core)
+- [Lib](#lib)
+- [Proxy](#proxy)
 
 ## How to start
 
@@ -45,24 +46,6 @@ paper-1 = 'paper-1'
 
 Learn more about the project and the progress of its development is joining the [discord community](https://discord.gg/5yVnrtRCGb).
 
-## Paper
-
-### Lobby Status
-
-Lobby status is a way to set worlds of a server as a lobby. This is useful for setting up a lobby server with multiple worlds.
-You can disable the place/break blocks, hunger, damage, and item drop.
-
-```yml
-lobby-status:
-  worlds:
-    - world
-    - test
-  blocks: true # If true, player will be unable to break or place blocks
-  hunger: true # If true, player will be unable to lose hunger
-  damage: true # If true, player will be unable to take damage
-  item-drop: true # If true, player will be unable to drop items
-```
-
 ## Contribute
 
 Are you a developer passionate about Minecraft and the community? If so, we invite you to contribute to our project for an open source Minecraft network that prioritizes transparency and security.
@@ -80,3 +63,5 @@ No matter your level of experience, there is something for everyone! Join us and
 - [Paper](https://papermc.io/)
 - [Velocity](https://papermc.io/software/velocity)
 - [Maven](https://maven.apache.org/)
+- [Docker](https://www.docker.com/)
+- [Kotlin](https://kotlinlang.org/)
