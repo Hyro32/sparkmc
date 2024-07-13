@@ -1,2 +1,11 @@
 chat:
   per-world-chat: false
+
+lobby:
+  worlds:
+    - world
+    - lobby
+  item-pickup: false
+  item-drop: false
+  hunger: false
+  player-damage: false

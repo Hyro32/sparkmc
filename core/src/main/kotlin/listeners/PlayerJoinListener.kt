@@ -2,6 +2,7 @@ package one.hyro.listeners
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import org.bukkit.GameMode
 import org.bukkit.World
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -13,6 +14,8 @@ object PlayerJoinListener: Listener {
     fun onPlayerJoin(event: PlayerJoinEvent) {
         event.joinMessage(null)
         val player = event.player
+        player.gameMode = GameMode.ADVENTURE
+        player.isInvulnerable = true
 
         if (player.hasPermission("hyro.join") || player.isOp) {
             val joinMessage: Component = Component.text(player.name + " has joined the server!", NamedTextColor.YELLOW)

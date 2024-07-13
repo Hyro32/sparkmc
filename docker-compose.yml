@@ -24,6 +24,7 @@ services:
       EULA: true
       MEMORY: 1G
       ONLINE_MODE: false
+      SPAWN_MONSTERS: false
       TYPE: PAPER
       VERSION: 1.20.6
     expose:
