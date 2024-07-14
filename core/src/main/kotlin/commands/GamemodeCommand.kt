@@ -11,7 +11,7 @@ object GamemodeCommand: BasicCommand {
     override fun execute(stack: CommandSourceStack, args: Array<out String>) {
         if (stack.executor !is Player) return
         val player: Player = stack.executor as Player
-        if (!player.hasPermission("hyro.gamemode")) return
+        //if (!player.hasPermission("hyro.gamemode")) return
         val gamemode: String = args.getOrNull(0) ?: return
 
         gamemode.let {

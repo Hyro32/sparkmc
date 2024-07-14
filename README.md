@@ -12,6 +12,7 @@ Megatron is an ecosystem of plugins and libraries that help manage a minecraft n
 ## Documentation
 
 - [Core](#core)
+- [Duels](#duels)
 - [Lib](#lib)
 - [Proxy](#proxy)
 

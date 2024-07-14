@@ -1,0 +1,8 @@
+name: HyroDuels
+version: '${project.version}'
+main: one.hyro.HyroDuels
+api-version: '1.20'
+
+commands:
+  join:
+  leave:
