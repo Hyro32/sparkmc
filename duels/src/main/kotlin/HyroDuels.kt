@@ -36,11 +36,6 @@ class HyroDuels: JavaPlugin(), Minigame {
         logger.info("HyroDuels has been disabled!")
     }
 
-    // See https://kotlinlang.org/docs/coding-conventions.html#class-layout
-    companion object {
-        var instance: HyroDuels? = null
-    }
-
     override fun waiting(session: Session) {
         TODO("Not yet implemented")
     }
@@ -55,5 +50,10 @@ class HyroDuels: JavaPlugin(), Minigame {
 
     override fun ending(session: Session) {
         TODO("Not yet implemented")
+    }
+
+    // See https://kotlinlang.org/docs/coding-conventions.html#class-layout
+    companion object {
+        var instance: HyroDuels? = null
     }
 }

@@ -26,4 +26,8 @@ class Queue {
 
     fun removeFromQueue(player: UUID) = singlesQueue.remove(player) ?: doublesQueue.remove(player)
     fun isQueued(player: UUID): Boolean = singlesQueue.contains(player) || doublesQueue.contains(player)
+
+    companion object {
+        val instance: Queue = Queue()
+    }
 }
