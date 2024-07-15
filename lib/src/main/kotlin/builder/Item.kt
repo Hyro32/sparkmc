@@ -2,11 +2,14 @@ package one.hyro.builder
 
 import net.kyori.adventure.text.Component
 import org.bukkit.Material
+import org.bukkit.NamespacedKey
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
+import org.bukkit.persistence.PersistentDataType
+import org.bukkit.plugin.Plugin
 
 class Item {
     var item: ItemStack? = null
@@ -53,6 +56,12 @@ class Item {
 
     fun click(consumer: (Player) -> Unit) = apply {
         this.consumer = consumer
+        return this
+    }
+
+    fun persistentData(key: String, value: String, plugin: Plugin) = apply {
+        val namespacedKey: NamespacedKey = NamespacedKey(plugin, key)
+        meta?.persistentDataContainer?.set(namespacedKey, PersistentDataType.STRING, value)
         return this
     }
 

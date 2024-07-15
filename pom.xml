@@ -19,5 +19,6 @@
         <module>core</module>
         <module>duels</module>
         <module>lib</module>
+        <module>survival</module>
     </modules>
 </project>
