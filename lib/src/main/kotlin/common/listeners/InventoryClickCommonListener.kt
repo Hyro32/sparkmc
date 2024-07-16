@@ -1,4 +1,4 @@
-package one.hyro.listeners
+package one.hyro.common.listeners
 
 import one.hyro.builder.Item
 import one.hyro.builder.Menu
@@ -8,7 +8,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.Inventory
 
-object InventoryClickListener: Listener {
+object InventoryClickCommonListener: Listener {
     @EventHandler
     fun onInventoryClick(event: InventoryClickEvent) {
         val inventory: Inventory = event.inventory
@@ -17,10 +17,7 @@ object InventoryClickListener: Listener {
             event.isCancelled = true
             val menu: Menu = inventory.holder as Menu
             val item: Item? = menu.items[event.slot]
-            item.let {
-                it?.consumer?.invoke(event.whoClicked as Player)
-                inventory.close()
-            }
+            item.let { it?.consumer?.invoke(event.whoClicked as Player) }
         }
     }
 }

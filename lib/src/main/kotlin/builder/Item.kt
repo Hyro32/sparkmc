@@ -1,6 +1,7 @@
 package one.hyro.builder
 
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.enchantments.Enchantment
@@ -33,13 +34,13 @@ class Item {
     }
 
     fun displayName(displayName: Component) = apply {
-        meta?.displayName(displayName)
+        meta?.displayName(displayName.decoration(TextDecoration.ITALIC, false))
         item?.itemMeta = meta
         return this
     }
 
     fun lore(lore: Component) = apply {
-        meta?.lore(listOf(lore))
+        meta?.lore(listOf(lore.decoration(TextDecoration.ITALIC, false)))
         item?.itemMeta = meta
         return this
     }

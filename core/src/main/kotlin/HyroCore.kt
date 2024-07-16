@@ -5,9 +5,8 @@ import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import one.hyro.commands.GamemodeCommand
 import one.hyro.commands.MinigamesCommand
+import one.hyro.common.listeners.InventoryClickCommonListener
 import one.hyro.listeners.AsyncChatListener
-import one.hyro.listeners.InventoryClickListener
-import one.hyro.listeners.InventoryDragListener
 import one.hyro.listeners.PlayerJoinListener
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
@@ -26,8 +25,7 @@ class HyroCore: JavaPlugin() {
         }
 
         Bukkit.getPluginManager().registerEvents(AsyncChatListener, this)
-        Bukkit.getPluginManager().registerEvents(InventoryClickListener, this)
-        Bukkit.getPluginManager().registerEvents(InventoryDragListener, this)
+        Bukkit.getPluginManager().registerEvents(InventoryClickCommonListener, this)
         Bukkit.getPluginManager().registerEvents(PlayerJoinListener, this)
         logger.info("HyroCore enabled!")
     }

@@ -11,7 +11,6 @@ class Menu: InventoryHolder {
     var title: Component = Component.text("Menu")
     var size: Int = 27
     var items: MutableMap<Int, Item> = mutableMapOf()
-    var draggable: Boolean = false
 
     fun size(size: Int) = apply {
         this.size = size
@@ -26,11 +25,6 @@ class Menu: InventoryHolder {
     fun item(slot: Int, item: Item) = apply {
         if (_inventory?.getItem(slot) != null) return@apply
         this.items[slot] = item
-        return this
-    }
-
-    fun draggable() = apply {
-        draggable = true
         return this
     }
 
