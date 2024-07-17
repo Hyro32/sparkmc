@@ -10,6 +10,7 @@ import one.hyro.listeners.AsyncChatListener
 import one.hyro.listeners.LobbyListeners
 import one.hyro.listeners.PlayerCommandPreprocessListener
 import one.hyro.listeners.PlayerJoinListener
+import one.hyro.managers.ScoreboardManager
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
@@ -18,6 +19,8 @@ class HyroCore: JavaPlugin() {
     override fun onEnable() {
         instance = this
         saveResource("config.yml", false)
+        ScoreboardManager.registerRoleTeams()
+        ScoreboardManager.updateScoreboard(this)
 
         val manager: LifecycleEventManager<Plugin> = this.lifecycleManager
         manager.registerEventHandler(LifecycleEvents.COMMANDS) { event ->
@@ -35,6 +38,7 @@ class HyroCore: JavaPlugin() {
     }
 
     override fun onDisable() {
+        ScoreboardManager.unregisterRoleTeams()
         logger.info("HyroCore disabled!")
     }
 

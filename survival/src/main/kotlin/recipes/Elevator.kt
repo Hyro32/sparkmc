@@ -12,8 +12,7 @@ import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.persistence.PersistentDataContainer
 import org.bukkit.persistence.PersistentDataType
 
-class Elevator: Recipe {
-    private val keyPrefix: String = "elevator_"
+class Elevator {
     private val key: NamespacedKey = NamespacedKey(HyroSurvival.instance!!, "elevator")
 
     fun goToAboveFloor(player: Player) {
@@ -72,31 +71,35 @@ class Elevator: Recipe {
         container.remove(key)
     }
 
-    override fun registerRecipes() {
-        val colors = listOf(
-            Material.WHITE_CONCRETE, Material.LIGHT_GRAY_CONCRETE, Material.GRAY_CONCRETE,
-            Material.BLACK_CONCRETE, Material.BROWN_CONCRETE, Material.RED_CONCRETE,
-            Material.ORANGE_CONCRETE, Material.YELLOW_CONCRETE, Material.LIME_CONCRETE,
-            Material.GREEN_CONCRETE, Material.CYAN_CONCRETE, Material.LIGHT_BLUE_CONCRETE,
-            Material.BLUE_CONCRETE, Material.PURPLE_CONCRETE, Material.MAGENTA_CONCRETE,
-            Material.PINK_CONCRETE
-        )
+    companion object {
+        private const val prefix: String = "elevator_"
 
-        colors.forEach { color ->
-            val elevatorItem = Item(color)
-                .displayName(Component.text("Elevator", NamedTextColor.GOLD))
-                .lore(Component.text("Jump to go up and sneak to go down", NamedTextColor.GRAY))
-                .persistentData("elevator", "elevator", HyroSurvival.instance!!)
-                .build()
+        fun registerRecipes() {
+            val colors = listOf(
+                Material.WHITE_CONCRETE, Material.LIGHT_GRAY_CONCRETE, Material.GRAY_CONCRETE,
+                Material.BLACK_CONCRETE, Material.BROWN_CONCRETE, Material.RED_CONCRETE,
+                Material.ORANGE_CONCRETE, Material.YELLOW_CONCRETE, Material.LIME_CONCRETE,
+                Material.GREEN_CONCRETE, Material.CYAN_CONCRETE, Material.LIGHT_BLUE_CONCRETE,
+                Material.BLUE_CONCRETE, Material.PURPLE_CONCRETE, Material.MAGENTA_CONCRETE,
+                Material.PINK_CONCRETE
+            )
 
-            val recipeKey = NamespacedKey(HyroSurvival.instance!!, keyPrefix + color.name.lowercase())
-            val recipe = ShapedRecipe(recipeKey, elevatorItem.item!!)
-            recipe.shape("AAA", "ABA", "ACA")
-            recipe.setIngredient('A', color)
-            recipe.setIngredient('B', Material.ENDER_PEARL)
-            recipe.setIngredient('C', Material.REDSTONE_TORCH)
+            colors.forEach { color ->
+                val elevatorItem = Item(color)
+                    .displayName(Component.text("Elevator", NamedTextColor.GOLD))
+                    .lore(Component.text("Jump to go up and sneak to go down", NamedTextColor.GRAY))
+                    .persistentData("elevator", "elevator", HyroSurvival.instance!!)
+                    .build()
 
-            Bukkit.addRecipe(recipe)
+                val recipeKey = NamespacedKey(HyroSurvival.instance!!, prefix + color.name.lowercase())
+                val recipe = ShapedRecipe(recipeKey, elevatorItem.item!!)
+                recipe.shape("AAA", "ABA", "ACA")
+                recipe.setIngredient('A', color)
+                recipe.setIngredient('B', Material.ENDER_PEARL)
+                recipe.setIngredient('C', Material.REDSTONE_TORCH)
+
+                Bukkit.addRecipe(recipe)
+            }
         }
     }
 }
