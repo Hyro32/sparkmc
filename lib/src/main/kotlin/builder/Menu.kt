@@ -11,6 +11,7 @@ class Menu: InventoryHolder {
     var title: Component = Component.text("Menu")
     var size: Int = 27
     var items: MutableMap<Int, Item> = mutableMapOf()
+    var clickeable: Boolean = false
 
     fun size(size: Int) = apply {
         this.size = size
@@ -29,10 +30,11 @@ class Menu: InventoryHolder {
     }
 
     fun fillColumn(column: Int, material: Material) = apply {
-        for (inventoryColumn in 0 until size) {
-            val slot = column + inventoryColumn * size
+        val rows = size / 9
+        for (row in 0 until rows) {
+            val slot = row * 9 + column
             if (_inventory?.getItem(slot) != null) continue
-            val item: Item = Item(material).displayName(Component.empty())
+            val item: Item = Item(material).displayName(Component.empty()).build()
             this.items[slot] = item
         }
     }
@@ -41,9 +43,14 @@ class Menu: InventoryHolder {
         for (inventoryRow in 0 until size) {
             val slot = row * size + inventoryRow
             if (_inventory?.getItem(slot) != null) continue
-            val item: Item = Item(material).displayName(Component.empty())
+            val item: Item = Item(material).displayName(Component.empty()).build()
             this.items[slot] = item
         }
+    }
+
+    fun clickable() = apply {
+        this.clickeable = true
+        return this
     }
 
     fun build() = apply {

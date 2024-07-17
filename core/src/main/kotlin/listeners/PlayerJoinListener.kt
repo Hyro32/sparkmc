@@ -15,7 +15,6 @@ object PlayerJoinListener: Listener {
         event.joinMessage(null)
         val player = event.player
         player.gameMode = GameMode.ADVENTURE
-        player.isInvulnerable = true
 
         if (player.hasPermission("hyro.join") || player.isOp) {
             val joinMessage: Component = Component.text(player.name + " has joined the server!", NamedTextColor.YELLOW)

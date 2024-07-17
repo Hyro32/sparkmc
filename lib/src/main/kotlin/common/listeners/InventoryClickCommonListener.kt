@@ -14,10 +14,24 @@ object InventoryClickCommonListener: Listener {
         val inventory: Inventory = event.inventory
 
         if (inventory.holder is Menu) {
-            event.isCancelled = true
             val menu: Menu = inventory.holder as Menu
-            val item: Item? = menu.items[event.slot]
-            item.let { it?.consumer?.invoke(event.whoClicked as Player) }
+            val items: MutableMap<Int, Item> = menu.items
+
+            if (menu.clickeable.not()) {
+                event.isCancelled = true
+                handleClick(event.whoClicked as Player, items, event.slot)
+                return
+            }
+
+            if (items.containsKey(event.slot)) {
+                event.isCancelled = true
+                handleClick(event.whoClicked as Player, items, event.slot)
+            }
         }
+    }
+
+    private fun handleClick(player: Player, items: MutableMap<Int, Item>, slot: Int) {
+        val item: Item = items[slot]!!
+        item.let { it.consumer?.invoke(player) }
     }
 }
