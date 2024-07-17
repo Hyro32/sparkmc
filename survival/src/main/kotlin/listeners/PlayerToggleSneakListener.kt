@@ -12,7 +12,7 @@ object PlayerToggleSneakListener: Listener {
     fun onPlayerToggleSneak(event: PlayerToggleSneakEvent) {
         val player: Player = event.player
         val block: Block = player.world.getBlockAt(player.location.blockX, player.location.blockY - 1, player.location.blockZ)
-        val elevator: Elevator = Elevator()
+        val elevator = Elevator()
 
         if (elevator.isElevatorBlock(block)) {
             Elevator().goToBelowFloor(player)

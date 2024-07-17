@@ -24,7 +24,7 @@ class Elevator: Recipe {
             if (isElevatorBlock(block)) {
                 val yaw: Float = player.eyeLocation.yaw
                 val pitch: Float = player.eyeLocation.pitch
-                val aboveElevator: Location = Location(player.world, block.x.toDouble(), block.y + 1.0, block.z.toDouble(), yaw, pitch)
+                val aboveElevator = Location(player.world, block.x.toDouble(), block.y + 1.0, block.z.toDouble(), yaw, pitch)
                 player.teleportAsync(aboveElevator.toCenterLocation()).thenAccept { success ->
                     if (!success) return@thenAccept
                     player.playSound(aboveElevator, Sound.BLOCK_BARREL_OPEN, 1.0f, 1.0f)
@@ -41,7 +41,7 @@ class Elevator: Recipe {
             if (isElevatorBlock(block)) {
                 val yaw: Float = player.eyeLocation.yaw
                 val pitch: Float = player.eyeLocation.pitch
-                val belowElevator: Location = Location(player.world, block.x.toDouble(), block.y + 1.0, block.z.toDouble(), yaw, pitch)
+                val belowElevator = Location(player.world, block.x.toDouble(), block.y + 1.0, block.z.toDouble(), yaw, pitch)
                 player.teleportAsync(belowElevator.toCenterLocation()).thenAccept { success ->
                     if (!success) return@thenAccept
                     player.playSound(belowElevator, Sound.BLOCK_BARREL_OPEN, 1.0f, 1.0f)
@@ -53,6 +53,23 @@ class Elevator: Recipe {
     fun isElevatorBlock(block: Block): Boolean {
         val container: PersistentDataContainer = CustomBlockData(block, HyroSurvival.instance!!)
         return container.has(key, PersistentDataType.STRING)
+    }
+
+    fun dropElevatorByColor(player: Player, block: Block, color: Material) {
+        removeElevatorData(block)
+
+        val elevatorItem: Item = Item(color)
+            .displayName(Component.text("Elevator", NamedTextColor.GOLD))
+            .lore(Component.text("Jump to go up and sneak to go down", NamedTextColor.GRAY))
+            .persistentData("elevator", "elevator", HyroSurvival.instance!!)
+            .build()
+
+        player.world.dropItemNaturally(block.location, elevatorItem.item!!)
+    }
+
+    private fun removeElevatorData(block: Block) {
+        val container: PersistentDataContainer = CustomBlockData(block, HyroSurvival.instance!!)
+        container.remove(key)
     }
 
     override fun registerRecipes() {
@@ -68,12 +85,7 @@ class Elevator: Recipe {
         colors.forEach { color ->
             val elevatorItem = Item(color)
                 .displayName(Component.text("Elevator", NamedTextColor.GOLD))
-                .lore(
-                    Component.text("Jump to go up")
-                        .append(Component.empty().appendNewline())
-                        .append(Component.text("Sneak to go down")
-                    ).color(NamedTextColor.GRAY),
-                )
+                .lore(Component.text("Jump to go up and sneak to go down", NamedTextColor.GRAY))
                 .persistentData("elevator", "elevator", HyroSurvival.instance!!)
                 .build()
 

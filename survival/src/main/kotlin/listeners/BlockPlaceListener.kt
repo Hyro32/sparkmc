@@ -15,11 +15,11 @@ object BlockPlaceListener: Listener {
     fun onBlockPlace(event: BlockPlaceEvent) {
         val itemInHand: ItemStack = event.itemInHand
         val container: PersistentDataContainer = itemInHand.itemMeta.persistentDataContainer
-        val key: NamespacedKey = NamespacedKey(HyroSurvival.instance!!, "elevator")
+        val key = NamespacedKey(HyroSurvival.instance!!, "elevator")
 
         if (container.has(key, PersistentDataType.STRING)) {
             val blocksContainer: PersistentDataContainer = CustomBlockData(event.block, HyroSurvival.instance!!)
-            blocksContainer.set(key, PersistentDataType.STRING, "elevator-" + event.block.type.name)
+            blocksContainer.set(key, PersistentDataType.STRING, "elevator" + event.block.type.name)
         }
     }
 }
