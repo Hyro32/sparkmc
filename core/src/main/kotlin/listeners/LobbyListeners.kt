@@ -1,5 +1,6 @@
 package one.hyro.listeners
 
+import io.papermc.paper.event.player.PlayerPickItemEvent
 import one.hyro.HyroCore
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.event.EventHandler
@@ -34,7 +35,7 @@ object LobbyListeners: Listener {
     }
 
     @EventHandler
-    fun onItemPickup(event: PlayerDropItemEvent) {
+    fun onItemPickup(event: PlayerPickItemEvent) {
         val itemPickup: Boolean = configuration.getBoolean("lobby.item-pickup")
         if (!itemPickup && isLobbyWorld(event.player.world.name)) event.isCancelled = true
     }

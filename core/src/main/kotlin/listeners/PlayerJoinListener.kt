@@ -16,7 +16,7 @@ object PlayerJoinListener: Listener {
         event.joinMessage(null)
         val player = event.player
         player.gameMode = GameMode.ADVENTURE
-        ScoreboardManager.setMainTab(player)
+        player.damage(0.0001)
         ScoreboardManager.setRole(player)
 
         if (player.hasPermission("hyro.join") || player.isOp) {
