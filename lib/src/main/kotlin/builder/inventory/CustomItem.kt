@@ -1,7 +1,8 @@
-package one.hyro.builder
+package one.hyro.builder.inventory
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextDecoration
+import one.hyro.Lib
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
 import org.bukkit.enchantments.Enchantment
@@ -10,64 +11,62 @@ import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.persistence.PersistentDataType
-import org.bukkit.plugin.Plugin
 
-class Item {
-    var item: ItemStack? = null
-    var material: Material? = null
-    var meta: ItemMeta? = null
-    var consumer: ((Player) -> Unit)? = null
+class CustomItem(material: Material) {
+    var item: ItemStack = ItemStack(material)
+    var meta: ItemMeta? = item.itemMeta
+    var interactionConsumer: ((Player) -> Unit)? = null
+    var clickConsumer: ((Player, Menu) -> Unit)? = null
 
-    constructor(material: Material) {
-        this.material = material
-        this.item = ItemStack(material)
-        this.meta = item?.itemMeta
-    }
-
-    constructor(player: Player) {
-        // TODO: Create item with player head
+    init {
+        build()
     }
 
     fun amount(amount: Int) = apply {
-        item?.amount = amount
+        item.amount = amount
         return this
     }
 
     fun displayName(displayName: Component) = apply {
         meta?.displayName(displayName.decoration(TextDecoration.ITALIC, false))
-        item?.itemMeta = meta
+        item.itemMeta = meta
         return this
     }
 
     fun lore(lore: Component) = apply {
         meta?.lore(listOf(lore.decoration(TextDecoration.ITALIC, false)))
-        item?.itemMeta = meta
+        item.itemMeta = meta
         return this
     }
 
     fun enchantment(enchantment: Enchantment, level: Int) = apply {
-        item?.addEnchantment(enchantment, level)
+        item.addEnchantment(enchantment, level)
         return this
     }
 
     fun hideEnchantments() = apply {
-        item?.itemMeta?.addItemFlags(ItemFlag.HIDE_ENCHANTS)
+        item.itemMeta?.addItemFlags(ItemFlag.HIDE_ENCHANTS)
         return this
     }
 
-    fun click(consumer: (Player) -> Unit) = apply {
-        this.consumer = consumer
+    fun interact(consumer: (Player) -> Unit) = apply {
+        this.interactionConsumer = consumer
         return this
     }
 
-    fun persistentData(key: String, value: String, plugin: Plugin) = apply {
-        val namespacedKey: NamespacedKey = NamespacedKey(plugin, key)
+    fun click(consumer: (Player, Menu) -> Unit) = apply {
+        this.clickConsumer = consumer
+        return this
+    }
+
+    fun persistentData(key: String, value: String) = apply {
+        val namespacedKey = NamespacedKey(Lib.plugin, key)
         meta?.persistentDataContainer?.set(namespacedKey, PersistentDataType.STRING, value)
         return this
     }
 
     fun build() = apply {
-        item?.itemMeta = meta
+        item.itemMeta = meta
         return this
     }
 }

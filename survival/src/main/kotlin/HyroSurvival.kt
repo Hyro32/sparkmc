@@ -4,7 +4,7 @@ import io.papermc.paper.command.brigadier.Commands
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import one.hyro.commands.TradeCommand
-import one.hyro.common.listeners.InventoryClickCommonListener
+import one.hyro.common.listener.InventoryClickCommonListener
 import one.hyro.listeners.BlockBreakListener
 import one.hyro.listeners.BlockPlaceListener
 import one.hyro.listeners.PlayerJumpListener

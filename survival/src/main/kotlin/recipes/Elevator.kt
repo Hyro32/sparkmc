@@ -4,10 +4,12 @@ import com.jeff_media.customblockdata.CustomBlockData
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import one.hyro.HyroSurvival
-import one.hyro.builder.Item
+import one.hyro.builder.inventory.CustomItem
 import org.bukkit.*
 import org.bukkit.block.Block
+import org.bukkit.entity.Item
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.persistence.PersistentDataContainer
 import org.bukkit.persistence.PersistentDataType
@@ -57,13 +59,13 @@ class Elevator {
     fun dropElevatorByColor(player: Player, block: Block, color: Material) {
         removeElevatorData(block)
 
-        val elevatorItem: Item = Item(color)
+        val elevatorItem = CustomItem(color)
             .displayName(Component.text("Elevator", NamedTextColor.GOLD))
             .lore(Component.text("Jump to go up and sneak to go down", NamedTextColor.GRAY))
-            .persistentData("elevator", "elevator", HyroSurvival.instance!!)
+            .persistentData("elevator", "elevator-"+ color.name.lowercase())
             .build()
 
-        player.world.dropItemNaturally(block.location, elevatorItem.item!!)
+        player.world.dropItemNaturally(block.location, elevatorItem.item)
     }
 
     private fun removeElevatorData(block: Block) {
@@ -85,14 +87,14 @@ class Elevator {
             )
 
             colors.forEach { color ->
-                val elevatorItem = Item(color)
+                val elevatorItem = CustomItem(color)
                     .displayName(Component.text("Elevator", NamedTextColor.GOLD))
                     .lore(Component.text("Jump to go up and sneak to go down", NamedTextColor.GRAY))
-                    .persistentData("elevator", "elevator", HyroSurvival.instance!!)
+                    .persistentData("elevator", "elevator-"+ color.name.lowercase())
                     .build()
 
                 val recipeKey = NamespacedKey(HyroSurvival.instance!!, prefix + color.name.lowercase())
-                val recipe = ShapedRecipe(recipeKey, elevatorItem.item!!)
+                val recipe = ShapedRecipe(recipeKey, elevatorItem.item)
                 recipe.shape("AAA", "ABA", "ACA")
                 recipe.setIngredient('A', color)
                 recipe.setIngredient('B', Material.ENDER_PEARL)

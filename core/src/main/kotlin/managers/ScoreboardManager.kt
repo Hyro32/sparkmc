@@ -3,7 +3,7 @@ package one.hyro.managers
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import one.hyro.HyroCore
-import one.hyro.common.Role
+import one.hyro.common.Rank
 import org.bukkit.Bukkit
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.entity.Player
@@ -28,24 +28,26 @@ object ScoreboardManager {
         Component.text(configuration.getString("health.symbol")?: "❤", NamedTextColor.RED)
     )
 
+    @OptIn(ExperimentalStdlibApi::class)
     fun registerRoleTeams() {
-        for (role: Role in Role.entries) {
-            val team: Team = scoreboard.getTeam(role.name)
-                ?: scoreboard.registerNewTeam(role.name)
-            team.prefix(role.prefix())
+        for (rank: Rank in Rank.entries) {
+            val team: Team = scoreboard.getTeam(rank.name)
+                ?: scoreboard.registerNewTeam(rank.name)
+            team.prefix(rank.prefix())
         }
     }
 
+    @OptIn(ExperimentalStdlibApi::class)
     fun unregisterRoleTeams() {
-        for (role: Role in Role.entries) {
-            val team: Team = scoreboard.getTeam(role.name)?: continue
+        for (rank: Rank in Rank.entries) {
+            val team: Team = scoreboard.getTeam(rank.name)?: continue
             team.unregister()
         }
     }
 
     fun setRole(player: Player) {
         // Get role from database
-        val team: Team = scoreboard.getTeam(Role.OWNER.name)?: return
+        val team: Team = scoreboard.getTeam(Rank.OWNER.name)?: return
         team.addEntry(player.name)
     }
 
@@ -61,7 +63,7 @@ object ScoreboardManager {
                 .appendSpace()
                 .append(Component.text("Role:", NamedTextColor.WHITE))
                 .appendSpace()
-                .append(Role.OWNER.prefix()),
+                .append(Rank.OWNER.prefix()),
             Component.text("⛃", NamedTextColor.LIGHT_PURPLE)
                 .appendSpace()
                 .append(Component.text("Coins:", NamedTextColor.WHITE))

@@ -3,7 +3,7 @@ package one.hyro.common
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 
-enum class Role(val prefix: Component?, val weigth: UByte, val permissions: List<String>) {
+enum class Rank(private val prefix: Component?, private val weight: UByte, val permissions: List<String>) {
     USER(null, 0u, listOf()),
     HELPER(
         Component.text("[", NamedTextColor.DARK_GRAY)
@@ -39,5 +39,5 @@ enum class Role(val prefix: Component?, val weigth: UByte, val permissions: List
     );
 
     fun prefix(): Component = prefix?.appendSpace() ?: Component.empty()
-    fun weightname(): String = weigth.toString() + name.lowercase()
+    //fun weightname(): String = weight.toString() + name.lowercase()
 }

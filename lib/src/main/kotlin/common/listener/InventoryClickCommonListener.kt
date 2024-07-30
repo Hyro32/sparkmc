@@ -1,7 +1,7 @@
-package one.hyro.common.listeners
+package one.hyro.common.listener
 
-import one.hyro.builder.Item
-import one.hyro.builder.Menu
+import one.hyro.builder.inventory.CustomItem
+import one.hyro.builder.inventory.Menu
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -12,26 +12,27 @@ object InventoryClickCommonListener: Listener {
     @EventHandler
     fun onInventoryClick(event: InventoryClickEvent) {
         val inventory: Inventory = event.inventory
+        val player: Player = event.whoClicked as Player
+        val slot: Int = event.slot
 
         if (inventory.holder is Menu) {
             val menu: Menu = inventory.holder as Menu
-            val items: MutableMap<Int, Item> = menu.items
 
-            if (menu.clickeable.not()) {
+            if (menu.clickable.not()) {
                 event.isCancelled = true
-                handleClick(event.whoClicked as Player, items, event.slot)
+                handleClick(player, menu, slot)
                 return
             }
 
-            if (items.containsKey(event.slot)) {
+            if (menu.items.containsKey(event.slot)) {
                 event.isCancelled = true
-                handleClick(event.whoClicked as Player, items, event.slot)
+                handleClick(player, menu, slot)
             }
         }
     }
 
-    private fun handleClick(player: Player, items: MutableMap<Int, Item>, slot: Int) {
-        val item: Item = items[slot]!!
-        item.let { it.consumer?.invoke(player) }
+    private fun handleClick(player: Player, menu: Menu, slot: Int) {
+        val item: CustomItem = menu.items[slot]!!
+        item.let { it.clickConsumer?.invoke(player, menu) }
     }
 }

@@ -3,8 +3,8 @@ package one.hyro.commands
 import io.papermc.paper.command.brigadier.BasicCommand
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import net.kyori.adventure.text.Component
-import one.hyro.builder.Item
-import one.hyro.builder.Menu
+import one.hyro.builder.inventory.CustomItem
+import one.hyro.builder.inventory.Menu
 import one.hyro.registry.Kit
 import one.hyro.registry.Queue
 import org.bukkit.Material
@@ -19,30 +19,30 @@ object JoinCommand: BasicCommand {
         val joinInventory: Menu = Menu()
             .title(Component.text("Duels"))
 
-        val classic: Item = Item(Material.DIAMOND_CHESTPLATE)
+        val classic = CustomItem(Material.DIAMOND_CHESTPLATE)
             .displayName(Component.text("Classic"))
             .lore(Component.text("Play a classic game of duels"))
 
-        val updated: Item = Item(Material.SHIELD)
+        val updated = CustomItem(Material.SHIELD)
             .displayName(Component.text("Updated"))
             .lore(Component.text("Play a game of duels with shields and crossbows"))
 
         when (args[0].lowercase()) {
             "singles" -> {
-                classic.click { p -> queue.addToQueue(p.uniqueId, Kit.CLASSIC, false) }
+                classic.click { p, m -> queue.addToQueue(p.uniqueId, Kit.CLASSIC, false) }
                 classic.amount(queue.getQueueByKit(Kit.CLASSIC, false).size)
                 classic.build()
 
-                updated.click { p -> queue.addToQueue(p.uniqueId, Kit.UPDATED, false) }
+                updated.click { p, m -> queue.addToQueue(p.uniqueId, Kit.UPDATED, false) }
                 updated.amount(queue.getQueueByKit(Kit.UPDATED, false).size)
                 updated.build()
             }
             "doubles" -> {
-                classic.click { p -> queue.addToQueue(p.uniqueId, Kit.CLASSIC, true) }
+                classic.click { p, m -> queue.addToQueue(p.uniqueId, Kit.CLASSIC, true) }
                 classic.amount(queue.getQueueByKit(Kit.CLASSIC, true).size)
                 classic.build()
 
-                updated.click { p -> queue.addToQueue(p.uniqueId, Kit.UPDATED, true) }
+                updated.click { p, m -> queue.addToQueue(p.uniqueId, Kit.UPDATED, true) }
                 updated.amount(queue.getQueueByKit(Kit.UPDATED, true).size)
                 updated.build()
             }

@@ -5,7 +5,7 @@ import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import one.hyro.commands.GamemodeCommand
 import one.hyro.commands.MinigamesCommand
-import one.hyro.common.listeners.InventoryClickCommonListener
+import one.hyro.common.listener.InventoryClickCommonListener
 import one.hyro.listeners.AsyncChatListener
 import one.hyro.listeners.LobbyListeners
 import one.hyro.listeners.PlayerCommandPreprocessListener
