@@ -2,9 +2,9 @@ package one.hyro.api.adapter
 
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
-import common.Rank
 import one.hyro.api.dto.player.PlayerData
 import one.hyro.api.dto.player.PlayerJson
+import one.hyro.common.Rank
 import java.util.*
 
 class PlayerAdapter {

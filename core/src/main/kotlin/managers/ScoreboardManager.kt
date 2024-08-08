@@ -61,7 +61,7 @@ object ScoreboardManager {
             Component.text(player.name + ":", NamedTextColor.GRAY),
             Component.text("★", NamedTextColor.RED)
                 .appendSpace()
-                .append(Component.text("Role:", NamedTextColor.WHITE))
+                .append(Component.text("Rank:", NamedTextColor.WHITE))
                 .appendSpace()
                 .append(Rank.OWNER.prefix()),
             Component.text("⛃", NamedTextColor.LIGHT_PURPLE)

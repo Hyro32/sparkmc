@@ -3,7 +3,6 @@ package one.hyro
 import io.papermc.paper.command.brigadier.Commands
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
-import one.hyro.commands.TradeCommand
 import one.hyro.common.listener.InventoryClickCommonListener
 import one.hyro.listeners.BlockBreakListener
 import one.hyro.listeners.BlockPlaceListener
@@ -22,7 +21,6 @@ class HyroSurvival: JavaPlugin() {
         val manager: LifecycleEventManager<Plugin> = this.lifecycleManager
         manager.registerEventHandler(LifecycleEvents.COMMANDS) { event ->
             val commands: Commands = event.registrar()
-            commands.register("trade", TradeCommand)
         }
 
         Bukkit.getPluginManager().registerEvents(BlockBreakListener, this)

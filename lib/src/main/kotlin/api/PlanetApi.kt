@@ -3,9 +3,9 @@ package one.hyro.api
 import api.ApiRequest
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import common.Rank
 import one.hyro.api.adapter.PlayerAdapter
 import one.hyro.api.dto.player.PlayerData
+import one.hyro.common.Rank
 import java.util.Date
 import java.util.UUID
 
