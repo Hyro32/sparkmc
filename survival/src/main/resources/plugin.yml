@@ -2,3 +2,6 @@ name: HyroSurvival
 version: '${project.version}'
 main: one.hyro.HyroSurvival
 api-version: '1.20'
+
+commands:
+  eco:

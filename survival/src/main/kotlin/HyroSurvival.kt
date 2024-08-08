@@ -3,6 +3,7 @@ package one.hyro
 import io.papermc.paper.command.brigadier.Commands
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
+import one.hyro.commands.EcoCommand
 import one.hyro.common.listener.InventoryClickCommonListener
 import one.hyro.listeners.BlockBreakListener
 import one.hyro.listeners.BlockPlaceListener
@@ -16,11 +17,13 @@ import org.bukkit.plugin.java.JavaPlugin
 class HyroSurvival: JavaPlugin() {
     override fun onEnable() {
         instance = this
+        Lib.init(this)
         Elevator.registerRecipes()
 
         val manager: LifecycleEventManager<Plugin> = this.lifecycleManager
         manager.registerEventHandler(LifecycleEvents.COMMANDS) { event ->
             val commands: Commands = event.registrar()
+            commands.register("eco", EcoCommand)
         }
 
         Bukkit.getPluginManager().registerEvents(BlockBreakListener, this)

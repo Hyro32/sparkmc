@@ -16,7 +16,11 @@ object PlanetApi {
         .addLast(KotlinJsonAdapterFactory())
         .build()
 
-    val players = object {
+    val players = PlayersApi
+    val moderation = ModerationApi
+    val eco = EconomyApi
+
+    object PlayersApi {
         fun get(uuid: UUID): PlayerData {
             val response: String = ApiRequest.get("$BASE_URL/players/$uuid")
             return moshi.adapter(PlayerData::class.java).fromJson(response)!!
@@ -45,5 +49,11 @@ object PlanetApi {
         fun delete(uuid: UUID) = ApiRequest.delete("$BASE_URL/players/$uuid")
     }
 
-    val moderation = object {}
+    object ModerationApi {
+        // Add moderation-related API calls here
+    }
+
+    object EconomyApi {
+        // Add economy-related API calls here
+    }
 }

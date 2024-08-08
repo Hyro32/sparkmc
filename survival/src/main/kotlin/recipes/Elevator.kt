@@ -7,9 +7,7 @@ import one.hyro.HyroSurvival
 import one.hyro.builder.inventory.CustomItem
 import org.bukkit.*
 import org.bukkit.block.Block
-import org.bukkit.entity.Item
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.ShapedRecipe
 import org.bukkit.persistence.PersistentDataContainer
 import org.bukkit.persistence.PersistentDataType
