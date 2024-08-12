@@ -3,7 +3,9 @@ package one.hyro.api
 import api.ApiRequest
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import one.hyro.api.adapter.EcoAdapter
 import one.hyro.api.adapter.PlayerAdapter
+import one.hyro.api.dto.economy.EcoData
 import one.hyro.api.dto.player.PlayerData
 import one.hyro.common.Rank
 import java.util.Date
@@ -13,6 +15,7 @@ object PlanetApi {
     private const val BASE_URL = "http://localhost:3000"
     private val moshi = Moshi.Builder()
         .add(PlayerAdapter())
+        .add(EcoAdapter())
         .addLast(KotlinJsonAdapterFactory())
         .build()
 
@@ -54,6 +57,19 @@ object PlanetApi {
     }
 
     object EconomyApi {
-        // Add economy-related API calls here
+        fun get(uuid: UUID): EcoData {
+            val response: String = ApiRequest.get("$BASE_URL/eco/$uuid")
+            return moshi.adapter(EcoData::class.java).fromJson(response)!!
+        }
+
+        fun getAll(): List<EcoData> {
+            val response: String = ApiRequest.get("$BASE_URL/eco")
+            return listOf(moshi.adapter(EcoData::class.java).fromJson(response)!!)
+        }
+
+        fun update(uuid: UUID, ecoData: EcoData): EcoData {
+            ApiRequest.patch("$BASE_URL/eco/$uuid", moshi.adapter(EcoData::class.java).toJson(ecoData))
+            return get(uuid)
+        }
     }
 }
