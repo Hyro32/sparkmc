@@ -16,12 +16,8 @@ object JoinCommand: BasicCommand {
         if (stack.executor !is Player || args.isEmpty()) return
         val player: Player = stack.executor as Player
 
-        val joinInventory: Menu = Menu()
-            .title(Component.text("Duels"))
-
-        val classic = CustomItem(Material.DIAMOND_CHESTPLATE)
-            .displayName(ClassicKit.name())
-            .lore(ClassicKit.description())
+        val joinInventory: Menu = Menu().title(Component.text("Duels"))
+        val classic: CustomItem = ClassicKit.icon()
 
         when (args[0].lowercase()) {
             "singles" -> {

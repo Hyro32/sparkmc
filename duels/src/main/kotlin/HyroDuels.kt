@@ -6,7 +6,6 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import one.hyro.commands.JoinCommand
 import one.hyro.commands.LeaveCommand
 import one.hyro.common.listener.InventoryClickCommonListener
-import one.hyro.common.listener.PlayerInteractCommonListener
 import one.hyro.listeners.EntityDamageByEntityListener
 import one.hyro.listeners.EntityDamageListener
 import one.hyro.listeners.PlayerQuitListener
@@ -15,16 +14,12 @@ import one.hyro.minigame.Session
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
-import java.io.File
 
 class HyroDuels: JavaPlugin(), Minigame {
     override fun onEnable() {
         instance = this
         Lib.init(this)
         saveResource("config.yml", false)
-
-        val mapsFolder = File(Bukkit.getWorldContainer(), "maps")
-        if (!mapsFolder.exists()) mapsFolder.mkdirs()
 
         val manager: LifecycleEventManager<Plugin> = this.lifecycleManager
         manager.registerEventHandler(LifecycleEvents.COMMANDS) { event ->

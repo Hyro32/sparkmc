@@ -6,8 +6,12 @@ import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 
 object ClassicKit: Kit {
-    override fun name(): Component = Component.text("Classic")
-    override fun description(): Component = Component.text("Classic")
+    override fun icon(): CustomItem {
+        return CustomItem(Material.DIAMOND_CHESTPLATE)
+            .displayName(Component.text("Classic"))
+            .lore(Component.text("Classic"))
+            .build()
+    }
 
     override fun helmet(): CustomItem {
         return CustomItem(Material.DIAMOND_HELMET)
