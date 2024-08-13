@@ -5,7 +5,11 @@ import io.papermc.paper.plugin.lifecycle.event.LifecycleEventManager
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import one.hyro.commands.JoinCommand
 import one.hyro.commands.LeaveCommand
+import one.hyro.common.listener.InventoryClickCommonListener
+import one.hyro.common.listener.PlayerInteractCommonListener
 import one.hyro.listeners.EntityDamageByEntityListener
+import one.hyro.listeners.EntityDamageListener
+import one.hyro.listeners.PlayerQuitListener
 import one.hyro.minigame.Minigame
 import one.hyro.minigame.Session
 import org.bukkit.Bukkit
@@ -16,9 +20,10 @@ import java.io.File
 class HyroDuels: JavaPlugin(), Minigame {
     override fun onEnable() {
         instance = this
+        Lib.init(this)
         saveResource("config.yml", false)
 
-        val mapsFolder: File = File(Bukkit.getWorldContainer(), "maps")
+        val mapsFolder = File(Bukkit.getWorldContainer(), "maps")
         if (!mapsFolder.exists()) mapsFolder.mkdirs()
 
         val manager: LifecycleEventManager<Plugin> = this.lifecycleManager
@@ -29,6 +34,9 @@ class HyroDuels: JavaPlugin(), Minigame {
         }
 
         Bukkit.getPluginManager().registerEvents(EntityDamageByEntityListener, this)
+        Bukkit.getPluginManager().registerEvents(EntityDamageListener, this)
+        Bukkit.getPluginManager().registerEvents(InventoryClickCommonListener, this)
+        Bukkit.getPluginManager().registerEvents(PlayerQuitListener, this)
         logger.info("HyroDuels has been enabled!")
     }
 

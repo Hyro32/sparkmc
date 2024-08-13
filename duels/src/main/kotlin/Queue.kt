@@ -1,12 +1,13 @@
-package one.hyro.registry
+package one.hyro
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import one.hyro.kits.Kit
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.util.UUID
 
-class Queue {
+object Queue {
     private val singlesQueue: MutableMap<UUID, Kit> = mutableMapOf()
     private val doublesQueue: MutableMap<UUID, Kit> = mutableMapOf()
 
@@ -26,8 +27,4 @@ class Queue {
 
     fun removeFromQueue(player: UUID) = singlesQueue.remove(player) ?: doublesQueue.remove(player)
     fun isQueued(player: UUID): Boolean = singlesQueue.contains(player) || doublesQueue.contains(player)
-
-    companion object {
-        val instance: Queue = Queue()
-    }
 }

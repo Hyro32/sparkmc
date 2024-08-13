@@ -1,14 +1,18 @@
 package one.hyro.minigame
 
 import net.kyori.adventure.text.Component
+import one.hyro.registry.SessionsRegistry
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import java.util.*
 
-class Session(private val minigame: Minigame, private val min: Int, max: Int) {
+open class Session(val minigame: Minigame, val min: Int, max: Int) {
     private val playersUuid: MutableList<UUID> = mutableListOf()
+        get() = field
+
     private val map = SessionMap()
+        get() = field
 
     private var state: SessionState = SessionState.WAITING
         set(newState) {
@@ -23,6 +27,7 @@ class Session(private val minigame: Minigame, private val min: Int, max: Int) {
 
     init {
         if (min > max) throw IllegalArgumentException("Min players cannot be greater than max players.")
+        SessionsRegistry.register(this)
         minigame.waiting(this)
     }
 
