@@ -9,6 +9,4 @@ class DuelSession(
     min: Int,
     max: Int,
     val kit: Kit
-) : Session(minigame, min, max) {
-    fun getKit(): Kit = kit
-}
+) : Session(minigame, min, max)

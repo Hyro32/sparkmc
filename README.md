@@ -7,7 +7,7 @@
 
 ### [Visit the website](https://hyro.one)
 
-Megatron is an ecosystem of plugins and libraries that help manage a minecraft network designed specifically for a single server. Development, compilation, be very fast!
+This is an ecosystem of plugins and libraries that help manage a minecraft network designed specifically for a single server. Development, compilation, be very fast!
 
 ## Documentation
 
@@ -28,7 +28,7 @@ git clone https://github.com/Hyro32/hyros-planet.git
 2. Build the project
 
 ```console
-mvn build
+gradle build
 ```
 
 ## Velocity with Docker
@@ -64,6 +64,5 @@ No matter your level of experience, there is something for everyone! Join us and
 
 - [Paper](https://papermc.io/)
 - [Velocity](https://papermc.io/software/velocity)
-- [Maven](https://maven.apache.org/)
 - [Docker](https://www.docker.com/)
 - [Kotlin](https://kotlinlang.org/)
