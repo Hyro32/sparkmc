@@ -11,11 +11,10 @@ This is an ecosystem of plugins and libraries that help manage a minecraft netwo
 
 ## Documentation
 
-- [Core](#core)
-- [Duels](#duels)
-- [Lib](#lib)
-- [Proxy](#proxy)
-- [Survival](#survival)
+- [Core](/core/README.md)
+- [Duels](/duels/README.md)
+- [Lib](/lib/README.md)
+- [Survival](/survival/README.md)
 
 ## How to start
 

@@ -1,11 +1,9 @@
-name: Gradle Build
+name: Build And Upload Artifacts
 
 on:
-  release:
-    types: [created]
   pull_request:
     branches:
-      - main
+      - 'main'
 
 jobs:
   build:
