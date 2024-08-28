@@ -14,8 +14,8 @@ object KickCommand {
             .requires { source -> source.hasPermission("hyro.kick") }
             .executes { context ->
                 val source: CommandSource = context.source
-                source.sendMessage(Component.text("You need to specify a player to kick!", NamedTextColor.RED))
-                0
+                source.sendMessage(Component.translatable("context.error.specifyPlayer", NamedTextColor.RED))
+                return@executes 0
             }
             .then(BrigadierCommand.requiredArgumentBuilder("player", StringArgumentType.word())
                 .suggests { _, builder ->
@@ -29,12 +29,16 @@ object KickCommand {
                     val target = proxy.getPlayer(player)
 
                     if (target.isPresent) {
-                        target.get().disconnect(Component.text("You have been kicked from the server!", NamedTextColor.RED))
-                        source.sendMessage(Component.text("Successfully kicked $player!", NamedTextColor.GREEN))
+                        target.get().disconnect(Component.translatable("context.success.kickMessage", NamedTextColor.RED))
+                        val successMessage = Component.translatable(
+                            "context.success.kick",
+                            Component.text(player, NamedTextColor.DARK_GREEN)
+                        ).color(NamedTextColor.GREEN)
+                        source.sendMessage(successMessage)
                     } else {
-                        source.sendMessage(Component.text("Player $player is not online!", NamedTextColor.RED))
+                        source.sendMessage(Component.translatable("context.error.playerOffline", NamedTextColor.RED))
                     }
-                    1
+                    return@executes 1
                 }
             )
             .build()

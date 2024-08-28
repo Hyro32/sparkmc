@@ -15,8 +15,8 @@ object ReplyCommand {
             //.requires { source -> source.hasPermission("hyro.reply") }
             .executes { context ->
                 val source: CommandSource = context.source
-                source.sendMessage(Component.text("You need to specify a message!", NamedTextColor.RED))
-                0
+                source.sendMessage(Component.translatable("context.error.specifyMessage", NamedTextColor.RED))
+                return@executes 0
             }
             .then(BrigadierCommand.requiredArgumentBuilder("message", StringArgumentType.greedyString())
                 .executes { context ->
@@ -26,13 +26,26 @@ object ReplyCommand {
 
                     if (queue.containsKey(source.uniqueId)) {
                         val target = proxy.getPlayer(queue[source.uniqueId]!!).get()
-                        source.sendMessage(Component.text("You -> ${target.username}: $message", NamedTextColor.GRAY))
-                        target.sendMessage(Component.text("${source.username} -> You: $message", NamedTextColor.GRAY))
+
+                        val sourceMessage = Component.translatable(
+                            "context.success.msg1",
+                            Component.text(target.username),
+                            Component.text(message)
+                        ).color(NamedTextColor.GRAY)
+                        source.sendMessage(sourceMessage)
+
+                        val targetMessage = Component.translatable(
+                            "context.success.msg2",
+                            Component.text(source.username),
+                            Component.text(message)
+                        ).color(NamedTextColor.GRAY)
+                        target.sendMessage(targetMessage)
+
                         queue.remove(source.uniqueId)
                     } else {
-                        source.sendMessage(Component.text("You have no one to reply to!", NamedTextColor.RED))
+                        source.sendMessage(Component.translatable("context.error.noAvailableReply", NamedTextColor.RED))
                     }
-                    1
+                    return@executes 1
                 }
             )
             .build()

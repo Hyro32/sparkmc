@@ -20,8 +20,8 @@ object MsgCommand {
             //.requires { source -> source.hasPermission("hyro.msg") }
             .executes { context ->
                 val source: CommandSource = context.source
-                source.sendMessage(Component.text("You need to specify a player to message!", NamedTextColor.RED))
-                0
+                source.sendMessage(Component.translatable("context.error.specifyPlayer", NamedTextColor.RED))
+                return@executes 0
             }
             .then(BrigadierCommand.requiredArgumentBuilder("player", StringArgumentType.word())
                 .suggests { _, builder ->
@@ -34,12 +34,9 @@ object MsgCommand {
                     val player = StringArgumentType.getString(context, "player")
                     val target = proxy.getPlayer(player)
 
-                    if (target.isPresent) {
-                        source.sendMessage(Component.text("You need to specify a message to send!", NamedTextColor.RED))
-                    } else {
-                        source.sendMessage(Component.text("Player $player is not online!", NamedTextColor.RED))
-                    }
-                    1
+                    if (target.isPresent) source.sendMessage(Component.translatable("context.error.specifyMessage", NamedTextColor.RED))
+                    else source.sendMessage(Component.translatable("context.error.playerOffline", NamedTextColor.RED))
+                    return@executes 1
                 }
                 .then(BrigadierCommand.requiredArgumentBuilder("message", StringArgumentType.greedyString())
                     .executes { context ->
@@ -49,13 +46,24 @@ object MsgCommand {
                         val message = StringArgumentType.getString(context, "message")
 
                         messageQueue[target.uniqueId] = source.uniqueId
-                        source.sendMessage(Component.text("You -> $player: $message", NamedTextColor.GRAY))
-                        target.sendMessage(Component.text("${source.username} -> You: $message", NamedTextColor.GRAY))
+                        val sourceMessage = Component.translatable(
+                            "context.success.msg1",
+                            Component.text(target.username),
+                            Component.text(message)
+                        ).color(NamedTextColor.GRAY)
+                        source.sendMessage(sourceMessage)
+
+                        val targetMessage = Component.translatable(
+                            "context.success.msg2",
+                            Component.text(source.username),
+                            Component.text(message)
+                        ).color(NamedTextColor.GRAY)
+                        target.sendMessage(targetMessage)
 
                         proxy.scheduler.buildTask(Proxy.instance, Runnable {
                             messageQueue.remove(target.uniqueId)
                         }).delay(30, TimeUnit.SECONDS).schedule()
-                        1
+                        return@executes 1
                     }
                 )
             )
