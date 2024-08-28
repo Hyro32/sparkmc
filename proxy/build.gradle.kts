@@ -9,22 +9,21 @@ version = "1.0.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://libraries.minecraft.net")
+    maven("https://repo.papermc.io/repository/maven-public/") {
+        name = "papermc-repo"
     }
-    maven {
-        url = uri("https://repo.papermc.io/repository/maven-public/")
+    maven("https://oss.sonatype.org/content/groups/public/") {
+        name = "sonatype"
     }
 }
 
 dependencies {
-    implementation(project(":lib"))
-    implementation("com.jeff-media:custom-block-data:2.2.2")
-    compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
+    compileOnly("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 }
 
 tasks.withType<ShadowJar> {
-    archiveFileName.set("HyroSurvival-${version}.jar")
+    archiveFileName.set("HyroProxy-${version}.jar")
     configurations = listOf(project.configurations.runtimeClasspath.get())
 }
 

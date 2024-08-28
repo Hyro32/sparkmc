@@ -3,4 +3,4 @@ plugins {
 }
 
 rootProject.name = "hyros-planet"
-include ("core", "duels", "lib", "survival")
+include ("core", "duels", "lib", "proxy", "survival")
