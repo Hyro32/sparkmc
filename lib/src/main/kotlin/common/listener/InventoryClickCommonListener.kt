@@ -32,7 +32,7 @@ object InventoryClickCommonListener: Listener {
     }
 
     private fun handleClick(player: Player, menu: Menu, slot: Int) {
-        val item: CustomItem = menu.items[slot]!!
-        item.let { it.clickConsumer?.invoke(player, menu) }
+        val item: CustomItem? = menu.items[slot]
+        item?.let { it.clickConsumer?.invoke(player) }
     }
 }

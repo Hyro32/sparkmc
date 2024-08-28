@@ -1,6 +1,5 @@
 package one.hyro.listeners
 
-import net.kyori.adventure.text.Component
 import org.bukkit.GameMode
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Player

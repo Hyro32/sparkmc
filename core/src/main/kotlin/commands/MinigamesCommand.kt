@@ -15,7 +15,7 @@ object MinigamesCommand: BasicCommand {
         val survival: CustomItem = CustomItem(Material.GRASS_BLOCK)
             .displayName(Component.text("Survival"))
             .lore(Component.text("Survive in a world with limited resources"))
-            .click { player: Player, menu: Menu ->
+            .click { player: Player ->
                 player.sendMessage(Component.text("You clicked on the survival minigame!"))
             }
             .build()
@@ -23,7 +23,7 @@ object MinigamesCommand: BasicCommand {
         val duels: CustomItem = CustomItem(Material.DIAMOND_SWORD)
             .displayName(Component.text("Duels"))
             .lore(Component.text("Fight against other players"))
-            .click { player: Player, menu: Menu ->
+            .click { player: Player ->
                 player.sendMessage(Component.text("You clicked on the duels minigame!"))
             }
 

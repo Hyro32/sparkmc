@@ -4,11 +4,11 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import one.hyro.HyroCore
 import one.hyro.common.Rank
+import one.hyro.scheduler.Schedule
 import org.bukkit.Bukkit
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
-import org.bukkit.scheduler.BukkitScheduler
 import org.bukkit.scoreboard.*
 
 object ScoreboardManager {
@@ -101,13 +101,12 @@ object ScoreboardManager {
     }
 
     fun updateScoreboard(plugin: Plugin) {
-        val scheduler: BukkitScheduler = Bukkit.getScheduler()
-        scheduler.scheduleSyncRepeatingTask(plugin, {
+        Schedule.runTaskTimer {
             for (player: Player in Bukkit.getOnlinePlayers()) {
                 setMainTab(player)
                 setCustomScoreboard(plugin.config, player)
                 setHealthBelowName(plugin.config, player)
             }
-        }, 0L, 20L)
+        }
     }
 }

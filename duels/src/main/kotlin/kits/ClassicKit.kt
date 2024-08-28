@@ -1,15 +1,21 @@
 package one.hyro.kits
 
 import net.kyori.adventure.text.Component
+import one.hyro.Queue
 import one.hyro.builder.inventory.CustomItem
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
+import org.bukkit.entity.Player
 
 object ClassicKit: Kit {
-    override fun icon(): CustomItem {
+    override fun icon(doubles: Boolean): CustomItem {
+        val queueSize: Int = if (doubles) Queue.getQueueByKit(this, true).size else Queue.getQueueByKit(this, false).size
+
         return CustomItem(Material.DIAMOND_CHESTPLATE)
             .displayName(Component.text("Classic"))
             .lore(Component.text("Classic"))
+            .amount(queueSize)
+            .click { player: Player -> Queue.addToQueue(player.uniqueId, this, doubles) }
             .build()
     }
 

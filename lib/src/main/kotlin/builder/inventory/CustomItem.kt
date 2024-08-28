@@ -16,7 +16,7 @@ class CustomItem(material: Material) {
     var item: ItemStack = ItemStack(material)
     var meta: ItemMeta? = item.itemMeta
     var interactionConsumer: ((Player) -> Unit)? = null
-    var clickConsumer: ((Player, Menu) -> Unit)? = null
+    var clickConsumer: ((Player) -> Unit)? = null
 
     init {
         build()
@@ -54,7 +54,7 @@ class CustomItem(material: Material) {
         return this
     }
 
-    fun click(consumer: (Player, Menu) -> Unit) = apply {
+    fun click(consumer: (Player) -> Unit) = apply {
         this.clickConsumer = consumer
         return this
     }

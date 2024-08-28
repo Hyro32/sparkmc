@@ -18,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin
 class HyroCore: JavaPlugin() {
     override fun onEnable() {
         instance = this
+        Lib.init(this)
         saveResource("config.yml", false)
         ScoreboardManager.registerRoleTeams()
         ScoreboardManager.updateScoreboard(this)

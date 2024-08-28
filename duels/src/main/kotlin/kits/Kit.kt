@@ -6,7 +6,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
 interface Kit {
-    fun icon(): CustomItem
+    fun icon(doubles: Boolean): CustomItem
     fun items(): List<CustomItem>
     fun helmet(): CustomItem? = null
     fun chestplate(): CustomItem? = null
