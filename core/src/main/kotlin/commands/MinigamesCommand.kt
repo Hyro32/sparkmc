@@ -12,7 +12,7 @@ object MinigamesCommand: BasicCommand {
     override fun execute(stack: CommandSourceStack, args: Array<out String>) {
         if (stack.executor !is Player) return
 
-        val survival: CustomItem = CustomItem(Material.GRASS_BLOCK)
+        val survival = CustomItem(Material.GRASS_BLOCK)
             .displayName(Component.text("Survival"))
             .lore(Component.text("Survive in a world with limited resources"))
             .click { player: Player ->
@@ -20,14 +20,15 @@ object MinigamesCommand: BasicCommand {
             }
             .build()
 
-        val duels: CustomItem = CustomItem(Material.DIAMOND_SWORD)
+        val duels = CustomItem(Material.DIAMOND_SWORD)
             .displayName(Component.text("Duels"))
             .lore(Component.text("Fight against other players"))
             .click { player: Player ->
                 player.sendMessage(Component.text("You clicked on the duels minigame!"))
             }
+            .build()
 
-        val minigames: Menu = Menu()
+        val minigames = Menu()
             .title(Component.text("Minigames"))
             .item(12, survival)
             .item(14, duels)

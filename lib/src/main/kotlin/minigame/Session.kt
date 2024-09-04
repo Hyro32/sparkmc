@@ -8,11 +8,8 @@ import org.bukkit.entity.Player
 import java.util.*
 
 open class Session(val minigame: Minigame, val min: Int, max: Int) {
-    private val playersUuid: MutableList<UUID> = mutableListOf()
-        get() = field
-
-    private val map = SessionMap()
-        get() = field
+    val playersUuid: MutableList<UUID> = mutableListOf()
+    val map = SessionMap()
 
     private var state: SessionState = SessionState.WAITING
         set(newState) {

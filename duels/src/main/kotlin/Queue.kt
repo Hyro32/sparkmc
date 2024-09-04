@@ -5,7 +5,7 @@ import net.kyori.adventure.text.format.NamedTextColor
 import one.hyro.kits.Kit
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import java.util.UUID
+import java.util.*
 
 object Queue {
     private val singlesQueue: MutableMap<UUID, Kit> = mutableMapOf()

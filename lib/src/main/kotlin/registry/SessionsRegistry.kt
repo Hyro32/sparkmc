@@ -4,7 +4,7 @@ import one.hyro.minigame.Session
 import java.util.UUID
 
 object SessionsRegistry {
-    private val sessions: MutableList<Session> = mutableListOf()
+    val sessions: MutableList<Session> = mutableListOf()
 
     fun register(session: Session) = sessions.add(session)
     fun unregister(session: Session) = sessions.remove(session)

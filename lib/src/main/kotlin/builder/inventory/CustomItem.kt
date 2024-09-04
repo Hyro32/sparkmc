@@ -18,12 +18,8 @@ class CustomItem(material: Material) {
     var interactionConsumer: ((Player) -> Unit)? = null
     var clickConsumer: ((Player) -> Unit)? = null
 
-    init {
-        build()
-    }
-
     fun amount(amount: Int) = apply {
-        item.amount = amount
+        if (amount <= 0 || amount > 64) item.amount = 1 else item.amount = amount
         return this
     }
 
