@@ -23,12 +23,12 @@ object JoinCommand: BasicCommand {
             "singles" -> {
                 classic
                     .amount(Queue.getQueueByKit(ClassicKit, false).size)
-                    .click { player: Player -> Queue.addToQueue(player.uniqueId, ClassicKit, false) }
+                    .click { player: Player -> Queue.addPlayerToQueue(player.uniqueId, ClassicKit, false) }
                     .build()
 
                 updated
                     .amount(Queue.getQueueByKit(UpdatedKit, false).size)
-                    .click { player: Player -> Queue.addToQueue(player.uniqueId, UpdatedKit, false) }
+                    .click { player: Player -> Queue.addPlayerToQueue(player.uniqueId, UpdatedKit, false) }
                     .build()
 
                 duelsMenu.item(0, classic)
@@ -37,12 +37,12 @@ object JoinCommand: BasicCommand {
             "doubles" -> {
                 classic
                     .amount(Queue.getQueueByKit(ClassicKit, true).size)
-                    .click { player: Player -> Queue.addToQueue(player.uniqueId, ClassicKit, true) }
+                    .click { player: Player -> Queue.addPlayerToQueue(player.uniqueId, ClassicKit, true) }
                     .build()
 
                 updated
                     .amount(Queue.getQueueByKit(UpdatedKit, false).size)
-                    .click { player: Player -> Queue.addToQueue(player.uniqueId, UpdatedKit, true) }
+                    .click { player: Player -> Queue.addPlayerToQueue(player.uniqueId, UpdatedKit, true) }
                     .build()
 
                 duelsMenu.item(0, classic)

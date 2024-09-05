@@ -15,11 +15,11 @@ object PlayerQuitListener: Listener {
     fun onPlayerQuit(event: PlayerQuitEvent) {
         val player: Player = event.player
 
-        if (Queue.isQueued(player.uniqueId)) {
-            Queue.removeFromQueue(player.uniqueId)
+        if (Queue.isPlayerQueued(player.uniqueId)) {
+            Queue.removePlayerFromQueue(player.uniqueId)
         }
 
-        if (SessionsRegistry.isPlayerInSession(player.uniqueId)) {
+        if (SessionsRegistry.isPlayerInAnySession(player.uniqueId)) {
             val session: Session = SessionsRegistry.getSession(player.uniqueId)!!
             session.removePlayer(player.uniqueId, Component.text("${player.name()} left the session!", NamedTextColor.RED))
         }

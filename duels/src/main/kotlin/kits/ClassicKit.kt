@@ -1,6 +1,7 @@
 package one.hyro.kits
 
 import one.hyro.builder.inventory.CustomItem
+import one.hyro.common.Kit
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 

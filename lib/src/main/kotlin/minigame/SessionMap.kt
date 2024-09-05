@@ -5,6 +5,7 @@ import org.bukkit.World
 import org.bukkit.WorldCreator
 import java.io.File
 import java.io.FileInputStream
+import java.util.UUID
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 
@@ -18,15 +19,19 @@ class SessionMap {
     private fun load(): World {
         val zipName: String = getRandomSessionMap()
         val zipPath: String = Bukkit.getWorldContainer().path + "/maps/$zipName"
-        val mapName: String = zipName.substring(0, zipName.length - 4) + System.currentTimeMillis()
+        val mapName: String = UUID.randomUUID().toString()
         val mapPath = File(Bukkit.getWorldContainer(), mapName)
+
+        if (!mapPath.exists()) {
+            mapPath.mkdirs()
+        }
 
         try {
             val zis = ZipInputStream(FileInputStream(zipPath))
-            val entry: ZipEntry? = zis.nextEntry
+            var entry: ZipEntry? = zis.nextEntry
 
             while (entry != null) {
-                val file = File(mapPath, mapName)
+                val file = File(mapPath, entry.name)
 
                 if (entry.isDirectory) {
                     file.mkdirs()
@@ -37,27 +42,28 @@ class SessionMap {
                         zis.copyTo(output)
                     }
                 }
+                entry = zis.nextEntry
             }
+
+            zis.closeEntry()
+            zis.close()
         } catch (e: Exception) {
-            e.printStackTrace()
+            error("Failed to load map.")
         }
 
-        val worldCreator= WorldCreator(mapName)
+        val worldCreator = WorldCreator(mapName)
         return Bukkit.createWorld(worldCreator)!!
     }
 
     fun unload() {
         val unloaded: Boolean = Bukkit.unloadWorld(world, false)
-        if (!unloaded) throw IllegalStateException("Failed to unload world.")
-
+        check(!unloaded) { "Failed to unload world." }
         val mapPath = File(Bukkit.getWorldContainer(), world.name)
         mapPath.deleteRecursively()
     }
 
     private fun getRandomSessionMap(): String {
-        File(Bukkit.getWorldContainer(), "/maps").listFiles()?.let {
-            return it.random().name
-        }
-        throw IllegalStateException("No maps found.")
+        File(Bukkit.getWorldContainer(), "/maps").listFiles()?.let { return it.random().name }
+        error("No maps found.")
     }
 }

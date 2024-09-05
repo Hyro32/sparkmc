@@ -6,12 +6,15 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import one.hyro.commands.JoinCommand
 import one.hyro.commands.LeaveCommand
 import one.hyro.common.listener.InventoryClickCommonListener
+import one.hyro.instances.DuelSession
 import one.hyro.listeners.EntityDamageByEntityListener
 import one.hyro.listeners.EntityDamageListener
 import one.hyro.listeners.PlayerQuitListener
 import one.hyro.minigame.Minigame
 import one.hyro.minigame.Session
+import one.hyro.utils.InventoryUtils
 import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -40,23 +43,27 @@ class HyroDuels: JavaPlugin(), Minigame {
     }
 
     override fun waiting(session: Session) {
-        TODO("Not yet implemented")
+
     }
 
     override fun starting(session: Session) {
-        TODO("Not yet implemented")
+
     }
 
     override fun playing(session: Session) {
-        TODO("Not yet implemented")
+        val duelSession = session as DuelSession
+        duelSession.playersUuids.forEach { uuid ->
+            val player: Player = Bukkit.getPlayer(uuid) ?: return
+            InventoryUtils.applyInventory(player, duelSession.kit)
+        }
     }
 
     override fun ending(session: Session) {
-        TODO("Not yet implemented")
+
     }
 
     // See https://kotlinlang.org/docs/coding-conventions.html#class-layout
     companion object {
-        var instance: HyroDuels? = null
+        lateinit var instance: HyroDuels
     }
 }

@@ -7,11 +7,15 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import java.util.*
 
-open class Session(val minigame: Minigame, val min: Int, max: Int) {
-    val playersUuid: MutableList<UUID> = mutableListOf()
+abstract class Session(
+    private val minigame: Minigame,
+    val minPlayers: Int,
+    val maxPlayers: Int
+) {
+    val playersUuids: MutableList<UUID> = mutableListOf()
     val map = SessionMap()
 
-    private var state: SessionState = SessionState.WAITING
+    var state: SessionState = SessionState.WAITING
         set(newState) {
             field = newState
             when (field) {
@@ -23,49 +27,51 @@ open class Session(val minigame: Minigame, val min: Int, max: Int) {
         }
 
     init {
-        if (min > max) throw IllegalArgumentException("Min players cannot be greater than max players.")
+        require(minPlayers <= maxPlayers) { "Min players cannot be greater than max players." }
         SessionsRegistry.register(this)
         minigame.waiting(this)
     }
 
     fun addPlayer(uuid: UUID, component: Component) {
-        if (this.state != SessionState.WAITING) throw IllegalStateException("Cannot join a session that is not waiting.")
-        val player: Player? = Bukkit.getPlayer(uuid)
+        check(state != SessionState.WAITING) { "Cannot join a session that is not waiting." }
+        check(playersUuids.size < maxPlayers) { "Cannot join a session that is full." }
 
-        player?.let {
-            val location: Location = map.world.spawnLocation
-            it.teleportAsync(location).thenAccept { success ->
-                if (!success) return@thenAccept
-                playersUuid.add(uuid)
+        val sessionMapSpawn: Location = map.world.spawnLocation
+        Bukkit.getPlayer(uuid)?.teleportAsync(sessionMapSpawn)?.thenAccept { success ->
+            if (!success) return@thenAccept
+            playersUuids.add(uuid)
 
-                for (playerUuid: UUID in playersUuid) {
-                    val sessionPlayer: Player? = Bukkit.getPlayer(playerUuid)
-                    sessionPlayer?.sendMessage(component) ?: continue
-                }
-
-                if (playersUuid.size >= min) state = SessionState.STARTING
+            for (playerUuid in playersUuids) {
+                val player: Player? = Bukkit.getPlayer(playerUuid)
+                player?.sendMessage(component)
             }
+
+            if (playersUuids.size >= minPlayers) state = SessionState.STARTING
         }
     }
 
     fun removePlayer(uuid: UUID, component: Component) {
-        val player: Player? = Bukkit.getPlayer(uuid);
+        val worldSpawn: Location = Bukkit.getWorld("world")?.spawnLocation ?: error("World not found.")
+        Bukkit.getPlayer(uuid)?.teleportAsync(worldSpawn)
+        playersUuids.remove(uuid)
 
-        player?.let {
-            val location: Location = Bukkit.getWorld("world")?.spawnLocation ?: return@let
-            it.teleportAsync(location)
+        for (playerUuid in playersUuids) {
+            val player: Player? = Bukkit.getPlayer(playerUuid)
+            player?.sendMessage(component)
         }
 
-        for (playerUuid: UUID in playersUuid) {
-            val sessionPlayer: Player = Bukkit.getPlayer(playerUuid) ?: continue
-            sessionPlayer.sendMessage(component)
+        when {
+            playersUuids.isEmpty() -> state = SessionState.ENDING
+            state == SessionState.STARTING && playersUuids.size < minPlayers -> state = SessionState.WAITING
         }
-
-        playersUuid.remove(uuid)
-        val isStartingWithPlayers: Boolean = state == SessionState.STARTING && (playersUuid.size < min && playersUuid.isNotEmpty())
-        if (isStartingWithPlayers) state = SessionState.WAITING
-        if (playersUuid.isEmpty()) state = SessionState.ENDING
     }
 
-    fun isPlayerInSession(uuid: UUID): Boolean = playersUuid.contains(uuid)
+    fun broadcast(component: Component) {
+        playersUuids.forEach { uuid ->
+            val player: Player? = Bukkit.getPlayer(uuid)
+            player?.sendMessage(component)
+        }
+    }
+
+    fun isPlayerInSession(uuid: UUID): Boolean = playersUuids.contains(uuid)
 }

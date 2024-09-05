@@ -14,12 +14,12 @@ object LeaveCommand: BasicCommand {
         if (stack.sender !is Player) return
         val player: Player = stack.sender as Player
 
-        if (Queue.isQueued(player.uniqueId)) {
-            Queue.removeFromQueue(player.uniqueId)
+        if (Queue.isPlayerQueued(player.uniqueId)) {
+            Queue.removePlayerFromQueue(player.uniqueId)
             player.sendMessage(Component.text("You left the queue!", NamedTextColor.RED))
         }
 
-        if (SessionsRegistry.isPlayerInSession(player.uniqueId)) {
+        if (SessionsRegistry.isPlayerInAnySession(player.uniqueId)) {
             val session: Session = SessionsRegistry.getSession(player.uniqueId)!!
             session.removePlayer(player.uniqueId, Component.text("You left the session!", NamedTextColor.RED))
         }
