@@ -1,36 +1,29 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-
 plugins {
-    kotlin("jvm") version "2.0.0"
-    id("com.gradleup.shadow") version "8.3.0"
+    id("java")
 }
 
-version = "1.0.0-SNAPSHOT"
+group = "one.hyro.spark.proxy"
+version = "0.0.1"
 
 repositories {
     mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/") {
-        name = "papermc-repo"
-    }
-    maven("https://oss.sonatype.org/content/groups/public/") {
-        name = "sonatype"
+    maven {
+        name = "papermc"
+        url = uri("https://repo.papermc.io/repository/maven-public/")
     }
 }
 
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    annotationProcessor("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
 }
 
-tasks.withType<ShadowJar> {
-    archiveFileName.set("HyroProxy-${version}.jar")
-    configurations = listOf(project.configurations.runtimeClasspath.get())
+tasks.test {
+    useJUnitPlatform()
 }
 
-tasks.assemble {
-    dependsOn(tasks.shadowJar)
-}
-
-artifacts {
-    archives(tasks.named<ShadowJar>("shadowJar"))
+tasks.withType<Jar> {
+    archiveBaseName = "SparkProxy"
 }

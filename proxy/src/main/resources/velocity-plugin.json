@@ -1,7 +1,0 @@
-{
-  "id": "proxy",
-  "name": "HyroProxy",
-  "version": "1.0.0-SNAPSHOT",
-  "authors": ["Hyro32"],
-  "main": "one.hyro.Proxy"
-}
