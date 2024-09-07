@@ -1,0 +1,3 @@
+group-formats:
+  default: "&7{prefix}{name}: &f{message}"
+chat-format: "&7{prefix}{name}: &f{message}"

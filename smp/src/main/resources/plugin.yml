@@ -4,3 +4,45 @@ description: 'A plugin for the Spark SMP server.'
 version: '${project.version}'
 website: 'https://sparkmc.org'
 api-version: '1.20'
+commands:
+  sethome:
+    description: Sets a home location with the given name.
+    usage: /sethome <name>
+  home:
+    description: Teleports to the home location with the given name.
+    usage: /home <name>
+  homes:
+    description: Opens the homes GUI.
+    usage: /homes
+  delhome:
+    description: Deletes the home location with the given name.
+    usage: /delhome <name>
+  spawn:
+    description: Teleports you to the spawn of the world.
+    usage: /spawn
+  team:
+    description: Create, Join, Leave, Open, Disband a team.
+    usage: /team <arg>
+  statistics:
+    description: Retrieve statistics of players.
+    usage: /statistics <player>
+    aliases: stats
+  starterkitkey:
+    description: Gives the Starter Kit Key.
+    usage: /starterkitkey
+  rtp:
+    description: Randomly teleports a player within the Overworld.
+  shop:
+    description: Shop.
+  tpa:
+    description: TPA.
+  tpaccept:
+    description: Accept TPA.
+  tpadeny:
+    description: Deny TPA.
+  donate:
+    description: Opens a book, which leads to the donation page.
+  about:
+    description: Opens a book, which tells about the history of CoupSquad.
+  help:
+    description: Opens a book, which explains the principe of the server.
