@@ -6,10 +6,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
-import one.hyro.spark.proxy.commands.BanCommand;
-import one.hyro.spark.proxy.commands.KickCommand;
-import one.hyro.spark.proxy.commands.TempBanCommand;
-import one.hyro.spark.proxy.commands.UnbanCommand;
+import one.hyro.spark.proxy.commands.*;
 import org.slf4j.Logger;
 
 @Plugin(
@@ -53,6 +50,10 @@ public class SparkProxy {
         // Register /unban command
         BrigadierCommand unbanCommand = UnbanCommand.createBrigadierCommand(proxyServer);
         proxyServer.getCommandManager().register(unbanCommand);
+
+        // Register /msg command
+        BrigadierCommand msgCommand = new MessageCommand(proxyServer).createBrigadierCommand();
+        proxyServer.getCommandManager().register(msgCommand);
 
         logger.info("All commands have been registered.");
     }
