@@ -1,0 +1,6 @@
+name: 'SparkSmp'
+main: 'one.hyro.spark.smp.SparkSmp'
+description: 'A plugin for the Spark SMP server.'
+version: '${project.version}'
+website: 'https://sparkmc.org'
+api-version: '1.20'
