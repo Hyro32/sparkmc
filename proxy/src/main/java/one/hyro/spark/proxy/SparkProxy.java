@@ -7,6 +7,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import one.hyro.spark.proxy.commands.*;
+import one.hyro.spark.proxy.listeners.PlayerJoinListener;
 import org.slf4j.Logger;
 
 @Plugin(
@@ -54,6 +55,9 @@ public class SparkProxy {
         // Register /msg command
         BrigadierCommand msgCommand = new MessageCommand(proxyServer).createBrigadierCommand();
         proxyServer.getCommandManager().register(msgCommand);
+
+        // Register the player join listener to handle bans
+        proxyServer.getEventManager().register(this, new PlayerJoinListener(proxyServer, logger));
 
         logger.info("All commands have been registered.");
     }
