@@ -14,6 +14,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":lib"))
     compileOnly("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
     annotationProcessor("com.velocitypowered:velocity-api:3.3.0-SNAPSHOT")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")

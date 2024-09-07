@@ -1,2 +1,2 @@
 rootProject.name = "sparkmc"
-include("proxy")
+include("proxy", "lib")
