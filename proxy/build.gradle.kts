@@ -1,5 +1,8 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("java")
+    id("com.gradleup.shadow") version "8.3.0"
 }
 
 group = "one.hyro.spark.proxy"
@@ -25,6 +28,16 @@ tasks.test {
     useJUnitPlatform()
 }
 
-tasks.withType<Jar> {
+tasks.withType<ShadowJar> {
     archiveBaseName = "SparkProxy"
+    archiveClassifier = ""
+    configurations = listOf(project.configurations.runtimeClasspath.get())
+}
+
+tasks.assemble {
+    dependsOn(tasks.shadowJar)
+}
+
+artifacts {
+    archives(tasks.named<ShadowJar>("shadowJar"))
 }

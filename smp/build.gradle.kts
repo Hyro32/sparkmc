@@ -1,5 +1,8 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     id("java")
+    id("com.gradleup.shadow") version "8.3.0"
 }
 
 group = "one.hyro.spark.smp"
@@ -11,6 +14,7 @@ repositories {
 }
 
 dependencies {
+    implementation(project(":lib"))
     compileOnly("org.projectlombok:lombok:1.18.34")
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
@@ -24,6 +28,16 @@ tasks.test {
     useJUnitPlatform()
 }
 
-tasks.withType<Jar> {
+tasks.withType<ShadowJar> {
     archiveBaseName = "SparkSmp"
+    archiveClassifier = ""
+    configurations = listOf(project.configurations.runtimeClasspath.get())
+}
+
+tasks.assemble {
+    dependsOn(tasks.shadowJar)
+}
+
+artifacts {
+    archives(tasks.named<ShadowJar>("shadowJar"))
 }
