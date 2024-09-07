@@ -6,6 +6,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
+import one.hyro.spark.lib.i18n.I18n;
 import one.hyro.spark.proxy.commands.BanCommand;
 import one.hyro.spark.proxy.commands.KickCommand;
 import one.hyro.spark.proxy.commands.TempBanCommand;
@@ -21,38 +22,38 @@ import org.slf4j.Logger;
         authors = {"Hyro32"}
 )
 public class SparkProxy {
-
-    private final ProxyServer proxyServer;
+    private final ProxyServer proxy;
     private final Logger logger;
 
     @Inject
-    public SparkProxy(ProxyServer proxyServer, Logger logger) {
-        this.proxyServer = proxyServer;
+    public SparkProxy(ProxyServer proxy, Logger logger) {
+        this.proxy = proxy;
         this.logger = logger;
     }
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
         registerCommands();
+        I18n.setupInternationalization();
         logger.info("SparkProxy has been initialized!");
     }
 
     private void registerCommands() {
         // Register /ban command
-        BrigadierCommand banCommand = BanCommand.createBrigadierCommand(proxyServer);
-        proxyServer.getCommandManager().register(banCommand);
+        BrigadierCommand banCommand = BanCommand.createBrigadierCommand(proxy);
+        proxy.getCommandManager().register(banCommand);
 
         // Register /tempban command
-        BrigadierCommand tempBanCommand = TempBanCommand.createBrigadierCommand(proxyServer);
-        proxyServer.getCommandManager().register(tempBanCommand);
+        BrigadierCommand tempBanCommand = TempBanCommand.createBrigadierCommand(proxy);
+        proxy.getCommandManager().register(tempBanCommand);
 
         // Register /kick command
-        BrigadierCommand kickCommand = KickCommand.createBrigadierCommand(proxyServer);
-        proxyServer.getCommandManager().register(kickCommand);
+        BrigadierCommand kickCommand = KickCommand.createBrigadierCommand(proxy);
+        proxy.getCommandManager().register(kickCommand);
 
         // Register /unban command
-        BrigadierCommand unbanCommand = UnbanCommand.createBrigadierCommand(proxyServer);
-        proxyServer.getCommandManager().register(unbanCommand);
+        BrigadierCommand unbanCommand = UnbanCommand.createBrigadierCommand(proxy);
+        proxy.getCommandManager().register(unbanCommand);
 
         logger.info("All commands have been registered.");
     }

@@ -5,29 +5,47 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.velocitypowered.api.command.BrigadierCommand;
 import com.velocitypowered.api.command.CommandSource;
+import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
-public final class KickCommand {
+import java.util.List;
 
+public final class KickCommand {
     public static BrigadierCommand createBrigadierCommand(final ProxyServer proxy) {
         LiteralCommandNode<CommandSource> kickNode = BrigadierCommand.literalArgumentBuilder("kick")
                 .requires(source -> source.hasPermission("spark.kick"))
+                .executes(context -> {
+                    CommandSource source = context.getSource();
+                    source.sendMessage(Component.translatable("context.error.specifyPlayer", NamedTextColor.RED));
+                    return Command.SINGLE_SUCCESS;
+                })
                 .then(BrigadierCommand.requiredArgumentBuilder("player", StringArgumentType.word())
-                        .then(BrigadierCommand.requiredArgumentBuilder("reason", StringArgumentType.greedyString())
-                                .executes(context -> {
-                                    CommandSource source = context.getSource();
-                                    String player = context.getArgument("player", String.class);
-                                    String reason = context.getArgument("reason", String.class);
+                        .suggests((context, builder) -> {
+                            List<String> onlinePlayers = proxy.getAllPlayers().stream().map(Player::getUsername).toList();
+                            onlinePlayers.forEach(builder::suggest);
+                            return builder.buildFuture();
+                        })
+                        .executes(context -> {
+                            CommandSource source = context.getSource();
+                            String player = context.getArgument("player", String.class);
+                            Player target = proxy.getPlayer(player).orElse(null);
 
-                                    // Simulate kicking the player
-                                    // Database.saveKick(player, reason);
-                                    source.sendMessage(Component.text(player + " has been kicked for: " + reason, NamedTextColor.YELLOW));
+                            if (target == null) {
+                                source.sendMessage(Component.translatable("context.error.playerOffline", NamedTextColor.RED));
+                                return Command.SINGLE_SUCCESS;
+                            }
 
-                                    return Command.SINGLE_SUCCESS;
-                                })
-                        )
+                            Component successMessage = Component.translatable(
+                                    "context.success.kick",
+                                    Component.text(player, NamedTextColor.DARK_GREEN)
+                            ).color(NamedTextColor.GREEN);
+
+                            target.disconnect(Component.translatable("context.success.kickMessage", NamedTextColor.RED));
+                            source.sendMessage(successMessage);
+                            return Command.SINGLE_SUCCESS;
+                        })
                 )
                 .build();
 
