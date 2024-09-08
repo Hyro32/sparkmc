@@ -60,7 +60,7 @@ public final class TempBanCommand {
                                             }
 
                                             if (expiry == null) {
-                                                source.sendMessage(Component.translatable("context.errors.invalidTimeFormat", NamedTextColor.RED));
+                                                source.sendMessage(Component.translatable("context.error.invalidTimeFormat", NamedTextColor.RED));
                                                 return Command.SINGLE_SUCCESS;
                                             }
 

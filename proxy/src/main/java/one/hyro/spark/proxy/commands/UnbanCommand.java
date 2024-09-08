@@ -31,16 +31,13 @@ public final class UnbanCommand {
                         .executes(context -> {
                             CommandSource source = context.getSource();
                             String player = context.getArgument("player", String.class);
-                            Player target = proxy.getPlayer(player).orElse(null);
 
-                            if (target == null) {
-                                source.sendMessage(Component.translatable("context.error.playerOffline", NamedTextColor.RED));
-                                return Command.SINGLE_SUCCESS;
-                            }
+                            // Check if player is already banned
+                            // Get uuid of player
 
                             Component successMessage = Component.translatable(
                                     "context.success.unban",
-                                    Component.text(target.getUsername(), NamedTextColor.DARK_GREEN)
+                                    Component.text(player, NamedTextColor.DARK_GREEN)
                             ).color(NamedTextColor.GREEN);
 
                             // Call API to delete ban from database
