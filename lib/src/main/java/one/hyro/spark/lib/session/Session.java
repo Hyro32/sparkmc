@@ -1,7 +1,8 @@
-package one.hyro.spark.lib.minigame;
+package one.hyro.spark.lib.session;
 
 import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import one.hyro.spark.lib.interfaces.Minigame;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

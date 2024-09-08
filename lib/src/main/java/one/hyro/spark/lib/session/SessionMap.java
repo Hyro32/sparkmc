@@ -1,4 +1,4 @@
-package one.hyro.spark.lib.minigame;
+package one.hyro.spark.lib.session;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;

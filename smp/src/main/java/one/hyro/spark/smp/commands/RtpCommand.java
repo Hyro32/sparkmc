@@ -6,7 +6,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import one.hyro.spark.lib.helpers.Cooldowns;
+import one.hyro.spark.lib.helper.Cooldowns;
 import one.hyro.spark.smp.SparkSmp;
 import org.bukkit.*;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package one.hyro.spark.lib.helpers;
+package one.hyro.spark.lib.helper;
 
 import one.hyro.spark.lib.SparkLib;
 import org.bukkit.scheduler.BukkitScheduler;
