@@ -4,7 +4,6 @@ import lombok.Getter;
 import one.hyro.spark.lib.common.listener.SparkInventoryListener;
 import one.hyro.spark.lib.common.listener.SparkItemInteractListener;
 import one.hyro.spark.lib.interfaces.Minigame;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -19,7 +18,7 @@ public class SparkLib {
 
     private static void setup() {
         if (plugin instanceof Minigame) {
-            File mapsFolder = new File(Bukkit.getWorldContainer(), "maps");
+            File mapsFolder = new File(plugin.getDataFolder(), "maps");
             if (!mapsFolder.exists()) mapsFolder.mkdirs();
         }
 

@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SparkItemRegistry implements Registry<SparkItem> {
-    private List<SparkItem> items = new ArrayList<>();
+    private final List<SparkItem> items;
     private static SparkItemRegistry instance;
 
     public SparkItemRegistry() {
         instance = this;
+        items = new ArrayList<>();
     }
 
     @Override

@@ -23,7 +23,6 @@ public class SparkMenu implements InventoryHolder {
         this.rows = 3;
         this.items = new HashMap<>();
         this.inventory = Bukkit.createInventory(this, rows * 9, title);
-        build();
     }
 
     public void setItem(int slot, SparkItem item) {
@@ -39,17 +38,19 @@ public class SparkMenu implements InventoryHolder {
         }
     }
 
-    public void fillRow(int row, Material material) {
+    public SparkMenu fillRow(int row, Material material) {
         for (int i = 0; i < 9; i++) {
             int slot = row * 9 + i;
             if (inventory.getItem(slot) != null) continue;
             SparkItem item = new SparkItem(material);
             setItem(row * 9 + i, item);
         }
+        return this;
     }
 
-    public void build() {
+    public SparkMenu build() {
         items.forEach((slot, item) -> inventory.setItem(slot, item.getStack()));
+        return this;
     }
 
     @Override

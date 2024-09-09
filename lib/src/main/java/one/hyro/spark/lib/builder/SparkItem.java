@@ -6,9 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import one.hyro.spark.lib.helper.registry.SparkItemRegistry;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -29,36 +27,41 @@ public class SparkItem {
         this.material = material;
         this.stack = new ItemStack(material);
         this.meta = stack.getItemMeta();
-        build();
     }
 
-    public void setAmount(int amount) {
+    public SparkItem setAmount(int amount) {
         if (amount <= 0 || amount > 64) stack.setAmount(1);
         else stack.setAmount(amount);
+        return this;
     }
 
-    public void setDisplayName(Component component) {
+    public SparkItem setDisplayName(Component component) {
         meta.displayName(component.decoration(TextDecoration.ITALIC, false));
+        return this;
     }
 
-    public void setLore(Component... components) {
+    public SparkItem setLore(Component... components) {
         List<Component> componentList = Arrays.stream(components)
                 .map(component -> component.decoration(TextDecoration.ITALIC, false))
                 .toList();
 
         meta.lore(componentList);
+        return this;
     }
 
-    public void setEnchantment(Enchantment enchantment, int level) {
-        stack.addEnchantment(enchantment, level);
+    public SparkItem onClick(Consumer<Player> consumer) {
+        this.clickConsumer = consumer;
+        return this;
     }
 
-    public void hideEnchantments() {
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+    public SparkItem onInteract(Consumer<Player> consumer) {
+        this.interactConsumer = consumer;
+        return this;
     }
 
-    public void build() {
+    public SparkItem build() {
         stack.setItemMeta(meta);
         SparkItemRegistry.getInstance().register(this);
+        return this;
     }
 }
