@@ -11,6 +11,8 @@ repositories {
 }
 
 dependencies {
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.moshi:moshi:1.15.1")
     compileOnly("org.projectlombok:lombok:1.18.34")
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
