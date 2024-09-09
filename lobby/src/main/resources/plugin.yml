@@ -1,5 +1,5 @@
-name: 'SparkSmp'
-main: 'one.hyro.spark.smp.SparkSmp'
+name: 'SparkLobby'
+main: 'one.hyro.spark.lobby.SparkLobby'
 description: 'A plugin for the Spark SMP server.'
 version: '0.0.1'
 website: 'https://sparkmc.org'

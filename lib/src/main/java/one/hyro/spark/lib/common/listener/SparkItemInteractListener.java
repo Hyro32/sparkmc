@@ -14,7 +14,6 @@ public class SparkItemInteractListener implements Listener {
         Player player = event.getPlayer();
         ItemStack item = player.getInventory().getItemInMainHand();
         SparkItem sparkItem = SparkItemRegistry.getInstance().getSparkItem(item);
-        System.out.println("Spark! ");
 
         if (event.getAction().isRightClick() && sparkItem != null) {
             event.setCancelled(true);
