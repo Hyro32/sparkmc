@@ -36,7 +36,7 @@ public class HttpRequest {
         }
     }
 
-    public static void put(String url, String body) {
+    public static String put(String url, String body) {
         Request request = new Request.Builder()
                 .url(url)
                 .put(RequestBody.create(JSON, body))
@@ -44,12 +44,14 @@ public class HttpRequest {
 
         try (Response response = httpClient.newCall(request).execute()) {
             SparkLib.getPlugin().getLogger().info(response.body().string());
+            return response.body().string();
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 
-    public static void patch(String url, String body) {
+    public static String patch(String url, String body) {
         Request request = new Request.Builder()
                 .url(url)
                 .patch(RequestBody.create(JSON, body))
@@ -57,8 +59,10 @@ public class HttpRequest {
 
         try (Response response = httpClient.newCall(request).execute()) {
             SparkLib.getPlugin().getLogger().info(response.body().string());
+            return response.body().string();
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 

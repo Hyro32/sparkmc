@@ -8,12 +8,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class CommonPlayerInteractListener implements Listener {
+public class SparkItemInteractListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
         ItemStack item = player.getInventory().getItemInMainHand();
         SparkItem sparkItem = SparkItemRegistry.getInstance().getSparkItem(item);
+        System.out.println("Spark! ");
 
         if (event.getAction().isRightClick() && sparkItem != null) {
             event.setCancelled(true);
