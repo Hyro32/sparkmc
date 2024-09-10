@@ -1,6 +1,7 @@
 package one.hyro.spark.lib.builder;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,8 +16,8 @@ import java.util.Map;
 public class SparkMenu implements InventoryHolder {
     private final Inventory inventory;
     private final Map<Integer, SparkItem> items;
-    private final Component title;
-    private final int rows;
+    @Setter private Component title;
+    @Setter private int rows;
 
     public SparkMenu() {
         this.title = Component.text("Menu");
@@ -25,17 +26,19 @@ public class SparkMenu implements InventoryHolder {
         this.inventory = Bukkit.createInventory(this, rows * 9, title);
     }
 
-    public void setItem(int slot, SparkItem item) {
+    public SparkMenu setItem(int slot, SparkItem item) {
         items.put(slot, item);
+        return this;
     }
 
-    public void fillColumn(int column, Material material) {
+    public SparkMenu fillColumn(int column, Material material) {
         for (int i = 0; i < rows; i++) {
             int slot = i * 9 + column;
             if (inventory.getItem(slot) != null) continue;
             SparkItem item = new SparkItem(material);
             setItem(i * 9 + column, item);
         }
+        return this;
     }
 
     public SparkMenu fillRow(int row, Material material) {
