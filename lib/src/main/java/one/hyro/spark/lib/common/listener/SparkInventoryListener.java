@@ -28,7 +28,11 @@ public class SparkInventoryListener implements Listener {
             SparkItem item = sparkMenu.getItems().get(slot);
 
             event.setCancelled(true);
-            if (item.getClickConsumer() != null) item.getClickConsumer().accept(player);
+            if (item.getLeftClickConsumer() != null && event.isLeftClick()) {
+                item.getLeftClickConsumer().accept(player);
+            } else if (item.getRightClickConsumer() != null && event.isRightClick()) {
+                item.getRightClickConsumer().accept(player);
+            }
         }
     }
 

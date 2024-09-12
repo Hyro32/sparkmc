@@ -20,7 +20,8 @@ public class SparkItem {
     private final Material material;
     private final ItemStack stack;
     private ItemMeta meta;
-    private Consumer<Player> clickConsumer;
+    private Consumer<Player> leftClickConsumer;
+    private Consumer<Player> rightClickConsumer;
     private Consumer<Player> interactConsumer;
 
     public SparkItem(Material material) {
@@ -49,8 +50,13 @@ public class SparkItem {
         return this;
     }
 
-    public SparkItem onClick(Consumer<Player> consumer) {
-        this.clickConsumer = consumer;
+    public SparkItem onLeftClick(Consumer<Player> consumer) {
+        this.leftClickConsumer = consumer;
+        return this;
+    }
+
+    public SparkItem onRightClick(Consumer<Player> consumer) {
+        this.rightClickConsumer = consumer;
         return this;
     }
 

@@ -32,8 +32,11 @@ public class HomeGUIManager implements Listener {
             SparkItem homeItem = new SparkItem(Material.RED_BED)
                     .setDisplayName(Component.text(homeName, NamedTextColor.AQUA))
                     .setLore(Component.text(""), Component.text("Left-Click to teleport", NamedTextColor.GREEN), Component.text("Right-Click to delete", NamedTextColor.RED))
-                    .onClick(p -> homeManager.teleportToHome(p, homeName))
-                    .onInteract(p -> openConfirmationGUI(p, homeName))
+                    .onRightClick(p -> openConfirmationGUI(p, homeName))
+                    .onLeftClick(p -> {
+                            homeManager.teleportToHome(p, homeName);
+                            player.closeInventory();
+                    })
                     .build();
 
             homeMenu.setItem(slot, homeItem);
@@ -48,7 +51,6 @@ public class HomeGUIManager implements Listener {
     }
 
     private void openConfirmationGUI(Player player, String homeName) {
-        System.out.println("TRIG OPEN CONFIRM GUI");
         SparkMenu confirmationMenu = new SparkMenu()
                 .setRows(1)
                 .setTitle(Component.text("Confirm Delete", NamedTextColor.RED))
@@ -57,7 +59,11 @@ public class HomeGUIManager implements Listener {
         SparkItem confirmDelete = new SparkItem(Material.GREEN_CONCRETE)
                 .setDisplayName(Component.text("Confirm", NamedTextColor.GREEN))
                 .setLore(Component.text("Click to delete the home", NamedTextColor.YELLOW))
-                .onInteract(p -> {
+                .onLeftClick(p -> {
+                    homeManager.deleteHome(player, homeName);
+                    player.closeInventory();
+                })
+                .onRightClick(p -> {
                     homeManager.deleteHome(player, homeName);
                     player.closeInventory();
                 })
@@ -66,11 +72,12 @@ public class HomeGUIManager implements Listener {
         SparkItem cancel = new SparkItem(Material.RED_CONCRETE)
                 .setDisplayName(Component.text("Cancel", NamedTextColor.RED))
                 .setLore(Component.text("Click to cancel", NamedTextColor.YELLOW))
-                .onInteract(p -> player.closeInventory())
+                .onLeftClick(p -> player.closeInventory())
+                .onRightClick(p -> player.closeInventory())
                 .build();
 
-        confirmationMenu.setItem(2, confirmDelete);
-        confirmationMenu.setItem(6, cancel);
+        confirmationMenu.setItem(11, confirmDelete);
+        confirmationMenu.setItem(15, cancel);
 
         player.openInventory(confirmationMenu.getInventory());
     }
