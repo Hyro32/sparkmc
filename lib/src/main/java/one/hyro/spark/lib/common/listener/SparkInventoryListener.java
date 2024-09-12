@@ -46,15 +46,14 @@ public class SparkInventoryListener implements Listener {
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent event) {
         Inventory inventory = event.getInventory();
-        BukkitScheduler scheduler = SparkLib.getPlugin().getServer().getScheduler();
 
         if (inventory.getHolder(false) instanceof SparkMenu sparkMenu) {
-            updateTask = scheduler.runTaskTimer(SparkLib.getPlugin(), new BukkitRunnable() {
+            updateTask = new BukkitRunnable() {
                 @Override
                 public void run() {
                     sparkMenu.build();
                 }
-            }, 0L, 20L);
+            }.runTaskTimer(SparkLib.getPlugin(), 0L, 20L);
         }
     }
 }

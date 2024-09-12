@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 public class SetSpawnCommand {
 
     public static LiteralCommandNode<CommandSourceStack> createBrigadierCommand() {
-        return Commands.literal("setspawn")
+        LiteralCommandNode<CommandSourceStack> setSpawnNode =  Commands.literal("setspawn")
                 .requires(source -> source.getSender().hasPermission("spark.setspawn"))
                 .executes(context -> {
                     if (!(context.getSource().getSender() instanceof Player player)) return Command.SINGLE_SUCCESS;
@@ -27,5 +27,6 @@ public class SetSpawnCommand {
                     return Command.SINGLE_SUCCESS;
                 })
                 .build();
+        return setSpawnNode;
     }
 }
