@@ -3,6 +3,7 @@ package one.hyro.spark.lib.builder;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import one.hyro.spark.lib.helper.registry.SparkItemRegistry;
 import org.bukkit.Material;
@@ -42,7 +43,7 @@ public class SparkItem {
 
     public SparkItem setLore(Component... components) {
         List<Component> componentList = Arrays.stream(components)
-                .map(component -> component.decoration(TextDecoration.ITALIC, false))
+                .map(component -> component.decoration(TextDecoration.ITALIC, false).color(NamedTextColor.GRAY))
                 .toList();
 
         meta.lore(componentList);

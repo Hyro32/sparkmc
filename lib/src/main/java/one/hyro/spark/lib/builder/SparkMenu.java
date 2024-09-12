@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Getter
 public class SparkMenu implements InventoryHolder {
-    private final Inventory inventory;
+    private Inventory inventory;
     private final Map<Integer, SparkItem> items;
     private Component title;
     private int rows;
@@ -32,6 +32,7 @@ public class SparkMenu implements InventoryHolder {
 
     public SparkMenu setRows(int rows) {
         this.rows = rows;
+        this.inventory = Bukkit.createInventory(this, rows * 9, title);
         return this;
     }
 

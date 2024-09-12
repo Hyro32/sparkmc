@@ -15,7 +15,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 public class RtpCommand  {
     public static LiteralCommandNode<CommandSourceStack> createBrigadierCommand() {
-        LiteralCommandNode<CommandSourceStack> rtpNode = Commands.literal("rtp")
+        return Commands.literal("rtp")
                 .requires(source -> source.getSender().hasPermission("spark.rtp"))
                 .executes(context -> {
                     if (!(context.getSource().getSender() instanceof Player player)) return Command.SINGLE_SUCCESS;
@@ -36,8 +36,6 @@ public class RtpCommand  {
                     return Command.SINGLE_SUCCESS;
                 })
                 .build();
-
-        return rtpNode;
     }
 
     private static void randomTeleportPlayer(Player player) {
