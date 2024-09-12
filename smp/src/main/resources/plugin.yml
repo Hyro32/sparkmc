@@ -4,3 +4,22 @@ description: 'A plugin for the Spark SMP server.'
 version: '0.0.1'
 website: 'https://sparkmc.org'
 api-version: '1.20'
+commands:
+  home:
+    description: Manage your home locations
+    usage: /home [name]
+  sethome:
+    description: Set a home location
+    usage: /sethome [name]
+  homes:
+    description: List your homes
+    usage: /homes
+  delhome:
+    description: Delete a home location
+    usage: /delhome [name]
+  rtp:
+    description: Random teleportation.
+    usage: /rtp
+permissions:
+  spark.maxhomes:
+    description: Sets the maximum amount of homes a player or group can have.
